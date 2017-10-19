@@ -1,0 +1,17 @@
+default: &default 
+  adapter: postgresql 
+  username: rolando 
+  password: 186425 
+  host: localhost 
+
+development: 
+  <<: *default 
+  database: notarias_development 
+
+test:
+  <<: *default 
+  database: notarias_test 
+
+production: 
+  <<: *default 
+  database: notarias_production
