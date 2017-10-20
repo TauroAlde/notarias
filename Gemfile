@@ -37,6 +37,7 @@ gem 'jbuilder', '~> 2.5'
 
 #Use Devise for user and login manager
 gem 'devise'
+gem 'activeadmin'
 #Use Bootstrap fot templates
 gem 'bootstrap', '~> 4.0.0.alpha6'
 gem 'jquery-rails'
