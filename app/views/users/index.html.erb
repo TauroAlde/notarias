@@ -19,18 +19,20 @@
       <tbody>
         <% @user.each do |user| %>
           <tr>
-            <td><% user.id %></td>
-            <td><% user.names %></td>
-            <td><% user.father_last_name %></td>
-            <td><% user.mother_last_name %></td>
-            <td><% user.email%></td>
+            <td><%= user.id %></td>
+            <td><%= user.names %></td>
+            <td><%= user.father_last_name %></td>
+            <td><%= user.mother_last_name %></td>
+            <td><%= user.email%></td>
             <td>activo</td>
             <td>acciones</td>
-            <td><%= link_to 'Ver', user_path(user) %></td>
-            <td><%= link_to 'Editar', edit_user_path(user) %></td>
-            <td><%= link_to 'Borrar', user_path(user),
+            <td>
+              <%= link_to 'Ver', user_path(user) %>
+              <%= link_to 'Editar', edit_user_path(user) %>
+              <%= link_to 'Borrar', user_path(user),
                 method: :delete,
-                data: { confirm: '¿Eliminar?'} %></td>
+                data: { confirm: '¿Eliminar?'} %>
+            </td>
           </tr>
         <% end %>
        </tbody>

@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
 
+before_action :allow_without_password, only: [:update]
+
   def index
     @user = User.all.order(:id)
   end
@@ -46,7 +48,15 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :names)
+    params.require(:user).
+      permit(:email, :password, :password_confirmation, :names, :father_last_name, :mother_last_name)
+  end
+
+  def allow_without_password
+    if params[:user][:password].blank? && params[:user][:password_confirmation].blank?
+      params[:user].delete(:password)
+      params[:user].delete(:password_confirmation)
+    end
   end
 
 
