@@ -1,0 +1,25 @@
+<navbar id="header">
+  <div class="row">
+    <div class="col-md-1">
+      <div>
+        <%= link_to "#", class: "btn btn-secondary menu-button" do %>
+          <i class= "fa fa-bars fa-2x menu-icon"></i>
+        <% end %>
+      </div>
+    </div>
+    <div class="col">
+      <div></div>
+    </div>
+    <div class="col-md-3">
+      <ul class="option-height">        
+        <li class="inline float-right">
+          <%= image_tag "user.gif", class: "rounded float-right user-avatar" %>
+        </li>
+        <li class="inline float-right">
+          <%= link_to "Cerrar Sesión", "#", class: "text-line align-middle" %>
+        </li>
+        <div class="clearfix"></div>
+      </ul>
+    </div>
+  </div>
+</navbar>

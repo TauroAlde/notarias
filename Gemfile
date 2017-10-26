@@ -40,7 +40,10 @@ gem 'devise'
 gem 'activeadmin'
 #Use Bootstrap fot templates
 gem 'bootstrap', '~> 4.0.0.alpha6'
+gem "font-awesome-rails"
 gem 'jquery-rails'
+gem 'popper_js', '~> 1.12.3'
+gem 'pry'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

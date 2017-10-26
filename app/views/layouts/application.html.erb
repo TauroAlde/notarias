@@ -9,7 +9,12 @@
   </head>
 
   <body>
-    <%= render "/layouts/header" %>
+    <% if current_user.nil? %>
+      <%= render "/layouts/no_user_header" %>
+    <% else %>
+      <%= render "/layouts/user_header" %>
+    <% end %>
+
     <%= yield %>
   </body>
 </html>
