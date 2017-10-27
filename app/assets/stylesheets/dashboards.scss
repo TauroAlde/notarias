@@ -1,3 +1,40 @@
 // Place all the styles related to the Dashboards controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#header {
+  width: 100%;
+  height: 80px;
+  padding: 10px;
+}
+
+.option-height {
+  margin-bottom: 0px;
+  margin-right: 15px;
+  height: 59px;
+}
+
+.user-avatar {
+  width: 59px;
+  height: 59px;
+  margin-left: 15px;
+}
+
+.menu-button {
+  margin-left: 15px;
+  width: 59px;
+  height: 59px;
+}
+
+.menu-icon {
+  margin-top: 5px;
+}
+
+.inline {
+  height: 59px;
+  display: inline-block;
+}
+
+.text-line {
+  line-height: 59px;
+}
