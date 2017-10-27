@@ -1,31 +1,34 @@
 <div class="container" >
-  <div class="form-group" >
-    <%= form_for @user do |f| %>
+  <div class="table-bordered" >
+    <div class="form-group" >
+      <%= form_for @user do |f| %>
+        <div class="well" >
+        <%= f.label :Nombre %><br>
+        <%= f.text_field :names %><br>
+        
+        <%= f.label :Apellido_paterno %><br>
+        <%= f.text_field :father_last_name %><br>
 
-      <%= f.label :Nombre %><br>
-      <%= f.text_field :names %><br>
+        <%= f.label :Apellido_materno %><br>
+        <%= f.text_field :mother_last_name %><br>
 
-      <%= f.label :Apellido_paterno %><br>
-      <%= f.text_field :father_last_name %><br>
+        <%= f.label :E_mail %><br>
+        <%= f.text_field :email %><br>
 
-      <%= f.label :Apellido_materno %><br>
-      <%= f.text_field :mother_last_name %><br>
+        <%= f.label :Contraseña %><br>
+        <%= f.text_field :password %><br>
 
-      <%= f.label :E_mail %><br>
-      <%= f.text_field :email %><br>
+        <%= f.label :Confirmar_contraseña %><br>
+        <%= f.text_field :password_confirmation %><br>
 
-      <%= f.label :Contraseña %><br>
-      <%= f.text_field :password %><br>
+        <%= f.label :Estatus %><br>
 
-      <%= f.label :Confirmar_contraseña %><br>
-      <%= f.text_field :password_confirmation %><br>
-
-      <%= f.label :Estatus %><br>
-
-      <%= f.label :Acciones %><br>
-      <div class="btn btn-primary">
-        <%= f.submit "Guardar"%>
-      </div>
-    <% end %>
+        <%= f.label :Acciones %><br>
+        <div class="btn btn-primary">
+          <%= f.submit "Guardar"%>
+        </div>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>

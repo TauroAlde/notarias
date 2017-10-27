@@ -1,12 +1,15 @@
-<div class="btn btn-default">
-  <%= link_to "Nuevo Usuario", new_user_path %><br>
+<div class="container">
+  <div class="right" >
+    <%= link_to "Nuevo Usuario", new_user_path %><br>
+  </div>
+  <div class="clearfix" ></div>
 </div>
 
-<div class="container">
-  <div class="row">
-    <table class="table table-bordered">
+<div>
+  <div class="container" >
+    <table class="table-index">
       <thead>
-        <tr>
+        <tr class="head-form" >
           <th>Registro</th>
           <th>Nombre(s)</th>
           <th>Apellido paterno</th>
@@ -14,6 +17,7 @@
           <th>E-mail</th>
           <th>Estatus</th>
           <th>Acciones</th>
+          <th>    </th>
         </tr>
       </thead>
       <tbody>
@@ -39,4 +43,3 @@
     </table>
   </div>
 </div>
-
