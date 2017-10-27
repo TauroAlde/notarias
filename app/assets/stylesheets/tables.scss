@@ -1,23 +1,29 @@
 @import "colors";
+tbody tr:first-child td {
+  border-top: none;
+}
 
-.table-index{
+.index-table{
   font-size: 70%;
   width: 100%;
-  max-width: 100%;
   vertical-align: middle;
-  margin-bottom: 1rem;
+  /*margin-bottom: 1rem;*/
   th, td {
-    border-top: 1px solid #e9ecef;
     vertical-align: middle;
-    border-bottom: 2px solid #e9ecef;
     padding: 10px;
   }
 }
 
-.head-form {
+.head-table {
   background-color: $pattens-blue2;
   th {
     background: none;
     color: gray;
+  }
+}
+
+.border-tbody{
+  tr{
+    border-bottom: 2px solid #e9ecef;
   }
 }

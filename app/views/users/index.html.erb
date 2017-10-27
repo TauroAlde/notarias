@@ -7,9 +7,9 @@
 
 <div>
   <div class="container" >
-    <table class="table-index">
+    <table class="index-table">
       <thead>
-        <tr class="head-form" >
+        <tr class="head-table" >
           <th>Registro</th>
           <th>Nombre(s)</th>
           <th>Apellido paterno</th>
@@ -20,7 +20,7 @@
           <th>    </th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="border-tbody">
         <% @user.each do |user| %>
           <tr>
             <td><%= user.id %></td>
