@@ -3,27 +3,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 @import "colors";
 
-.table-index{
-  font-size: 70%;
-  width: 100%;
-  max-width: 100%;
-  vertical-align: middle;
-  margin-bottom: 1rem;
-  th, td {
-    border-top: 1px solid #e9ecef;
-    vertical-align: middle;
-    border-bottom: 2px solid #e9ecef;
-    padding: 10px;
-  }
-}
 
-.head-form {
-  background-color: $pattens-blue2;
-  th {
-    background: none;
-    color: gray;
-  }
-}
 
 .right{
   right: 30px;
