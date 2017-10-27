@@ -1,7 +1,4 @@
 @import "colors";
-tbody tr:first-child td {
-  border-top: none;
-}
 
 .index-table{
   font-size: 70%;
@@ -23,6 +20,9 @@ tbody tr:first-child td {
 }
 
 .tbody-border{
+  tr:first-child td {
+    border-top: none;
+  }
   tr{
     border-bottom: 2px solid #e9ecef;
   }
