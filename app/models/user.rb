@@ -4,4 +4,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, 
          :recoverable, :rememberable, :trackable, :validatable
+
+  has_many :procedures, class_name: "Procedure", foreign_key: :creator_user
+
 end
