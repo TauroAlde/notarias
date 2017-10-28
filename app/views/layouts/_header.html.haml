@@ -1,0 +1,20 @@
+%navbar#header
+  .row
+    .col-md-1
+      %div
+        - if current_user
+          = link_to "#", class: "btn btn-secondary menu-button" do
+            %i.fa.fa-bars.fa-2x.menu-icon
+    .col
+      %div
+    .col-md-3
+      %ul.option-height
+        - if current_user
+          %li.inline.float-right
+            = image_tag "user.gif", class: "rounded float-right user-avatar"
+          %li.inline.float-right
+            = link_to "Cerrar Sesión", "#", class: "text-line align-middle"
+        - else
+          %li.inline.float-right
+            = link_to "Iniciar Sesión", "#", class: "text-line align-middle"
+        .clearfix
