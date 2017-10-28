@@ -1,11 +1,14 @@
-<div class="btn btn-default">
-  <%= link_to "Nuevo Usuario", new_user_path %><br>
+<div class="container">
+  <div class="right" >
+    <%= link_to "Nuevo Usuario", new_user_path %><br>
+  </div>
+  <div class="clearfix" ></div>
 </div>
 
-<div class="container">
-  <div class="row">
-    <table class="table table-bordered">
-      <thead>
+<div>
+  <div class="container" >
+    <table class="index-table">
+      <thead class="head-table" >
         <tr>
           <th>Registro</th>
           <th>Nombre(s)</th>
@@ -14,9 +17,10 @@
           <th>E-mail</th>
           <th>Estatus</th>
           <th>Acciones</th>
+          <th>    </th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="tbody-border">
         <% @user.each do |user| %>
           <tr>
             <td><%= user.id %></td>
@@ -39,4 +43,3 @@
     </table>
   </div>
 </div>
-
