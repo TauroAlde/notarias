@@ -1,0 +1,35 @@
+.container
+  .panel.panel-default
+
+    %div
+      %strong Registro
+    %div 
+      = @user.id
+
+    %div
+      %strong Nombre(s)
+    %div
+      = @user.names
+
+    %div
+      %strong Apellido Paterno
+    %div
+      = @user.father_last_name
+
+    %div
+      %strong Apellido Materno
+    %div
+      = @user.mother_last_name
+
+    %div
+      %strong E-mail
+    %div
+      = @user.email
+
+    %div
+      %strong Estatus
+    %div
+      %strong Acciones
+
+.btn.btn-default
+  = link_to 'Regresar', users_path
