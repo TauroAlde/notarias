@@ -1,2 +1,5 @@
-- flash.each do |name, msg|
-  = content_tag :div, msg, class: "alert alert-info"
+- if flash.present?
+  .row
+    - flash.each do |name, msg|
+      .col.alert.alert-info.marginless
+        = content_tag :div, msg
