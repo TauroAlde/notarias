@@ -9,7 +9,10 @@
   %body
     = render "/layouts/header"
     = render "/layouts/flash_messages"
-    #body-container.container-fluid
-      #body-row.row
-        .col
-          = yield
+    #body-container
+      #left-sidebar.sidebar-container
+        = render "/layouts/sidebar"
+      #content
+        = yield
+      #right-sidebar
+        fdsfdsa
