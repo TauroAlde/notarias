@@ -3,6 +3,14 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 @import "colors";
 
+@mixin sidebar-transition {
+  -webkit-transition: 0.3s ease;
+  -moz-transition: 0.3s ease;
+  -ms-transition: 0.3s ease;
+  -o-transition: 0.3s ease;
+  transition: 0.3s ease;
+}
+
 #header-container {
   border-bottom: 1px solid rgba(153,165,166, 0.3);
   //min-height: 10%;
@@ -24,11 +32,7 @@
   .menu-button {
     background-color: transparent;
     border: 1px solid rgba(153,165,166, 0.3);
-    -webkit-transition: background 0.8s ease;
-    -moz-transition: background 0.8s ease;
-    -ms-transition: background 0.8s ease;
-    -o-transition: background 0.8s ease;
-    transition: background 0.8s ease;
+    @include sidebar-transition;
     &:hover { background-color: $pattens-blue }
     i { color: $echo-blue }
   }
@@ -54,9 +58,13 @@ body, html {
     height: 100%;
   }
   #left-sidebar {
-    left:0;
+    left:-150px;
     width: 10%;
     min-width: 200px;
+    @include sidebar-transition;
+    &:hover {
+      left: 0;
+    }
   }
   #content {
     flex: 1 1 auto;
@@ -75,7 +83,33 @@ body, html {
   height: 100%;
   width: 100%;
   .menu-row {
-    
+    height: 50px;
+    display: flex;
+    cursor: pointer;
+    &:hover { background-color: $link-water }
+  }
+  .sidebar-link {
+    line-height: 50px;
+  }
+  .menu-link-container {
+    flex-grow: 1;
+    padding-left: 10px;
+    a {
+      display: block;
+      text-decoration: none;
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      color: $echo-blue;
+    }
+  }
+  .menu-icon-container {
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    i {
+      line-height: 50px;
+      color: $echo-blue;
+    }
   }
 }
 
