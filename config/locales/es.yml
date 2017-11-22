@@ -1,3 +1,31 @@
 es:
-  hello: "Hola Mundo"
-  log_in: "Iniciar Sesión"
+  #session new
+  log_in_title: "Inicio de Sesión"
+  email: "Correo Electronico"
+  password: "Contraseña"
+  remember_me: "Recordar Cuenta"
+  log_in_button: "Ingresar"
+  #User shared links
+  sign_up: "Regístrate"
+  forgot_password: "¿Olvidaste tu Contraseña?"
+  confirmation_instructions: "¿No recibió las instrucciones de confirmación?"
+  confirm_unlock_instructions: "¿No recibió instrucciones de desbloqueo?"
+  sign_in_with: "Iniciar sesión con #{OmniAuth::Utils.camelize(provider)}"
+  #user_views
+  new_user: "Nuevo Usuario"
+  edit_user: "Editar Usuario"
+  name: "Nombre(s)"
+  father_last_name: "Apellido Paterno"
+  mother_last_name: "Apellido Materno"
+  email: "Correo Electronico"
+  password: "Contraseña"
+  password_confirmation: "Confirmar Contraseña"
+  status: "Estatus"
+  actions: "Acciones"
+  save: "Guardar"
+  registration: "Registro"
+  return: "Regresar"
+  #actions
+  show: "Ver"
+  edit: "Editar"
+  delete: "Borrar"

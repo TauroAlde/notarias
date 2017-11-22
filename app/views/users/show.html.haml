@@ -2,34 +2,34 @@
   .panel.panel-default
 
     %div
-      %strong Registro
+      %strong= t('registration')
     %div 
       = @user.id
 
     %div
-      %strong Nombre(s)
+      %strong= t('name')
     %div
       = @user.names
 
     %div
-      %strong Apellido Paterno
+      %strong= t('father_last_name')
     %div
       = @user.father_last_name
 
     %div
-      %strong Apellido Materno
+      %strong= t('mother_last_name')
     %div
       = @user.mother_last_name
 
     %div
-      %strong E-mail
+      %strong= t('email')
     %div
       = @user.email
 
     %div
-      %strong Estatus
+      %strong= t('status')
     %div
-      %strong Acciones
+      %strong= t('actions')
 
 .btn.btn-default
-  = link_to 'Regresar', users_path
+  = link_to t('return'), users_path

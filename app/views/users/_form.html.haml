@@ -2,33 +2,33 @@
   .form-group
     = form_for @user do |f|
       .well
-        = f.label :Nombre
+        = f.label :names, t('name')
         %br/
         = f.text_field :names
         %br/
-        = f.label :Apellido_paterno
+        = f.label :father_last_name, t('father_last_name')
         %br/
         = f.text_field :father_last_name
         %br/
-        = f.label :Apellido_materno
+        = f.label :mother_last_name, t('mother_last_name')
         %br/
         = f.text_field :mother_last_name
         %br/
-        = f.label :E_mail
+        = f.label :E_mail, t('email')
         %br/
         = f.text_field :email
         %br/
-        = f.label :Contraseña
+        = f.label :password, t('password')
         %br/
         = f.text_field :password
         %br/
-        = f.label :Confirmar_contraseña
+        = f.label :password_confirmation, t('password_confirmation')
         %br/
         = f.text_field :password_confirmation
         %br/
-        = f.label :Estatus
+        = f.label :status, t('status')
         %br/
-        = f.label :Acciones
+        = f.label :actions, t('actions')
         %br/
         .btn.btn-primary
-          = f.submit "Guardar"
+          = f.submit t('save')
