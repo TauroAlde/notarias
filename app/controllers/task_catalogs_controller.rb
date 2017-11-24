@@ -1,9 +1,6 @@
 class TaskCatalogsController < ApplicationController
 
 
-  def index
-    @task = Task.all.order(:id)
-  end
 
   def show
     @task = Task.find(params[:id])
@@ -43,7 +40,7 @@ class TaskCatalogsController < ApplicationController
 
     def task_catalogs_params
     params.require(:task).
-      permit(:name)
+    permit(:name)
   end
 
 end
