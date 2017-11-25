@@ -1,18 +1,18 @@
 .btn.btn-default
-  = link_to t('new_user'), new_user_path
+  = link_to t(:new_user), new_user_path
   %br
 .container
   .row
     %table.index-table
       %thead.head-table
         %tr
-          %th= t('registration')
-          %th= t('name')
-          %th= t('father_last_name')
-          %th= t('mother_last_name')
-          %th= t('email')
-          %th= t('status')
-          %th= t('actions')
+          %th= t(:registration)
+          %th= t(:name)
+          %th= t(:father_last_name)
+          %th= t(:mother_last_name)
+          %th= t(:email)
+          %th= t(:status)
+          %th= t(:actions)
       %tbody.tbody-border
         - @user.each do |user|
           %tr
@@ -24,8 +24,8 @@
             %td activo
             %td acciones
             %td
-              = link_to t('show'), user_path(user)
-              = link_to t('edit'), edit_user_path(user)
-              = link_to t('delete'), user_path(user), |
+              = link_to t(:show), user_path(user)
+              = link_to t(:edit), edit_user_path(user)
+              = link_to t(:delete), user_path(user), |
                 method: :delete,                   |
                 data: { confirm: '¿Eliminar?'}     |

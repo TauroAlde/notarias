@@ -12,24 +12,24 @@
       = @user.names
 
     %div
-      %strong= t('father_last_name')
+      %strong= t(:father_last_name)
     %div
       = @user.father_last_name
 
     %div
-      %strong= t('mother_last_name')
+      %strong= t(:mother_last_name)
     %div
       = @user.mother_last_name
 
     %div
-      %strong= t('email')
+      %strong= t(:email)
     %div
       = @user.email
 
     %div
-      %strong= t('status')
+      %strong= t(:status)
     %div
-      %strong= t('actions')
+      %strong= t(:actions)
 
 .btn.btn-default
-  = link_to t('return'), users_path
+  = link_to t(:return), users_path
