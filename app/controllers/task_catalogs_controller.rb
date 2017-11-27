@@ -40,7 +40,7 @@ class TaskCatalogsController < ApplicationController
 
   private
 
-    def task_catalogs_params
+  def task_catalogs_params
     params.require(:task).
     permit(:name)
   end
