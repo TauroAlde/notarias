@@ -4,9 +4,10 @@ Rails.application.routes.draw do
     ActiveAdmin.routes(self)
     root 'dashboards#index' 
     # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-
+   
     resources :users
     resources :dashboards
+    resources :task_catalogs
   end
 
   get '/*path', to: redirect("/#{I18n.default_locale}/%{path}"), constraints: lambda { |req| !req.path.starts_with? "/#{I18n.default_locale}/" }
