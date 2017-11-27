@@ -12,7 +12,6 @@
     .header-element-container.col-md-3
       - if current_user
         #session-links-container.element-flex-box.height-100
-          = link_to "Cerrar Sesión", destroy_user_session_path, method: :delete, class: "session-link"
           = link_to "#", class: "session-link" do
             = image_tag "user.gif", class: "rounded user-avatar"
       - else

@@ -2,6 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 @import "colors";
+@import "bootstrap";
 
 @mixin sidebar-transition {
   -webkit-transition: 0.3s ease;
@@ -56,41 +57,52 @@ body, html {
     display: inline;
     position: absolute;
     height: 100%;
+    @include sidebar-transition;
   }
   #left-sidebar {
     left:-150px;
     width: 10%;
     min-width: 200px;
-    @include sidebar-transition;
     &:hover {
       left: 0;
     }
   }
   #content {
     flex: 1 1 auto;
+    padding: 0 100px;
+    @include media-breakpoint-down(sm) {
+      padding: 0 50px;
+    }
     //width: 60%;
   }
   #right-sidebar {
     right: 0;
+    width: 10%;
   }
 }
 
 .sidebar-container {
   background-color: $alice-blue;
-}
-
-#left-sidebar-content {
-  height: 100%;
-  width: 100%;
+  #left-sidebar-content, #right-sidebar-content {
+    height: 100%;
+    width: 100%;
+  }
+  .menu-icon-container {
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    i {
+      line-height: 50px;
+      color: $echo-blue;
+    }
+  }
   .menu-row {
     height: 50px;
     display: flex;
     cursor: pointer;
     &:hover { background-color: $link-water }
   }
-  .sidebar-link {
-    line-height: 50px;
-  }
+  .sidebar-link { line-height: 50px; }
   .menu-link-container {
     flex-grow: 1;
     padding-left: 10px;
@@ -102,15 +114,13 @@ body, html {
       color: $echo-blue;
     }
   }
-  .menu-icon-container {
-    width: 50px;
-    display: flex;
-    justify-content: center;
-    i {
-      line-height: 50px;
-      color: $echo-blue;
-    }
-  }
+}
+
+#left-sidebar-content {
+  
+}
+#right-sidebar-content {
+  
 }
 
 
