@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     resources :users
     resources :dashboards
     resources :task_catalogs
+    resources :procedures
   end
 
   get '/*path', to: redirect("/#{I18n.default_locale}/%{path}"), constraints: lambda { |req| !req.path.starts_with? "/#{I18n.default_locale}/" }
