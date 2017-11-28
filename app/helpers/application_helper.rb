@@ -3,7 +3,7 @@ module ApplicationHelper
     content_tag :div, class: "menu-row row" do
       concat(
         content_tag(:div, class: "menu-link-container") do
-          concat link_to(text, path, class: "sidebar-link")
+          concat link_to(text, path, options.merge(class: "sidebar-link"))
         end
       )
 

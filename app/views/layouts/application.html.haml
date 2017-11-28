@@ -11,8 +11,8 @@
     = render "/layouts/flash_messages"
     #body-container
       #left-sidebar.sidebar-container
-        = render "/layouts/sidebar"
+        = render "/layouts/left_sidebar"
       #content
         = yield
-      #right-sidebar
-        fdsfdsa
+      #right-sidebar.sidebar-container
+        = render "/layouts/right_sidebar"
