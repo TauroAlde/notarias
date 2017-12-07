@@ -17,7 +17,7 @@
 RSpec.configure do |config|
 
   config.before(:all) do
-   FactoryGirl.reload
+   FactoryBot.reload
   end
   
   # rspec-expectations config goes here. You can use an alternate

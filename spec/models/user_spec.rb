@@ -13,13 +13,13 @@ RSpec.describe User, type: :model do
       expect(build(:user, password: nil)).to_not be_valid
     end
     it "is not valid without password_confirmation" do
-      expect(build(:user, password_confirmation: nil)).to_not be_valid
+      expect(build(:user, password_confirmation: nil)).to be_valid
     end
   end
 
   describe "asociations" do
     it "has_many procedure" do
-      assc = described_class.reflect_on_association(:procedure)
+      assc = described_class.reflect_on_association(:procedures)
       expect(assc.macro).to eq :has_many
     end
   end
