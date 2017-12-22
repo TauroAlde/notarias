@@ -5,14 +5,13 @@
       %th creator user:
       %th version:
   %tbody
+    = link_to "New Procedure", new_procedure_catalog_path
     - @procedure.each do |procedure|
       %tr
         %td= procedure.name
         %td= procedure.creator_user_id
         %td= procedure.version
         %td
-          = link_to "New", new_procedure_catalog_path
-          %br
           = link_to "Edit", edit_procedure_catalog_path(procedure)
           %br
           = link_to "Delete", procedure_catalog_path(procedure), method: :delete
