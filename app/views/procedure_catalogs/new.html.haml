@@ -1,0 +1,17 @@
+= form_for @procedure, url:procedure_catalogs_path   do |f|
+  - @procedure.errors.full_messages.each do |msg|
+    %li= msg
+  .field
+    = f.label :name
+    %br/
+    = f.text_field :name
+    %br/
+    = f.label :creator_user_id
+    %br/
+    = f.text_field :creator_user_id
+    %br/
+    = f.label :version
+    %br/
+    = f.text_field :version
+    %br/
+    = f.submit
