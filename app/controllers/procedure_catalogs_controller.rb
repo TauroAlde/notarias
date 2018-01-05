@@ -1,7 +1,7 @@
 class ProcedureCatalogsController < ApplicationController
 
   def index
-    @procedure = Procedure.all.order(:id)
+    @procedures = Procedure.all
   end
 
   def show
@@ -17,7 +17,20 @@ class ProcedureCatalogsController < ApplicationController
     if @procedure.save
       redirect_to procedure_catalogs_path
     else
-      redirect_to new_procedure_catalog_path
+      redirect_to :new
+    end
+  end
+
+  def edit
+    @procedure = Procedure.find(params[:id])
+  end
+
+  def update
+    @procedure = Procedure.find(params[:id])
+    if @procedure.update_attributes(procedure_params)
+      redirect_to procedure_catalog_path(@procedure)
+    else
+      render :edit
     end
   end
 

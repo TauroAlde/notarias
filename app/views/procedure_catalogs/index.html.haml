@@ -6,7 +6,7 @@
       %th version:
   %tbody
     = link_to "New Procedure", new_procedure_catalog_path
-    - @procedure.each do |procedure|
+    - @procedures.each do |procedure|
       %tr
         %td= procedure.name
         %td= procedure.creator_user_id
