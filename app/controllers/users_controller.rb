@@ -40,10 +40,20 @@ before_action :allow_without_password, only: [:update]
   def destroy
     @user = User.find(params[:id])
     @user.destroy
-
     redirect_to users_path
   end
 
+  def lock
+    user = User.find(params[:id])
+    user.lock_access! if !(current_user == user)
+    redirect_to users_path
+  end
+
+  def unlock
+    user = User.find(params[:id])
+    user.unlock_access! if !(current_user == user)
+    redirect_to users_path
+  end
 
   private
 
@@ -59,5 +69,12 @@ before_action :allow_without_password, only: [:update]
     end
   end
 
+  def lock_access!
+    self.locked_at = Time.now.utc
+  end
+
+  def unlock_access!
+    self.locked_at = nil
+  end
 
 end

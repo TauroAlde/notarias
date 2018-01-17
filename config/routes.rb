@@ -4,7 +4,10 @@ Rails.application.routes.draw do
     ActiveAdmin.routes(self)
     root 'dashboards#index' 
 
-    resources :users
+    resources :users do
+      post :lock, :on => :member
+      post :unlock, :on => :member
+    end
     resources :dashboards
     resources :task_catalogs
     resources :procedure_catalogs

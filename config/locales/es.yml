@@ -29,3 +29,5 @@ es:
   show: "Ver"
   edit: "Editar"
   delete: "Borrar"
+  lock: "Bloquear"
+  unlock: "Desbloquear"

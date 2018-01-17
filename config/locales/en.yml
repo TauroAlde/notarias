@@ -50,3 +50,5 @@ en:
   show: "Show"
   edit: "Edit"
   delete: "Delete"
+  lock: "Lock"
+  unlock: "Unlock"
