@@ -45,13 +45,23 @@ before_action :allow_without_password, only: [:update]
 
   def lock
     user = User.find(params[:id])
-    user.lock_access! if !(current_user == user)
+    if !(current_user == user)
+      user.lock_access!
+      flash[:success] = t(:lock_access)
+    else
+      flash[:notice] = t(:no_current_user)
+    end
     redirect_to users_path
   end
 
   def unlock
     user = User.find(params[:id])
-    user.unlock_access! if !(current_user == user)
+    if !(current_user == user)
+      user.unlock_access!
+      flash[:success] = t(:unlock_access)
+    else
+      flash[:alert] = t(:no_current_user)
+    end
     redirect_to users_path
   end
 
@@ -71,10 +81,12 @@ before_action :allow_without_password, only: [:update]
 
   def lock_access!
     self.locked_at = Time.now.utc
+    locked_at.save  
   end
 
   def unlock_access!
     self.locked_at = nil
+    locked_at.save
   end
 
 end

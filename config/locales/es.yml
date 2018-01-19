@@ -31,3 +31,6 @@ es:
   delete: "Borrar"
   lock: "Bloquear"
   unlock: "Desbloquear"
+  lock_access: "Usuario Bloqueado"
+  unlock_access: "Usuario Desbloqueado"
+  no_current_user: "¡Esta tarea no puede realizarse sobre el usuario activo!"
