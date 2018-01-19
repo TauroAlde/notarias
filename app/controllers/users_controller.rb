@@ -49,7 +49,7 @@ before_action :allow_without_password, only: [:update]
       user.lock_access!
       flash[:success] = t(:lock_access)
     else
-      flash[:notice] = t(:no_current_user)
+      flash[:notice] = t(:cant_perform_this_action)
     end
     redirect_to users_path
   end
@@ -60,7 +60,7 @@ before_action :allow_without_password, only: [:update]
       user.unlock_access!
       flash[:success] = t(:unlock_access)
     else
-      flash[:alert] = t(:no_current_user)
+      flash[:alert] = t(:cant_perform_this_action)
     end
     redirect_to users_path
   end
@@ -77,16 +77,6 @@ before_action :allow_without_password, only: [:update]
       params[:user].delete(:password)
       params[:user].delete(:password_confirmation)
     end
-  end
-
-  def lock_access!
-    self.locked_at = Time.now.utc
-    locked_at.save  
-  end
-
-  def unlock_access!
-    self.locked_at = nil
-    locked_at.save
   end
 
 end

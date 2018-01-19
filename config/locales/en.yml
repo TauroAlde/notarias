@@ -54,4 +54,4 @@ en:
   unlock: "Unlock"
   lock_access: "User has been locked!"
   unlock_access: "User has been lunocked!"
-  no_current_user: "This task can not be performed on the active user!"
+  cant_perform_this_action: "This task can not be performed on the active user!"
