@@ -14,7 +14,7 @@ es:
   #user_views
   new_user: "Nuevo Usuario"
   edit_user: "Editar Usuario"
-  names: "Nombre(s)"
+  name: "Nombre(s)"
   father_last_name: "Apellido Paterno"
   mother_last_name: "Apellido Materno"
   email: "Correo Electronico"
