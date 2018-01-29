@@ -1,28 +1,15 @@
 - if flash.present?
   .row
     - flash.each do |name, msg|
-      - rando = rand(1..8).to_i
-      - if rando === 1
-        .col.alert.alert-primary.marginless
-          = content_tag :div, msg
-      - elsif rando === 2
-        .col.alert.alert-secondary.marginless
-          = content_tag :div, msg
-      - if rando === 3
-        .col.alert.alert-success.marginless
-          = content_tag :div, msg
-      - elsif rando === 4
-        .col.alert.alert-danger.marginless
-          = content_tag :div, msg
-      - if rando === 5
-        .col.alert.alert-warning.marginless
-          = content_tag :div, msg
-      - elsif rando === 6
-        .col.alert.alert-info.marginless
-          = content_tag :div, msg
-      - if rando === 7
-        .col.alert.alert-light.marginless
-          = content_tag :div, msg
-      - elsif rando === 8
-        .col.alert.alert-dark.marginless
-          = content_tag :div, msg
+      - if name === "notice" || name === "info"
+        .col.marginless
+          .alert(class="alert-info")= msg
+      - elsif name === "success"
+        .col.marginless
+          .alert(class="alert-success")= msg
+      - elsif name === "alert" || name === "warning"
+        .col.marginless
+          .alert(class="alert-warning")= msg
+      - elsif name === "error" || name === "danger"
+        .col.marginless
+          .alert(class="alert-danger")= msg
