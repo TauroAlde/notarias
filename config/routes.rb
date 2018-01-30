@@ -5,8 +5,8 @@ Rails.application.routes.draw do
     root 'dashboards#index' 
 
     resources :users do
-      post :lock, :on => :member
-      post :unlock, :on => :member
+      post :lock, on: :member
+      post :unlock, on: :member
     end
     resources :dashboards
     resources :task_catalogs

@@ -176,7 +176,7 @@ Devise.setup do |config|
   config.lock_strategy = :none
 
   # Defines which key will be used when locking and unlocking an account
-  config.unlock_keys = [:status]
+  # config.unlock_keys = [:status]
 
   # Defines which strategy will be used to unlock an account.
   # :email = Sends an unlock link to the user email
