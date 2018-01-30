@@ -40,10 +40,30 @@ before_action :allow_without_password, only: [:update]
   def destroy
     @user = User.find(params[:id])
     @user.destroy
-
     redirect_to users_path
   end
 
+  def lock
+    user = User.find(params[:id])
+    if !(current_user == user)
+      user.lock_access!
+      flash[:success] = t(:lock_access)
+    else
+      flash[:notice] = t(:cant_perform_this_action)
+    end
+    redirect_to users_path
+  end
+
+  def unlock
+    user = User.find(params[:id])
+    if !(current_user == user)
+      user.unlock_access!
+      flash[:success] = t(:unlock_access)
+    else
+      flash[:alert] = t(:cant_perform_this_action)
+    end
+    redirect_to users_path
+  end
 
   private
 
@@ -58,6 +78,5 @@ before_action :allow_without_password, only: [:update]
       params[:user].delete(:password_confirmation)
     end
   end
-
 
 end
