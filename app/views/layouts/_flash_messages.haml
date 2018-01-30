@@ -1,15 +1,12 @@
 - if flash.present?
   .row
     - flash.each do |name, msg|
-      - if name === "notice" || name === "info"
-        .col.marginless
+      .col.marginless
+        - if name === "notice" || name === "info"
           .alert(class="alert-info")= msg
-      - elsif name === "success"
-        .col.marginless
+        - elsif name === "success"
           .alert(class="alert-success")= msg
-      - elsif name === "alert" || name === "warning"
-        .col.marginless
+        - elsif name === "alert" || name === "warning"
           .alert(class="alert-warning")= msg
-      - elsif name === "error" || name === "danger"
-        .col.marginless
+        - elsif name === "error" || name === "danger"
           .alert(class="alert-danger")= msg
