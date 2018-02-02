@@ -14,4 +14,19 @@ module ApplicationHelper
       )
     end
   end
+    
+  def alert_colors_helper(name, msg)
+    palabra = case
+    when name === "notice" || name === "info"
+      "info"
+    when name === "success"
+      "success"
+    when name === "alert" || name === "warning"
+      "warning"
+    else name === "error" || name === "danger"
+      "danger"      
+    end
+
+    content_tag :div, msg, class: "alert alert-#{palabra}"
+  end
 end

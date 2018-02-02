@@ -2,11 +2,4 @@
   .row
     - flash.each do |name, msg|
       .col.marginless
-        - if name === "notice" || name === "info"
-          .alert(class="alert-info")= msg
-        - elsif name === "success"
-          .alert(class="alert-success")= msg
-        - elsif name === "alert" || name === "warning"
-          .alert(class="alert-warning")= msg
-        - elsif name === "error" || name === "danger"
-          .alert(class="alert-danger")= msg
+        = alert_colors_helper(name, msg)
