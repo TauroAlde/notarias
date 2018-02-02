@@ -15,16 +15,12 @@ module ApplicationHelper
     end
   end
     
-  def alert_colors_helper(name, msg)
-    palabra = case
-    when name === "notice" || name === "info"
-      "info"
-    when name === "success"
-      "success"
-    when name === "alert" || name === "warning"
-      "warning"
-    else name === "error" || name === "danger"
-      "danger"      
+  def alert_colors_helper(name, msg)    
+    palabra = case name
+    when "notice", "info" then "info"
+    when "success" then "success"
+    when "alert", "warning" then "warning"
+    when "error", "danger" then "danger"      
     end
 
     content_tag :div, msg, class: "alert alert-#{palabra}"
