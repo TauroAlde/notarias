@@ -16,4 +16,8 @@ class User < ApplicationRecord
     self.locked_at = nil
     save
   end
+
+  def full_name
+    [name,father_last_name,mother_last_name].join(" ")  
+  end
 end

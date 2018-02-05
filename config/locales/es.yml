@@ -36,5 +36,5 @@ es:
   unlock_access: "El usuario ha sido desbloqueado con exito"
   cant_perform_this_action: "¡Esta tarea no puede realizarse sobre el usuario activo!"
   #masquerade
-  masquerade_message: "Estas personificando a "
+  masquerade_message: "Estas personificando a %{fullname}"
   reverse_masquerade_link: "Salir"

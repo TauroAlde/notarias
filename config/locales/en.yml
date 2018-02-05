@@ -57,5 +57,5 @@ en:
   unlock_access: "User has been lunocked!"
   cant_perform_this_action: "This task can not be performed on the active user!"
   #masquerade
-  masquerade_message: "You are impersonating "
+  masquerade_message: "You are impersonating %{fullname}"
   reverse_masquerade_link: ". logout."
