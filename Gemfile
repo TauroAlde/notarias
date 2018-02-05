@@ -38,6 +38,7 @@ gem "haml-rails"
 
 #Use Devise for user and login manager
 gem 'devise'
+gem 'devise_masquerade'
 gem 'activeadmin'
 #Use Bootstrap fot templates
 gem 'bootstrap', '~> 4.0.0.alpha6'

@@ -78,5 +78,4 @@ before_action :allow_without_password, only: [:update]
       params[:user].delete(:password_confirmation)
     end
   end
-
 end

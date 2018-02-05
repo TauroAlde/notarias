@@ -29,8 +29,12 @@ es:
   show: "Ver"
   edit: "Editar"
   delete: "Borrar"
+  masquerade_login: "Personificar"
   lock: "Bloquear"
   unlock: "Desbloquear"
   lock_access: "El usuario ha sido bloqueado con exito"
   unlock_access: "El usuario ha sido desbloqueado con exito"
   cant_perform_this_action: "¡Esta tarea no puede realizarse sobre el usuario activo!"
+  #masquerade
+  masquerade_message: "Estas personificando a "
+  reverse_masquerade_link: "Salir"

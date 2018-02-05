@@ -137,3 +137,13 @@ body, html {
 
 .alert { margin-bottom: 0 !important }
 
+#masquerade {
+  width: 100%;
+  background-color: #cad5e3;
+  .masquerade-message {
+    padding-top: 13px;
+    padding-bottom: 13px;
+    text-align: center;
+    font-size: 11px;
+  }
+}

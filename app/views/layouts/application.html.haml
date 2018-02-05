@@ -6,6 +6,15 @@
     = csrf_meta_tags
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+
+  -if user_masquerade?
+    %nav#masquerade
+      .masquerade-message
+        = t(:masquerade_message)
+        = "#{current_user.name} #{current_user.father_last_name} #{current_user.mother_last_name}"
+        = link_to t(:reverse_masquerade_link), back_masquerade_path(current_user)
+        %a.fa.fa-times
+
   %body
     = render "/layouts/header"
     = render "/layouts/flash_messages"
