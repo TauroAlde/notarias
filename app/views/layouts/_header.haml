@@ -3,7 +3,7 @@
     .header-element-container.col-md-2
       .element-flex-box
         - if current_user
-          = link_to "#", class: "btn btn-secondary menu-button" do
+          = link_to "#", class: "btn btn-secondary menu-button ", id: "open-hide" do
             %i.fa.fa-bars.fa-2x.menu-icon
 
     .header-element-container.col-md-7
