@@ -25,5 +25,4 @@ module ApplicationHelper
 
     content_tag :div, msg, class: "alert alert-#{notice_class}"
   end
-
 end
