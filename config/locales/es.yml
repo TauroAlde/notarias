@@ -38,3 +38,6 @@ es:
   #masquerade
   masquerade_message: "Estas personificando a %{fullname}"
   reverse_masquerade_link: "Salir"
+  #paginate
+  previous: "Anterior"
+  next: "Siguiente"
