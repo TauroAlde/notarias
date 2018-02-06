@@ -6,12 +6,13 @@
           = link_to "#", class: "btn btn-secondary menu-button ", id: "open-hide" do
             %i.fa.fa-bars.fa-2x.menu-icon
 
-    .header-element-container.col-md-7
+    .header-element-container.col-md-6
       .element-flex-box
         SEARCH BAR
-    .header-element-container.col-md-3
+    .header-element-container.col-md-4
       - if current_user
         #session-links-container.element-flex-box.height-100
+          = current_user.full_name
           = link_to "#", class: "session-link" do
             = image_tag "user.gif", class: "rounded user-avatar"
       - else

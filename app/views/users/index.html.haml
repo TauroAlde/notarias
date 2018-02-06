@@ -21,11 +21,34 @@
             %td= user.father_last_name
             %td= user.mother_last_name
             %td= user.email
-            %td activo
-            %td acciones
             %td
-              = link_to t(:show), user_path(user)
-              = link_to t(:edit), edit_user_path(user)
-              = link_to t(:delete), user_path(user), |
-                method: :delete,                   |
-                data: { confirm: '¿Eliminar?'}     |
+              - if user.locked_at?
+                = "Locked"
+              - else
+                = "Unlocked"
+            %td.btn-group
+              %button.btn.btn-secondary.btn-sm.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+                Action
+              %ul.dropdown-menu
+                %li.dropdown-item
+                  = link_to t(:show), user_path(user)
+                %li.dropdown-item
+                  = link_to t(:edit), edit_user_path(user)
+                %li.dropdown-item
+                  = link_to t(:delete), user_path(user),
+                    method: :delete,
+                    data: { confirm: '¿Eliminar?'}
+                %li.dropdown-item
+                  = link_to t(:masquerade_login), masquerade_path(user)
+                - unless user == current_user
+                  .dropdown-divider
+                  %li.dropdown-item
+                    %a.fa.fa-lock
+                    = link_to t(:lock), lock_user_path(user), method: :post
+                  %li.dropdown-item
+                    %a.fa.fa-unlock
+                    = link_to t(:unlock), unlock_user_path(user), method: :post
+%nav.float-right{"aria-label": "Page navigation example"}
+  %ul.pagination
+    = will_paginate(@user, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer, class: 'pagination-sm', previous_label: t(:previous), next_label: t(:next))
+%clearfix
