@@ -6,6 +6,17 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :procedures, class_name: "Procedure", foreign_key: :creator_user
+  validates :username,uniqueness: true
+
+  before_validation :set_username
+
+  def set_username
+    if User.where(username: username).blank?
+      self.username = [name,father_last_name,mother_last_name].join("")
+    else
+      self.username = [name,father_last_name,mother_last_name,"#{rand(0..9)}"].join("")
+    end
+  end
 
   def lock_access!
     self.locked_at = Time.now.utc
