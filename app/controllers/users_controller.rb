@@ -3,7 +3,7 @@ class UsersController < ApplicationController
 before_action :allow_without_password, only: [:update]
 
   def index
-    @user = User.all.order(:id)
+    @user = User.paginate(page: params[:page], per_page: 2)
   end
 
   def show

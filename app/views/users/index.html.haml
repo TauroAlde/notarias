@@ -48,4 +48,7 @@
                   %li.dropdown-item
                     %a.fa.fa-unlock
                     = link_to t(:unlock), unlock_user_path(user), method: :post
-
+%nav.float-right{"aria-label": "Page navigation example"}
+  %ul.pagination
+    = will_paginate(@user, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer, class: 'pagination-sm', previous_label: t(:previous), next_label: t(:next))
+%clearfix
