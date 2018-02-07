@@ -11,6 +11,10 @@ es:
   confirmation_instructions: "¿No recibió las instrucciones de confirmación?"
   confirm_unlock_instructions: "¿No recibió instrucciones de desbloqueo?"
   sign_in_with: "Iniciar sesión con #{OmniAuth::Utils.camelize(provider)}"
+  #left_sidebar
+  dashboard: "Tablero"
+  users: "Usuarios"
+  catalogs: "Catalogos"
   #user_views
   new_user: "Nuevo Usuario"
   edit_user: "Editar Usuario"

@@ -32,6 +32,10 @@ en:
   confirmation_instructions: "Didn't receive confirmation instructions?"
   confirm_unlock_instructions: "Didn't receive unlock instructions?"
   sign_in_with: "Sign in with #{OmniAuth::Utils.camelize(provider)}"
+  #left_sidebar
+  dashboard: "Dashboard"
+  users: "Users"
+  catalogs: "Catalogs"
   #user_views
   new_user: "New User"
   edit_user: "Edit User"
