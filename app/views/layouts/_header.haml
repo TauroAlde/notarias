@@ -13,7 +13,7 @@
       - if current_user
         #session-links-container.element-flex-box.height-100
           = current_user.full_name
-          = link_to "#", class: "session-link" do
+          = link_to "#", class: "session-link", id: "right-sidebar-switch" do
             = image_tag "user.gif", class: "rounded user-avatar"
       - else
         #session-links-container.element-flex-box
