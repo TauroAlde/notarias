@@ -23,12 +23,12 @@
             %td= user.email
             %td
               - if user.locked_at?
-                = "Locked"
+                = t(:locked)
               - else
-                = "Unlocked"
+                = t(:unlocked)
             %td.btn-group
               %button.btn.btn-secondary.btn-sm.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
-                Action
+                = t(:actions)
               %ul.dropdown-menu
                 %li.dropdown-item
                   = link_to t(:show), user_path(user)

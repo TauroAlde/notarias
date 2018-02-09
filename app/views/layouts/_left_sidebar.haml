@@ -1,6 +1,6 @@
 #left-sidebar-content
   .container-fluid
-    = left_sidebar_link("Pagina principal", "#", "dashboard")
-    = left_sidebar_link("Usuarios", users_path , "users")
-    = left_sidebar_link("Catologs", procedure_catalogs_path , "book")
+    = left_sidebar_link(t(:dashboard), "#", "dashboard")
+    = left_sidebar_link(t(:users), users_path , "users")
+    = left_sidebar_link(t(:catalogs), procedure_catalogs_path , "book")
     .menu-row.row
