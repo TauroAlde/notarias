@@ -9,4 +9,5 @@ class Preference < ApplicationRecord
 
   enum field_type: [:text, :textarea, :number, :select_field, :checkbox,
                     :radio, :date, :email, :password]
+
 end
