@@ -2,7 +2,11 @@ class Preference < ApplicationRecord
 
   has_many :user_preferences
   has_many :users, through: :user_preferences
+  
+  validates :name, presence: true
+  validates :default_values, presence: true
+  validates :field_type, presence: true
 
-  enum field: {text: 0, textarea: 1, number: 2, select: 3, checkbox: 4, 
-              radio: 5, date: 6, email: 7, password: 8}
+  enum field_type: [:text, :textarea, :number, :select_field, :checkbox,
+                    :radio, :date, :email, :password]
 end
