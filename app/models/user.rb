@@ -9,6 +9,7 @@ class User < ApplicationRecord
   has_many :groups, through: :user_groups
   has_many :user_groups
   has_many :user_preferences
+  has_many :preferences
 
   def lock_access!
     self.locked_at = Time.now.utc
