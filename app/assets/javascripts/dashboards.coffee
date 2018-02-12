@@ -5,11 +5,30 @@
 
 $ ->
   $(window).click (e) ->
-    if e.target == $('#open-hide')[0] or $('#open-hide').find(e.target).length
+    catchLeftClick(e)
+    catchRightClick(e)
+
+  catchLeftClick = (event) ->
+    if event.target == $('#open-hide')[0] or $('#open-hide').find(event.target).length
       $('#left-sidebar').toggleClass 'show-sidebar'
-      e.preventDefault()
-    else if e.target == $('#left-sidebar-content')[0] or $('#left-sidebar-content').find(e.target).length
+      event.preventDefault()
+    else if event.target == $('#left-sidebar-content')[0] or $('#left-sidebar-content').find(event.target).length
       $('#left-sidebar').addClass 'show-sidebar'
     else
       $('#left-sidebar').removeClass 'show-sidebar'
     return
+
+  catchRightClick = (event) ->
+    if event.target == $('#right-sidebar-switch')[0] or $('#right-sidebar-switch').find(event.target).length
+      event.preventDefault()
+      $('#right-sidebar').toggleClass 'show-right-sidebar'
+    else if event.target == $('#close-sidebar')[0]
+      event.preventDefault()
+      $('#right-sidebar').removeClass 'show-right-sidebar'
+    else if event.target == $('#right-sidebar')[0] or $('#right-sidebar').find(event.target).length
+      $('#right-sidebar').addClass 'show-right-sidebar'
+    else
+      $('#right-sidebar').removeClass 'show-right-sidebar'
+    return
+
+  
