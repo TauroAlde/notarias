@@ -19,7 +19,6 @@ $ ->
     return
 
   catchRightClick = (event) ->
-    console.log('no')
     if event.target == $('#right-sidebar-switch')[0] or $('#right-sidebar-switch').find(event.target).length
       event.preventDefault()
       $('#right-sidebar').toggleClass 'show-right-sidebar'
