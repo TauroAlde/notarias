@@ -3,9 +3,9 @@
 
 = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
   .field
-    = f.label :email, t(:email)
+    = f.label :login, t(:login)
     %br
-    = f.email_field :email, autofocus: true
+    = f.text_field :login
 
   .field
     = f.label :password, t(:password)
