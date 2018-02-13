@@ -11,10 +11,15 @@ class User < ApplicationRecord
   before_validation :set_username
 
   def set_username
+    binding.pry
     if User.where(username: username).blank?
       self.username = [name,father_last_name,mother_last_name].join("")
     else
-      self.username = [name,father_last_name,mother_last_name,"#{rand(0..9)}"].join("")
+      if User.where(username: username).exists?
+        while User.where(username: username).exists?  do
+          self.username = [name,father_last_name,mother_last_name,"#{rand(00..99)}"].join("")
+        end
+      end
     end
   end
 
