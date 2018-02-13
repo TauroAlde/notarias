@@ -6,9 +6,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :procedures, class_name: "Procedure", foreign_key: :creator_user
+  has_many :user_preferences
+  has_many :preferences, through: :user_preferences
   has_many :groups, through: :user_groups
   has_many :user_groups
-  has_many :user_preferences
 
   def lock_access!
     self.locked_at = Time.now.utc
