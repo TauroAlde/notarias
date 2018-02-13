@@ -3,12 +3,13 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :lockable, :masqueradable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable, authentication_keys: [:login]
 
   has_many :procedures, class_name: "Procedure", foreign_key: :creator_user
   validates :username,uniqueness: true
 
   before_validation :set_username
+  attr_accessor :login
 
   def set_username
     binding.pry
@@ -21,6 +22,14 @@ class User < ApplicationRecord
         end
       end
     end
+  end
+
+  def login=(login)
+    @login = login
+  end
+
+  def login
+    @login || self.username || self.email
   end
 
   def lock_access!
