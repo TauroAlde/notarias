@@ -3,7 +3,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :lockable, :masqueradable,
-         :recoverable, :rememberable, :trackabley
+         :recoverable, :rememberable, :trackable
 
   has_many :procedures, class_name: "Procedure", foreign_key: :creator_user
   validates :username,uniqueness: true
@@ -14,8 +14,8 @@ class User < ApplicationRecord
   attr_accessor :login, :prevalidate_username_uniqueness
 
   def set_username
-    prevalidate_username_uniqueness = true
-    if prevalidate_username_uniqueness  === true
+    binding.pry
+    if prevalidate_username_uniqueness  == true
       if username.blank?
         self.username = [name,father_last_name,mother_last_name].join("")
       end
@@ -32,7 +32,6 @@ class User < ApplicationRecord
   end
 
  def self.find_for_database_authentication(warden_conditions)
-  binding.pry
     conditions = warden_conditions.dup
     if login = conditions.delete(:login)
       where(conditions.to_h).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
