@@ -1,0 +1,27 @@
+.container
+  .form-group
+    = form_for @preference do |f|
+      .well
+        = f.label t(:name)
+        %br/
+        = f.text_field :name
+        %br/
+        = f.label t(:description)
+        %br/
+        = f.text_field :description
+        %br/
+        = f.label t(:default_values)
+        %br/
+        = f.text_field :default_values
+        %br/
+        = f.label t(:encrypted)
+        %br/
+        = f.check_box :encrypted
+        %br/
+        = f.label t(:field_type)
+        %br/
+        = f.number_field :field_type
+        %br/
+    
+        .btn.btn-default
+          = f.submit t(:save)

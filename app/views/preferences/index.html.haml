@@ -1,0 +1,37 @@
+.btn.btn-default
+  = link_to t(:Preferences), new_preference_path
+  %br
+.container
+  .row
+    %table.index-table
+      %thead.head-table
+        %tr
+          %th= :user_id
+          %th= :preference_id
+          %th= t(:name)
+          %th= t(:description)
+          %th= t(:defaul_values)
+          %th= t(:encrypted)
+          %th= t(:field)
+      %tbody.tbody-border
+      - @preferences.each do |preference|
+        %tr
+          %td= current_user.id
+          %td= preference.id          
+          %td= preference.name
+          %td= preference.description
+          %td= preference.default_values
+          %td= preference.encrypted
+          %td= preference.field_type
+          %td.btn-group
+            %button.btn.btn-secondary.btn-sm.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+              = t(:actions)
+            %ul.dropdown-menu
+              %li.dropdown-item
+                = link_to t(:show), preference_path(preference)
+              %li.dropdown-item
+                = link_to t(:edit), edit_preference_path(preference)
+              %li.dropdown-item
+                = link_to t(:delete), preference_path(preference),
+                  method: :delete,
+                  data: { confirm: '¿Eliminar?'}
