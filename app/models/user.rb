@@ -8,13 +8,12 @@ class User < ApplicationRecord
   has_many :procedures, class_name: "Procedure", foreign_key: :creator_user
   validates :username,uniqueness: true
   validates :username, presence: :true, uniqueness: { case_sensitive: false }
-  validates_format_of :username, with: /^[a-zA-Z0-9_\.]*$/, :multiline => true
+  validates_format_of :username, with: /^[a-zA-Z0-9_\.]*$/, multiline: true
 
   before_validation :set_username
   attr_accessor :login, :prevalidate_username_uniqueness
 
   def set_username
-    binding.pry
     if prevalidate_username_uniqueness  == true
       if username.blank?
         self.username = [name,father_last_name,mother_last_name].join("")
@@ -27,7 +26,6 @@ class User < ApplicationRecord
 
 
   def login
-    binding.pry
     @login || self.username || self.email
   end
 
