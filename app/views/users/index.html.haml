@@ -38,10 +38,11 @@
                   = link_to t(:delete), user_path(user),
                     method: :delete,
                     data: { confirm: '¿Eliminar?'}
-                %li.dropdown-item
-                  = link_to t(:masquerade_login), masquerade_path(user)
-                - unless user == current_user
+                - if current_user != user
                   .dropdown-divider
+                  %li.dropdown-item
+                    %a.fa.fa-id-badge
+                    = link_to t(:masquerade_login), masquerade_path(user)
                   %li.dropdown-item
                     %a.fa.fa-lock
                     = link_to t(:lock), lock_user_path(user), method: :post
