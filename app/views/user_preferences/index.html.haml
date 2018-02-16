@@ -1,0 +1,29 @@
+.btn.btn-default
+  = link_to t(:user_preferences), new_user_preference_path
+  %br
+.container
+  .row
+    %table.index-table
+      %thead.head-table
+        %tr
+          %th= :user_id
+          %th= :preference_id
+          %th= t(:values)
+      %tbody.tbody-border
+      - @user_preferences.each do |user_preference|
+        %tr
+          %td= current_user.id
+          %td= user_preference.id
+          %td= user_preference.value
+          %td.btn-group
+            %button.btn.btn-secondary.btn-sm.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+              = t(:actions)
+            %ul.dropdown-menu
+              %li.dropdown-item
+                = link_to t(:show), user_preference_path(user_preference)
+              %li.dropdown-item
+                = link_to t(:edit), edit_user_preference_path(user_preference)
+              %li.dropdown-item
+                = link_to t(:delete), user_preference_path(user_preference),
+                  method: :delete,
+                  data: { confirm: '¿Eliminar?'}

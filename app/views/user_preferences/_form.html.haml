@@ -1,0 +1,19 @@
+.container
+  .form-group
+    = form_for @user_preference do |f|
+      .well
+        = f.label :user_id
+        %br/
+        = f.text_field :user_id
+        %br/
+        = f.label :preference_id
+        %br/
+        = f.text_field :preference_id
+        %br/
+        = f.label :default_values
+        %br/
+        = f.text_field :value
+        %br/
+
+        .btn.btn-default
+          = f.submit t(:save)
