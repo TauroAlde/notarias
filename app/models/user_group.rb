@@ -5,6 +5,6 @@ class UserGroup < ApplicationRecord
   validates :user_id, presence: true
   validates :group_id, presence: true
 
-  validates_uniqueness_of :user_id, scope: :group_id
-  validates_uniqueness_of :group_id, scope: :user_id
+  validates :user_id, uniqueness: { scope: :group_id }
+  validates :group_id, uniqueness: { scope: :user_id }
 end

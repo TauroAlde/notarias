@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :user_group do
-    user_id { create(:user).id }
-    group_id { create(:group).id }
+    user_id 1
+    group_id 1
   end
 end
