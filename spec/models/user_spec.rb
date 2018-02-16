@@ -14,7 +14,7 @@ RSpec.describe User, type: :model do
     it {expect(build(:user, email: nil)).to_not be_valid}
     it {expect(build(:user, password: nil)).to_not be_valid}
     it {expect(build(:user, password_confirmation: nil)).to be_valid}
-    it {expect(build(:user, username: nil)).to_not be_valid}
+    it {expect(build(:user, username: nil)).to be_valid}
     it { is_expected.to validate_presence_of(:username) }
     it { expect validate_uniqueness_of(:username) }
     it { expect allow_value('/^[a-zA-Z0-9_\.]*$/').for(:username) }
@@ -30,57 +30,61 @@ RSpec.describe User, type: :model do
   end
   
   describe "#set_username" do
-    # y antes de los contextos describes los comportamientos por default
-    # la cosa con este metodo es que si el campo viene false, el comportamiento por default
-    # es el que sucede, entonces el bloque de context tiens dos opciones
-    # o lo quitas y pones aqui el comportamiento por default
-    # etc
-    # o pasas todos los comportamientos por default al context
-    # ahora regresando al nombrado
-    context "miatrubitovirtual == true" do # no me acuerdo como se llama el campo
-      # aca ya van entonces los its de que pasa cuando es true
-      it "returns username set by user" do
+    context "prevalidate_username_uniqueness == true" do 
+      it "returns a new username when the user is blank" do
+        user = create(:user, username: "")
+        expect(user.username).to eq(user.login)
+      end
 
-        expected_username = "username1"
-        user = create(:user, username: expected_username)
-        expect(user.username).to eq(expected_username)
+      it "returns a new username when the user is nil" do
+        user = create(:user, username: nil)
+        expect(user.username).to eq(user.login)
+      end
+
+      it "returns a different username when the second created user have the same username1" do
+        username = "username1"
+        user = create(:user, username: username)
+        user2 = create(:user, username: username)
+        expect(user2.username).to_not eq(username)
+      end
+
+      it "returns a different username when the username exists in the database" do
+        username = "username1"
+        user = create(:user, username: username)
+        user2 = create(:user, username: username)
+        expect(user.username).to_not eq(user2.username)
       end
     end
 
-    context "miatributovirtual == false" do
-      # que pasa cuando es false, espera vino alguien
-      it "comportamiento por default" do
+    context "prevalidate_username_uniqueness == false" do
+      it "returns username set by user" do
+        user = create(:user, username: "username")
+        expect(user.username).to eq(user.username)
       end
     end 
-
-    it "expect a different username" do
-      expect_username = create(:user, username: "")
-      expect(expect_username.username).to eq("user_name1father_last_namemother_last_name")
-    end
-
-    it "expect a change the username" do
-      expect_username = create(:user, username: "user_name1father_last_namemother_last_name")
-      expect_username2 = create(:user, username: "user_name1father_last_namemother_last_name")
-      expect(expect_username2.username).to_not eq("user_name1father_last_namemother_last_name")
-    end
   end
 
-  describe "#login" do
-    context do
-      before(:each) do
-        @user = create(:user)
-      end
-      
-      it "returns username" do
-        expect(@user.login).to eq(@user.username)
+  describe "#login" do #These tests are for the devise behavior, the instance form User to evaluate, has to be new, not a record saved in the database or it will never be saved in cases that are not sent or the username or email.      
+      it "returns username when user is created" do
+        user = create(:user)
+        expect(user.login).to eq(user.username)
       end
 
-      it "returns email" do
-        user = User.new(email: "el email")
-        user.login
-        expect(@user.login).to eq(@user.email)
+    context "those cases are for an unsaved user" do
+      it "returns email when username is nil" do
+        user = build(:user, email: "email", username: nil)
+        expect(user.login).to eq(user.email)
+      end
+
+      it "returns username when email is nil" do
+        user = build(:user, email: nil, username: "username")
+        expect(user.login).to eq(user.username)
+      end
+
+      it "returns login when email and username are nil" do
+        user = build(:user, email: nil, username: nil)
+        expect(user.login).to eq(nil)
       end
     end
   end
-
 end
