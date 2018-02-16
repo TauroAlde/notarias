@@ -38,7 +38,7 @@
                   = link_to t(:delete), user_path(user),
                     method: :delete,
                     data: { confirm: '¿Eliminar?'}
-                - if !(current_user == user)
+                - if current_user != user
                   .dropdown-divider
                   %li.dropdown-item
                     %a.fa.fa-id-badge
