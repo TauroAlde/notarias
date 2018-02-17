@@ -48,3 +48,7 @@ es:
   #paginate
   previous: "Anterior"
   next: "Siguiente"
+  description: "Descripcion"
+  default_values: "Valores por default"
+  encrypted: "Encriptado"
+  field_type: "Tipo de campo"
