@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :group do
-    name "group name"
+    name "exist group name"
   end
 end
