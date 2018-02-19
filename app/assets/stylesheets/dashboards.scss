@@ -220,3 +220,11 @@ body, html {
     }
   }
 }
+
+.close-flash-message {
+  &:hover{
+    background-color: $system-grey;
+    color: white;
+    cursor: pointer;
+  }
+}
