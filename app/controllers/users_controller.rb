@@ -37,11 +37,11 @@ before_action :allow_without_password, only: [:update]
     end
   end
 
-  def destroy
-    @user = User.find(params[:id])
-    @user.destroy
-    redirect_to users_path
-  end
+  #def destroy
+  #  @user = User.find(params[:id])
+  #  @user.destroy
+  #  redirect_to users_path
+  #end
 
   def lock
     user = User.find(params[:id])
