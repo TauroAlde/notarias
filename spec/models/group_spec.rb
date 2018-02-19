@@ -3,10 +3,6 @@ require 'rails_helper'
 RSpec.describe Group, type: :model do
 
   describe "validations" do
-    before do
-      @group = create(:group)
-    end
-    
     it {  is_expected.to validate_uniqueness_of(:name) }
   end
 
