@@ -239,11 +239,11 @@ body, html {
   form { position: relative; }
   #submit-login-btn {
     @include media-breakpoint-up(md) {
-      width: 100px;
-      height: 100px;
-      -moz-border-radius: 50px;
-      -webkit-border-radius: 50px;
-      border-radius: 50px;
+      width: 70px;
+      height: 70px;
+      -moz-border-radius: 35px;
+      -webkit-border-radius: 35px;
+      border-radius: 40px;
       -webkit-box-shadow: -1px 4px 17px -1px rgba(0,0,0,0.47);
       -moz-box-shadow: -1px 4px 17px -1px rgba(0,0,0,0.47);
       box-shadow: -1px 4px 17px -1px rgba(0,0,0,0.47);
@@ -251,9 +251,9 @@ body, html {
       background-color: $login-box-submit-btn;
       border: 5px solid $login-box-green;
       color: $login-box-green;
-      font-size: 30px;
+      font-size: 20px;
       position: absolute;
-      bottom: -60px;
+      bottom: -35px;
       right: -34px;
       overflow: hidden;
       @include fading-transition(0.1s);
@@ -261,7 +261,7 @@ body, html {
       &:hover {
         background-color: $login-box-submit-btn-hover;
         color: $login-box-dark-blue;
-        width: 200px;
+        width: 180px;
         span { display: inline; }
       }
     }
