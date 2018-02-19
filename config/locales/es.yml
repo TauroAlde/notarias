@@ -51,3 +51,5 @@ es:
   default_values: "Valores por default"
   encrypted: "Encriptado"
   field_type: "Tipo de campo"
+  sign_out: "Salir"
+  profile: "Mi Perfil"

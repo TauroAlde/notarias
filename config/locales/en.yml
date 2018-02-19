@@ -69,3 +69,5 @@ en:
   #paginate
   previous: "Previous"
   next: "Next"
+  sign_out: "Sign Out"
+  profile: "Profile"

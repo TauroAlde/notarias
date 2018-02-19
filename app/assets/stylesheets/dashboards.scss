@@ -19,33 +19,9 @@
   transition: $time ease;
 }
 
-#header-container {
-  border-bottom: 1px solid rgba(153,165,166, 0.3);
-  height: 7%;
-  //min-height: 10%;
-  //height: 10%;
-  #header-row {
-    height: 100%;
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
-  #session-links-container {
-    justify-content: flex-end;
-  }
-  .session-link {
-    margin-left: 10px;
-  }
-  .user-avatar {
-    width: 40px;
-  }
-  .menu-button {
-    background-color: transparent;
-    border: 1px solid rgba(153,165,166, 0.3);
-    @include sidebar-transition;
-    &:hover { background-color: $pattens-blue }
-    i { color: $echo-blue }
-  }
-}
+$left-menu-hidden-width: 50px;
+$left-menu-width: 200px;
+$left-menu-row-height: 50px;
 
 body, html {
   height: 100%;
@@ -53,86 +29,67 @@ body, html {
 }
 
 #body-container {
-  @include media-breakpoint-up(md) { height: 93%; }
-  min-height: 90%;
+  height: 100%;
   //height: 90%;
   background-color: $pattens-blue;
-  #left-sidebar, #right-sidebar{
-    display: inline;
-    position: absolute;
-    height: 100%;
-    @include sidebar-transition;
-  }
-  #left-sidebar {
-    left:-150px;
-    width: 10%;
-    min-width: 200px;
-    &:hover {
-      left: 0;
-    }
-    &.show-sidebar {
-      left: 0;
-    }
-  }
 
-  #content {
+  #content, #content-with-menu {
     padding: 0;
     height: 100%;
     //@include media-breakpoint-down(sm) { padding: 0; }
     //width: 60%;
   }
-  #right-sidebar {
-    right:  0;
-    width: 10%;
-    visibility: hidden;
-    &.show-right-sidebar {
-      visibility: visible;
-    }
+
+  #content-with-menu {
+    @include media-breakpoint-up(md) { padding-left: 50px; }
   }
 }
 
 .sidebar-container {
-  background-color: $alice-blue;
-  #left-sidebar-content, #right-sidebar-content {
-    height: 100%;
-    width: 100%;
-  }
-  .menu-icon-container {
-    width: 50px;
-    display: flex;
-    justify-content: center;
-    i {
-      line-height: 50px;
-      color: $echo-blue;
+  background-color: $login-box-dark-blue;
+  @include media-breakpoint-up(md) {
+    width: $left-menu-hidden-width;
+    overflow: hidden;
+    z-index: 999;
+    &:hover {
+      width: 200px;
     }
+  }
+
+  &#left-sidebar, &#right-sidebar{
+    display: inline;
+    position: absolute;
+    height: 100%;
+    @include sidebar-transition;
+  }
+  &#left-sidebar {
+    //left:-150px;
+  }
+  &#right-sidebar {
+    right:  0;
+    width: 10%;
+    z-index: 999;
   }
   .menu-row {
-    height: 50px;
-    display: flex;
     cursor: pointer;
-    &:hover { background-color: $link-water }
-  }
-  .sidebar-link { line-height: 50px; }
-  .menu-link-container {
-    flex-grow: 1;
-    padding-left: 10px;
-    a {
-      display: block;
-      text-decoration: none;
-      font-family: Arial, Helvetica, sans-serif;
-      font-weight: bold;
-      color: $echo-blue;
+    height: $left-menu-hidden-width;
+    text-decoration: none;
+    i, span { line-height: $left-menu-row-height; color: $system-white; }
+    i { width: $left-menu-hidden-width;  font-size: 1.5em; text-align: center; }
+    span {
+      font-size: 14px;
+      flex-grow: 1;
+      text-align: left; 
+      //font-family: courier, serif; 
+      vertical-align: baseline;
     }
+    &:hover { background-color: $system-grey }
+  }
+  #left-sidebar-content, #right-sidebar-content {
+    width: $left-menu-width;
+    height: 100%;
   }
 }
-
-#left-sidebar-content {
-  
-}
-#right-sidebar-content {
-  
-}
-
 
 .inline-block { display: inline-block }
 .line-height-100 { height: 100% }

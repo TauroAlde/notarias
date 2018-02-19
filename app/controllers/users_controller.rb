@@ -19,11 +19,11 @@ before_action :allow_without_password, only: [:update]
   end
 
   def create
-    user = User.new(user_params)
-    if user.save
+    @user = User.new(user_params)
+    if @user.save
       redirect_to users_path
     else
-      redirect_to new_user_path
+      render :new
     end
   end
 

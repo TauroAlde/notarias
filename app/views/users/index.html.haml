@@ -1,10 +1,12 @@
-.btn.btn-default
-  = link_to t(:new_user), new_user_path
-  %br
-.container
-  .row
-    %table.index-table
-      %thead.head-table
+
+.row
+  .col-md-12
+    .btn.btn-default
+      = link_to t(:new_user), new_user_path
+.row
+  .col-md-12
+    %table.table.index-table.table-hover
+      %thead.thead-light.table-head
         %tr
           %th= t(:registration)
           %th= t(:name)
@@ -13,7 +15,7 @@
           %th= t(:email)
           %th= t(:status)
           %th= t(:actions)
-      %tbody.tbody-border
+      %tbody.table-body
         - @user.each do |user|
           %tr
             %td= user.id
@@ -49,7 +51,8 @@
                   %li.dropdown-item
                     %a.fa.fa-unlock
                     = link_to t(:unlock), unlock_user_path(user), method: :post
-%nav.float-right{"aria-label": "Page navigation example"}
-  %ul.pagination
-    = will_paginate(@user, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer, class: 'pagination-sm', previous_label: t(:previous), next_label: t(:next))
-%clearfix
+    %nav.float-right{"aria-label": "Page navigation example"}
+      %ul.pagination
+        = will_paginate(@user, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer, class: 'pagination-sm', previous_label: t(:previous), next_label: t(:next))
+    %clearfix
+  

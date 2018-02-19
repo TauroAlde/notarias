@@ -1,7 +1,0 @@
-#right-sidebar-content
-  .container-fluid
-    %div
-      = link_to "X", "#", class: "btn pull-left", id: "close-sidebar"
-      .clearfix
-    = left_sidebar_link("Salir", destroy_user_session_path, "sign-out", method: :delete)
-    .menu-row.row
