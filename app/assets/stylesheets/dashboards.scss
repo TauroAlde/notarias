@@ -212,18 +212,13 @@ body, html {
       box-shadow:none !important;
       border-bottom: 1px solid $login-box-green;
     }
-    &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-      color: $login-box-grey;
-      opacity: 1; /* Firefox */
+    &:valid {
+      color: $login-box-white;
+      background-color: $login-box-body-background;
     }
-
-    &:-ms-input-placeholder { /* Internet Explorer 10-11 */
-      color: $login-box-grey;
-    }
-
-    &::-ms-input-placeholder { /* Microsoft Edge */
-      color: $login-box-grey;
-    }
+    &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */ color: $login-box-grey; opacity: 1; /* Firefox */ }
+    &:-ms-input-placeholder { /* Internet Explorer 10-11 */ color: $login-box-grey; }
+    &::-ms-input-placeholder { /* Microsoft Edge */ color: $login-box-grey; }
   }
   // Custom checkbox
   .custom-checkbox {
@@ -232,7 +227,7 @@ body, html {
       background-color: $login-box-green;
     }
     .custom-control-description {
-      padding-left: 20px;
+      padding-left: 24px;
     }
   }
   // we add this for the form to allow the absolute button to fix to the content
