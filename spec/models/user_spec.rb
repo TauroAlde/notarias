@@ -65,23 +65,23 @@ RSpec.describe User, type: :model do
   end
 
   describe "#login" do #These tests are for the devise behavior, the instance form User to evaluate, has to be new, not a record saved in the database or it will never be saved in cases that are not sent or the username or email.      
-      it "returns username when user is created" do
-        user = create(:user)
-        expect(user.login).to eq(user.username)
-      end
+    it "returns username when user is created" do
+      user = create(:user)
+      expect(user.login).to eq(user.username)
+    end
 
-    context "those cases are for an unsaved user" do
-      it "returns email when username is nil" do
+    context "these cases are for unsaved user" do
+      it "when username is nil returns email" do
         user = build(:user, email: "email", username: nil)
         expect(user.login).to eq(user.email)
       end
 
-      it "returns username when email is nil" do
+      it "when email is nil returns username" do
         user = build(:user, email: nil, username: "username")
         expect(user.login).to eq(user.username)
       end
 
-      it "returns login when email and username are nil" do
+      it "when email and username are nil returns login nil" do
         user = build(:user, email: nil, username: nil)
         expect(user.login).to eq(nil)
       end

@@ -6,7 +6,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :procedures, class_name: "Procedure", foreign_key: :creator_user
-  validates :username,uniqueness: true
+  validates :username, uniqueness: true
   validates :username, presence: :true, uniqueness: { case_sensitive: false }
   validates_format_of :username, with: /^[a-zA-Z0-9_\.]*$/, multiline: true
 
@@ -16,10 +16,10 @@ class User < ApplicationRecord
   def set_username
     if prevalidate_username_uniqueness  == true
       if username.blank?
-        self.username = [name,father_last_name,mother_last_name].join("")
+        self.username = full_name.gsub(" ", '')
       end
       while User.where(username: username).exists?  do
-        self.username = [name,father_last_name,mother_last_name,"#{rand(00..99)}"].join("")
+        self.username = username + "#{rand(00..99)}"
       end
     end
   end
@@ -49,6 +49,6 @@ class User < ApplicationRecord
   end
 
   def full_name
-    [name,father_last_name,mother_last_name].join(" ")  
+    [name,father_last_name,mother_last_name].join(" ")
   end
 end

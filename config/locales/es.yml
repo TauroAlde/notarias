@@ -1,7 +1,7 @@
 es:
   #session new
   log_in_title: "Inicio de Sesión"
-  login: "inicar session con email o correo electronico"
+  login: "Inicar session con email o correo electronico"
   username: "Nombre de usario"
   email: "Correo Electronico"
   password: "Contraseña"
