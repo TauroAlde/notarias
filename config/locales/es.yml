@@ -1,10 +1,10 @@
 es:
   #session new
   log_in_title: "Inicio de Sesión"
-  email: "Correo Electronico"
+  email: "Correo Electrónico"
   password: "Contraseña"
   remember_me: "Recordar Cuenta"
-  log_in_button: "Ingresar"
+  log_in_button: "Entrar"
   #User shared links
   sign_up: "Regístrate"
   forgot_password: "¿Olvidaste tu Contraseña?"
@@ -21,7 +21,6 @@ es:
   name: "Nombre(s)"
   father_last_name: "Apellido Paterno"
   mother_last_name: "Apellido Materno"
-  email: "Correo Electronico"
   password: "Contraseña"
   password_confirmation: "Confirmar Contraseña"
   status: "Estatus"
