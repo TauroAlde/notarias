@@ -7,14 +7,12 @@ RSpec.describe Group, type: :model do
       @group = create(:group)
     end
     
-    it { should validate_uniqueness_of(:name) }
-    it { expect(build(:group, name: "other group name")).to be_valid }
-    it { expect(build(:group, name: "exist group name")).to_not be_valid }
+    it {  is_expected.to validate_uniqueness_of(:name) }
   end
 
   describe "asociations" do
-    it { should have_many(:permissions) }
-    it { should have_many(:user_groups) }
-    it { should have_many(:users).through(:user_groups) }
+    it {  is_expected.to have_many(:permissions) }
+    it {  is_expected.to have_many(:user_groups) }
+    it {  is_expected.to have_many(:users).through(:user_groups) }
   end
 end
