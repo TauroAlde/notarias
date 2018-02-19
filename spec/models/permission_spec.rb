@@ -7,10 +7,10 @@ RSpec.describe Permission, type: :model do
   end
 
   describe "asociations" do
-    it { should belong_to(:featurette) }
-    it { should belong_to(:user) }
-    it { should belong_to(:group) }
-    it { should have_many(:permission_tags) }
+    it { is_expected.to belong_to(:featurette) }
+    it { is_expected.to belong_to(:user) }
+    it { is_expected.to belong_to(:group) }
+    it { is_expected.to have_many(:permission_tags) }
   end
 
 end
