@@ -14,6 +14,13 @@ module ApplicationHelper
     when "error", "danger" then "danger"      
     end
 
-    content_tag :div, msg, class: "alert alert-#{notice_class}"
+    content_tag :div, class: "alert alert-#{notice_class} alert-dismissible fade show", role: "alert" do
+      concat msg
+      concat(
+        content_tag(:button, type: "button", class: "close close-flash-message", aria: { label: "Close"}, data: { dismiss: "alert"}) do
+          content_tag :span, "&times;".html_safe ,aria: { hidden: "true" }
+        end
+      )
+    end
   end
 end
