@@ -64,6 +64,11 @@ body, html {
 
 .sidebar-container {
   background-color: $login-box-dark-blue;
+  @include media-breakpoint-down(md) {
+    width: 0px;
+    overflow: hidden;
+    z-index: 999;
+  }
   @include media-breakpoint-up(md) {
     width: $left-menu-hidden-width;
     overflow: hidden;
@@ -107,6 +112,10 @@ body, html {
     width: $left-menu-width;
     height: 100%;
   }
+}
+
+.show-sidebar {
+  width: 40%
 }
 
 .inline-block { display: inline-block }
