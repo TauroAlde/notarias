@@ -71,3 +71,5 @@ en:
   next: "Next"
   sign_out: "Sign Out"
   profile: "Profile"
+  no_authorizable_passed_as_argument: "There was no authorizable subject passed to build a permission"
+  no_resource_passed_as_argument: "There was no resource passed to build a permission"

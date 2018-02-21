@@ -53,3 +53,5 @@ es:
   field_type: "Tipo de campo"
   sign_out: "Salir"
   profile: "Mi Perfil"
+  no_authorizable_passed_as_argument: "Ningun sujeto autorizable fue pasado como argumento para agregar"
+  no_resource_passed_as_argument: "Ningun recurso fue pasado como argumento para agregar un permiso"
