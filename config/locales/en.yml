@@ -23,6 +23,8 @@ en:
   #session new
   log_in_title: "Log in"
   email: "E-mail"
+  login: "Login"
+  username: "Username"
   password: "Password"
   remember_me: "Remember Account"
   log_in_button: "Log in"
