@@ -13,9 +13,8 @@ RSpec.describe User, type: :model do
 
   describe "validations" do
     it { expect(build(:user)).to be_valid }
-    it { expect(build(:user, password: nil)).to_not be_valid }
-    it { expect(build(:user, password_confirmation: nil)).to be_valid }
-    it { expect(build(:user, username: nil)).to_not be_valid }
+    it { is_expected.to validate_presence_of(:password) }
+    it { is_expected.to validate_presence_of(:password_confirmation) }
     it { is_expected.to validate_presence_of(:email) }
     it { is_expected.to validate_presence_of(:username) }
     it { is_expected.to validate_uniqueness_of(:username).case_insensitive }
@@ -48,8 +47,8 @@ RSpec.describe User, type: :model do
       end
     end
 
-    context " when prevalidate_username_uniqueness = false" do
-      it "not change the username" do
+    context "when prevalidate_username_uniqueness = false" do
+      it "doesn't change the username" do
         username_string = "username"
         user1 = create(:user, username: username_string)
         user2 = build(:user, username: username_string)
@@ -58,7 +57,12 @@ RSpec.describe User, type: :model do
     end 
   end
 
-  describe "#login" do #These tests are for the devise behavior, the instance form User to evaluate, has to be new, not a record saved in the database or it will never be saved in cases that are not sent or the username or email.
+  #These tests are for the devise behavior, 
+  #the instance form User to evaluate, 
+  #has to be new, not a record saved in 
+  #the database or it will never be saved in 
+  #cases that are not sent or the username or email.
+  describe "#login" do
     it "returns username" do
       user = create(:user)
       expect(user.login).to eq(user.username)
