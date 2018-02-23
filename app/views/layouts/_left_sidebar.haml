@@ -1,6 +1,9 @@
-#left-sidebar-content
-  .container-fluid
-    = left_sidebar_link("Pagina principal", "#", "dashboard")
-    = left_sidebar_link("Usuarios", users_path , "users")
-    = left_sidebar_link("Catologs", procedure_catalogs_path , "book")
-    .menu-row.row
+#left-sidebar-content.d-flex.flex-column
+  = left_sidebar_link(t(:profile), user_path(current_user), "user-circle", wrapper_options: { class: "profile-row"})
+
+  = left_sidebar_link(t(:dashboard), root_path, "dashboard")
+  = left_sidebar_link(t(:users), users_path , "users")
+  = left_sidebar_link(t(:catalogs), procedure_catalogs_path , "book")
+
+  .mt-auto.d-flex.flex-column
+    = left_sidebar_link(t(:sign_out), logout_path(current_user), "sign-out", wrapper_options: { class: "sidebar-bottom-link" }, method: :delete)

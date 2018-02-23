@@ -1,0 +1,21 @@
+.container
+  .panel.panel-default
+
+    %div
+      %strong= t(:user_id)
+    %div 
+      = current_user.id
+    %div
+      %strong= t(:preference_id)
+    %div 
+      = @user_preference.preference.description
+    %div
+      %strong= t(:user_preference_id)
+    %div 
+      = @user_preference.id
+    %div
+      %strong= t(:defalt_value)
+    %div 
+      = @user_preference.value
+.btn.btn-default
+  = link_to t(:return), user_preferences_path

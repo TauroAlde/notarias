@@ -3,7 +3,7 @@ class UsersController < ApplicationController
 before_action :allow_without_password, only: [:update]
 
   def index
-    @user = User.all.order(:id)
+    @user = User.paginate(page: params[:page], per_page: 2)
   end
 
   def show
@@ -18,12 +18,12 @@ before_action :allow_without_password, only: [:update]
     @user = User.find(params[:id])
   end
 
-    def create
-    user = User.new(user_params)
-    if user.save
+  def create
+    @user = User.new(user_params)
+    if @user.save
       redirect_to users_path
     else
-      redirect_to new_user_path
+      render :new
     end
   end
 
@@ -37,11 +37,11 @@ before_action :allow_without_password, only: [:update]
     end
   end
 
-  def destroy
-    @user = User.find(params[:id])
-    @user.destroy
-    redirect_to users_path
-  end
+  #def destroy
+  #  @user = User.find(params[:id])
+  #  @user.destroy
+  #  redirect_to users_path
+  #end
 
   def lock
     user = User.find(params[:id])

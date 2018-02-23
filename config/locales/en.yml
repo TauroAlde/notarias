@@ -34,6 +34,10 @@ en:
   confirmation_instructions: "Didn't receive confirmation instructions?"
   confirm_unlock_instructions: "Didn't receive unlock instructions?"
   sign_in_with: "Sign in with #{OmniAuth::Utils.camelize(provider)}"
+  #left_sidebar
+  dashboard: "Dashboard"
+  users: "Users"
+  catalogs: "Catalogs"
   #user_views
   new_user: "New User"
   edit_user: "Edit User"
@@ -49,15 +53,25 @@ en:
   registration: "Record"
   return: "Return"
   #actions
+  actions: "Actions"
   show: "Show"
   edit: "Edit"
   delete: "Delete"
   masquerade_login: "Personify"
   lock: "Lock"
   unlock: "Unlock"
+  locked: "Locked"
+  unlocked: "Unlocked"
   lock_access: "User has been locked!"
   unlock_access: "User has been lunocked!"
   cant_perform_this_action: "This task can not be performed on the active user!"
   #masquerade
   masquerade_message: "You are impersonating %{fullname}"
   reverse_masquerade_link: ". logout."
+  #paginate
+  previous: "Previous"
+  next: "Next"
+  sign_out: "Sign Out"
+  profile: "Profile"
+  no_authorizable_passed_as_argument: "There was no authorizable subject passed to build a permission"
+  no_resource_passed_as_argument: "There was no resource passed to build a permission"

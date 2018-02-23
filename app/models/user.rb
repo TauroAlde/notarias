@@ -3,9 +3,15 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :lockable, :masqueradable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :rememberable, :trackable, :validatable
 
   has_many :procedures, class_name: "Procedure", foreign_key: :creator_user
+  has_many :user_preferences
+  has_many :preferences, through: :user_preferences
+  has_many :permissions, as: :authorizable
+  has_many :groups, through: :user_groups
+  has_many :user_groups
+  
   validates :username, uniqueness: true
   validates :username, presence: :true, uniqueness: { case_sensitive: false }
   validates_format_of :username, with: /^[a-zA-Z0-9_\.]*$/, multiline: true

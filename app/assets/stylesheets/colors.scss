@@ -4,3 +4,21 @@ $link-water: #C9D2D7;
 $pattens-blue2: #D4DDE3;
 $echo-blue: #A6B5CB;
 $hit-grey: #99A5A6;
+
+$system-green: rgb(45, 204, 112);
+$system-white: rgb(254, 253, 251);
+$system-grey: rgb(150, 167, 175);
+$system-dark-blue: rgb(52, 73, 94);
+
+$login-box-white: $system-white;
+$login-box-green: $system-green;
+$login-box-grey: $system-grey;
+$login-box-dark-blue: $system-dark-blue;
+$login-box-light-green: #19FF7A;
+$login-box-light-blue: #47637F;
+
+$login-box-submit-btn: $login-box-dark-blue;
+$login-box-submit-btn-hover: $login-box-green;
+$login-box-body-background: $login-box-dark-blue;
+$login-box-header-background: $login-box-green;
+$login-input-label: $login-box-grey;

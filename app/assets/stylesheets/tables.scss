@@ -1,31 +1,12 @@
 @import "colors";
 
 .index-table{
-  font-size: 70%;
+  font-size: 12px;
   width: 100%;
-  vertical-align: middle;
   /*margin-bottom: 1rem;*/
-  th, td {
-    vertical-align: middle;
-    padding: 10px;
-  }
-}
-
-.head-table {
-  background-color: $pattens-blue2;
-  th {
-    background: none;
-    color: gray;
-  }
-}
-
-.tbody-border{
-  tr:first-child td {
-    border-top: none;
-  }
-  tr{
-    border-bottom: 2px solid #e9ecef;
-  }
+  th, td { vertical-align: middle !important; }
+  .table-head {}
+  .table-body{}
 }
 
 .btn-group{

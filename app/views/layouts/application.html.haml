@@ -4,9 +4,8 @@
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %title Notarias
     = csrf_meta_tags
-    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
-    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
-
+    = stylesheet_link_tag    'application', media: 'all'
+    = javascript_include_tag 'application'
   -if user_masquerade?
     %nav#masquerade
       .masquerade-message
@@ -15,15 +14,11 @@
         %a.fa.fa-times
 
   %body
-    = render "/layouts/header"
     = render "/layouts/flash_messages"
     #body-container
       - if user_signed_in?
         #left-sidebar.sidebar-container
           = render "/layouts/left_sidebar"
-      #content
+      %div{ id: user_signed_in? ? "content-with-menu" : "content" }
         = yield
-      - if user_signed_in?
-        #right-sidebar.sidebar-container
-          = render "/layouts/right_sidebar"
-
+        
