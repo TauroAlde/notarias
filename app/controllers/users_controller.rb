@@ -69,7 +69,7 @@ before_action :allow_without_password, only: [:update]
 
   def user_params
     params.require(:user).
-      permit(:email, :password, :password_confirmation, :name, :father_last_name, :mother_last_name)
+      permit(:username, :email, :password, :password_confirmation, :name, :father_last_name, :mother_last_name)
   end
 
   def allow_without_password
