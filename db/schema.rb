@@ -137,8 +137,10 @@ ActiveRecord::Schema.define(version: 20180221062532) do
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
     t.datetime "locked_at"
+    t.string   "username"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+    t.index ["username"], name: "index_users_on_username", unique: true, using: :btree
   end
 
 end
