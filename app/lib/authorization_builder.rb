@@ -1,22 +1,23 @@
 class AuthorizationBuilder
-  attr_accessor :user, :group, :resource, :actions, @permission
+  # Adds all behaviour of an common model
+  include ActiveModel::Model
 
-  def initialize(user: nil, group: nil, resource: nil, actions: [:all])
-    @user = user
-    @group = group
-    raise AuthorizationBuilding::AuthorizableNil.new(I18n.t(:no_authorizable_passed_as_argument)) if @user.blank? && @group.blank?
-    @resource = resource
-    raise AuthorizationBuilding::ResourceNil.new(I18n.t(:no_resource_passed_as_argument)) if @resource.blank?
-    @action = action
-  end
+  attr_accessor :authorizable, :resource, :actions, :permission
 
   def add_permission
-    @permission = Permission.create(
-      {
-        user: @user,
-        group: @group,
-      }.merge(:resource_permission_type)
-    )
+    begin
+      @permission = Permission.new(
+        {
+          authorizable: authorizable,
+          permission_tags: build_permission_tags
+        }.merge(resource_permission_type)
+      )
+      @permission.save!
+    rescue ActiveRecord::RecordInvalid => e
+      @permission.errors.full_messages.each do |error|
+        errors.add(:base, error)
+      end
+    end
   end
 
   def resource_permission_type
@@ -27,6 +28,7 @@ class AuthorizationBuilder
     end
   end
 
-  class AuthorizationBuilding::AuthorizableNil < StandardError; end
-  class AuthorizationBuilding::ResourceNil < StandardError; end
+  def build_permission_tags
+    (@actions || [:read]).map { |action| PermissionTag.new(name: action) }
+  end
 end

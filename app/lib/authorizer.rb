@@ -55,7 +55,7 @@ class Authorizer
     if resource.respond_to?(:new)
       "permissions.featurette_object = '#{resource.to_s}'"
     else
-      "permissions.featurette_id = #{resource.id} AND permissions.featurette_type = '#{resource.to_s}'"
+      "permissions.featurette_id = #{resource.id} AND permissions.featurette_type = '#{resource.class.to_s}'"
     end
   end
 end
