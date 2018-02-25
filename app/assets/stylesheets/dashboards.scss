@@ -156,7 +156,7 @@ body, html {
     color: $login-input-label;
   }
 
-  input[type="email"], input[type="password"] {
+  input[type="email"], input[type="password"], input[type="text"] {
     border: none;
     background-color: $login-box-body-background;
     border-bottom: 1px solid  $login-box-body-background;
