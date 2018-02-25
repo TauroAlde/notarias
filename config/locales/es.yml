@@ -11,6 +11,7 @@ es:
   edit: "Editar"
   edit_user: "Editar Usuario"
   email: "Correo Electrónico"
+  email_or_username: "Correo Electrónico o Nombre de Usuario"
   encrypted: "Encriptado"
   father_last_name: "Apellido Paterno"
   field_type: "Tipo de campo"

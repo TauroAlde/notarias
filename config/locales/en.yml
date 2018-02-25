@@ -30,6 +30,7 @@ en:
   edit: "Edit"
   edit_user: "Edit User"
   email: "E-mail"
+  email_or_username: "E-mail or Username"
   father_last_name: "Father Last Name"
   forgot_password: "Forgot your password?"
   lock: "Lock"
