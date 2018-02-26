@@ -1,5 +1,6 @@
 es:
   actions: "Acciones"
+  authorization_failed_with: "No tiene permitido acceso a %{resource} en %{action}"
   cant_perform_this_action: "¡Esta tarea no puede realizarse sobre el usuario activo!"
   catalogs: "Catalogos"
   confirmation_instructions: "¿No recibió las instrucciones de confirmación?"

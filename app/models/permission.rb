@@ -8,6 +8,7 @@ class Permission < ApplicationRecord
   scope :for_featurette_object, ->(featurette_object) { where(featurette_object: featurette_object) }
 
   validates_with CustomValidators::PermissionValidator
+  validates :action, presence: true
   #validates_uniqueness_of :authorizable_id, scope: [:authorizable_type], conditions: -> {
   #  where("(featurette_id IS NULL AND featurette_object IS NOT NULL) OR (featurette_id IS NOT NULL AND featurette_object IS NULL)")
   #}, if: ->(permission) { binding.pry }

@@ -1,10 +1,14 @@
 FactoryBot.define do
   factory :permission do
-    featurette_object "featurete object"
-    featurette_type "preference name"
-    # featurette
-    user_id { create(:user).id }
-    group_id { create(:group).id }
+    authorizable { create(:user) }
     permitted true
+
+    trait :authorizable_group do
+      authorizable { create(:user_group) }
+    end
+
+    trait :not_permitted do
+      permitted false
+    end
   end
 end

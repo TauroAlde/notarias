@@ -1,28 +1,37 @@
 class Authorizer
-  attr_accessor :authorizable, :resource, :action, :query
+  attr_accessor :authorizable, :resource, :action, :permissions
   #CRUD_ACTIONs = [:create, :read, :update, :destroy]
   AUTHORIZABLE_COLLECTION_JOINS_CLASS = UserGroup
   AUTHORIZABLE_CLASS = User
   AUTHORIZABLE_COLLECTION_CLASS = Group
-
+  MANAGE = 'manage'
 
   def initialize(authorizable)
     @authorizable = authorizable
   end
 
-  def authorize!(resource, action = :all)
+  def authorize(resource, action = MANAGE)
     @resource = resource
     @action = action
-    find_permission
+    find_permissions
+    if permissions.count > 0
+      permissions.all? { |permission| permission.permitted? }
+    else
+      false
+    end
+  end
+
+  def authorize!(resource, action = MANAGE)
+    raise AccessDenied.new(I18n.t(:authorization_failed_with, resource: resource.class, action: action)) unless authorize(resource, action)
+    true
   end
 
   private
 
-  def find_permission
-    @query = Permission.find_by_sql(
+  def find_permissions
+    @permissions = Permission.find_by_sql(
       <<-SQL
         SELECT permissions.* FROM permissions
-        INNER JOIN permission_tags ON permission_tags.permission_id = permissions.id
         WHERE (
           ( permissions.authorizable_id = #{authorizable.id}
             AND permissions.authorizable_type = '#{AUTHORIZABLE_CLASS.to_s}') 
@@ -33,7 +42,7 @@ class Authorizer
             ) AND permissions.authorizable_type = '#{AUTHORIZABLE_COLLECTION_JOINS_CLASS.to_s}'
           )
         )
-        AND (permission_tags.name = 'all' OR permission_tags.name = '#{action.to_s}')
+        AND (permissions.action = LOWER('#{MANAGE}') OR permissions.action = LOWER('#{action.to_s}'))
         AND (#{resource_sub_query})
       SQL
     )
@@ -52,10 +61,12 @@ class Authorizer
   end
 
   def resource_sub_query
-    if resource.respond_to?(:new)
+    if resource.respond_to?(:new) || resource.is_a?(String)
       "permissions.featurette_object = '#{resource.to_s}'"
     else
       "permissions.featurette_id = #{resource.id} AND permissions.featurette_type = '#{resource.class.to_s}'"
     end
   end
+
+  class AccessDenied < StandardError; end
 end

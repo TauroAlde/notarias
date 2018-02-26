@@ -21,6 +21,7 @@
 
 en:
   actions: "Actions"
+  authorization_failed_with: "Access denied trying to make use of %{resource} on %{action}"
   cant_perform_this_action: "This task can not be performed on the active user!"
   catalogs: "Catalogs"
   confirmation_instructions: "Didn't receive confirmation instructions?"

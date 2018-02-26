@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180221062532) do
+ActiveRecord::Schema.define(version: 20180226032035) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,22 +35,18 @@ ActiveRecord::Schema.define(version: 20180221062532) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "permission_tags", force: :cascade do |t|
-    t.string   "name"
-    t.integer  "permission_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-  end
-
   create_table "permissions", force: :cascade do |t|
     t.string   "featurette_object"
     t.string   "featurette_type"
     t.integer  "featurette_id"
-    t.boolean  "permitted"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.boolean  "permitted",         default: true
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.integer  "authorizable_id"
     t.string   "authorizable_type"
+    t.string   "action",            default: "manage"
+    t.index ["featurette_id", "featurette_type", "authorizable_id", "authorizable_type", "action"], name: "index_permissions_on_ftrt_object_and_authorizable_and_action", unique: true, using: :btree
+    t.index ["featurette_object", "authorizable_id", "authorizable_type", "action"], name: "index_permissions_on_featurette_and_authorizable_and_action", unique: true, using: :btree
   end
 
   create_table "preferences", force: :cascade do |t|
