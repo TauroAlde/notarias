@@ -37,9 +37,8 @@
                 %li.dropdown-item
                   = link_to t(:edit), edit_user_path(user)
                 %li.dropdown-item
-                  = link_to t(:delete), user_path(user),
-                    method: :delete,
-                    data: { confirm: '¿Eliminar?'}
+                  - if current_user != user
+                    = link_to(t(:delete), user_path(user), method: :delete, data: { confirm: '¿Eliminar?'})
                 - if current_user != user
                   .dropdown-divider
                   %li.dropdown-item
