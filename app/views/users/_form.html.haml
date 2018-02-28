@@ -1,38 +1,37 @@
-.container
-  .form-group
-    = form_for @user do |f|
-      .well
-        = f.label t(:name)
-        %br/
-        = f.text_field :name
-        %br/
-        = f.label t(:father_last_name)
-        %br/
-        = f.text_field :father_last_name
-        %br/
-        = f.label t(:mother_last_name)
-        %br/
-        = f.text_field :mother_last_name
-        %br/
-        = f.label t(:email)
-        %br/
-        = f.text_field :email
-        %br/
-        = f.label t(:username)
-        %br/
-        = f.text_field :username
-        %br/
-        = f.label t(:password)
-        %br/
-        = f.text_field :password
-        %br/
-        = f.label t(:password_confirmation)
-        %br/
-        = f.text_field :password_confirmation
-        %br/
-        = f.label t(:status)
-        %br/
-        = f.label t(:actions)
-        %br/
-        .btn.btn-primary
-          = f.submit t(:save)
+
+= form_for @user do |f|
+  .row
+    .col-md-6
+      %div.text-center
+        = image_tag "user.gif", class: "rounded-circle"
+
+      .form-group
+        .d-inline-flex.flex-row.justify-content-between
+          .p-1
+            = f.label t(:name), class: "label-padding"
+            = f.text_field :name, class: "field-boxes"
+          .p-1
+            = f.label t(:father_last_name), class: "label-padding"
+            = f.text_field :father_last_name, class: "field-boxes"
+          .p-1
+            = f.label t(:mother_last_name), class: "label-padding"
+            = f.text_field :mother_last_name, class: "field-boxes"
+          .clear-fix
+    .col-md-6
+      .d-inline-flex.flex-row.justify-content-between.padding-rigth-form
+        .p-1
+          = f.label t(:username), class: "label-padding"
+          = f.text_field :username, class: "field-boxes"
+        .p-1
+          = f.label t(:email), class: "label-padding"
+          = f.text_field :email, class: "field-boxes"
+      .d-flex.flex-column.padding-rigth-form
+        .p-1
+          = f.label t(:password), class: "label-padding"
+          = f.text_field :password, class: "field-boxes"
+        .p-1
+          = f.label t(:password_confirmation), class: "label-padding"
+          = f.text_field :password_confirmation, class: "field-boxes"
+        .p-1.action-buttons
+          = f.submit t(:save), class: "btn btn-primary"
+          = link_to t(:return), users_path, class: "btn btn-secondary"

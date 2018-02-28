@@ -1,5 +1,5 @@
 #left-sidebar-content.d-flex.flex-column
-  = left_sidebar_link(t(:profile), user_path(current_user), "user-circle", wrapper_options: { class: "profile-row"})
+  = left_sidebar_link(t(:profile), edit_user_path(current_user), "user-circle", wrapper_options: { class: "profile-row"})
 
   = left_sidebar_link(t(:dashboard), root_path, "dashboard")
   = left_sidebar_link(t(:users), users_path , "users")
