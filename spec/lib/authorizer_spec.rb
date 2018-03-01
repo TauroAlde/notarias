@@ -2,36 +2,71 @@ require 'rails_helper'
 
 RSpec.describe Authorizer, type: :model do
   RSpec.shared_examples "authorization allowed" do
-
-    before { permission }
-    subject { Authorizer.new(authorizable) }
-
-    it { expect(subject.authorize(featurette)).to eql true }
-    it { expect(subject.authorize!(featurette)).to eql true  }
-    it { expect { subject.authorize!(featurette) }.not_to raise_error { Authorizer::AccessDenied } }
-    it "authorizes action" do 
-      expect(subject.authorize(featurette, action)).to eql true
-    end
+    it { expect(subject.authorize(featurette, action)).to eql true }
+    it { expect(subject.authorize!(featurette, action)).to eql true  }
+    it { expect { subject.authorize!(featurette, action) }.not_to raise_error { Authorizer::AccessDenied } }
   end
 
   describe "With featurette_object permission" do
+    let(:permission) { create(:permission, featurette_object: featurette, action: action, authorizable: authorizable) }
+
+    subject { Authorizer.new(authorizable) }
+    before { permission }
 
     context "For management action" do
-      it_behaves_like "authorization allowed" do
-        let(:action) { Authorizer::MANAGE }
-        let(:authorizable) { create(:user) }
-        let(:featurette) { "aresource" }
-        let(:permission) { create(:permission, featurette_object: featurette, action: action, authorizable: authorizable) }
+      let(:action) { Authorizer::MANAGE }
+      let(:authorizable) { create(:user) }
+      let(:featurette) { "aresource" }
+
+      it "returns true authorizing management action by default" do
+        permission
+        expect(subject.authorize(featurette)).to eql true
       end
+      it_behaves_like "authorization allowed"
     end
 
-    #context "For custom action" do
-    #  let(:authorizable) { create(:user) }
-    #  before { create(:permission, featurette_object: "aresource", action: "custom_action", authorizable: authorizable) }
-    #  
-    #  it_behaves_like "authorization allowed"
-    #end
+    context "For custom action" do
+      let(:action) { "customaction" }
+      let(:authorizable) { create(:user) }
+      let(:featurette) { "aresource" }
 
+      it "returns false authorizing management action by default" do
+        permission
+        expect(subject.authorize(featurette)).to eql false
+      end
+      it_behaves_like "authorization allowed"
+    end
+  end
+
+  describe "With featurette polymorphic relation permission" do
+    let(:permission) { create(:permission, featurette: featurette, action: action, authorizable: authorizable) }
+
+    subject { Authorizer.new(authorizable) }
+    before { permission }
+
+    context "For management action" do
+      let(:action) { Authorizer::MANAGE }
+      let(:authorizable) { create(:user) }
+      let(:featurette) { create(:user) }
+
+      it "returns true authorizing management action by default" do
+        permission
+        expect(subject.authorize(featurette)).to eql true
+      end
+      it_behaves_like "authorization allowed"
+    end
+
+    context "For custom action" do
+      let(:action) { "customaction" }
+      let(:authorizable) { create(:user) }
+      let(:featurette) { create(:user) }
+
+      it "returns false authorizing management action by default" do
+        permission
+        expect(subject.authorize(featurette)).to eql false
+      end
+      it_behaves_like "authorization allowed"
+    end
   end
 
   describe "With featurette relation permisison" do
