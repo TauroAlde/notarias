@@ -7,5 +7,12 @@ FactoryBot.define do
     sequence(:username) { |n| "username#{n}" }
     password "123456"
     password_confirmation "123456"
+
+    trait :in_group do
+      after(:create) do |user|
+        group = create(:group)
+        create(:user_group, group: group, user: user)
+      end
+    end
   end
 end

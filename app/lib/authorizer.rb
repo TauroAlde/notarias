@@ -15,7 +15,8 @@ class Authorizer
     @action = action
     find_permissions
     if permissions.count > 0
-      permissions.all? { |permission| permission.permitted? }
+      if !permissions.all? { |permission| permission.permitted? }
+        permissions.select { |permission| permission.action }
     else
       false
     end
@@ -34,18 +35,26 @@ class Authorizer
         SELECT permissions.* FROM permissions
         WHERE (
           ( permissions.authorizable_id = #{authorizable.id}
-            AND permissions.authorizable_type = '#{AUTHORIZABLE_CLASS.to_s}') 
-          OR 
-          ( permissions.authorizable_id IN (
-              SELECT #{join_table_name}.#{join_table_foreign_key_to_authorizable_collection} FROM #{join_table_name}
-              WHERE #{join_table_name}.#{join_table_foreign_key_to_authorizable} = #{authorizable.id}
-            ) AND permissions.authorizable_type = '#{AUTHORIZABLE_COLLECTION_JOINS_CLASS.to_s}'
-          )
+            AND permissions.authorizable_type = '#{authorizable.class.to_s}' )
+          #{authorizable_collection_query}
         )
         AND (permissions.action = LOWER('#{MANAGE}') OR permissions.action = LOWER('#{action.to_s}'))
         AND (#{resource_sub_query})
       SQL
     )
+  end
+
+  def authorizable_collection_query
+    if authorizable.class == AUTHORIZABLE_CLASS
+      <<-SQL
+        OR
+        ( permissions.authorizable_id IN (
+            SELECT #{join_table_name}.#{join_table_foreign_key_to_authorizable_collection} FROM #{join_table_name}
+            WHERE #{join_table_name}.#{join_table_foreign_key_to_authorizable} = #{authorizable.id}
+          ) AND permissions.authorizable_type = '#{AUTHORIZABLE_COLLECTION_JOINS_CLASS.to_s}'
+        )
+      SQL
+    end
   end
 
   def join_table_name

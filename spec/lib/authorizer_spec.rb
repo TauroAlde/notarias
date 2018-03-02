@@ -69,6 +69,34 @@ RSpec.describe Authorizer, type: :model do
     end
   end
 
-  describe "With featurette relation permisison" do
+  describe "Authorizing authorizable collection class" do
+    let(:permission) { create(:permission, featurette: featurette, action: action, authorizable: authorizable) }
+
+    subject { Authorizer.new(authorizable) }
+    before { permission }
+
+    context "For management action" do
+      let(:action) { Authorizer::MANAGE }
+      let(:authorizable) { create(:user, :in_group).groups.first }
+      let(:featurette) { create(:user) }
+
+      it "returns true authorizing management action by default" do
+        permission
+        expect(subject.authorize(featurette)).to eql true
+      end
+      it_behaves_like "authorization allowed"
+    end
+
+    context "For custom action" do
+      let(:action) { "customaction" }
+      let(:authorizable) { create(:user, :in_group).groups.first }
+      let(:featurette) { create(:user) }
+
+      it "returns false authorizing management action by default" do
+        permission
+        expect(subject.authorize(featurette)).to eql false
+      end
+      it_behaves_like "authorization allowed"
+    end
   end
 end
