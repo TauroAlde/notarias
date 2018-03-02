@@ -14,9 +14,11 @@ class Authorizer
     @resource = resource
     @action = action
     find_permissions
-    if permissions.count > 0
-      if !permissions.all? { |permission| permission.permitted? }
-        permissions.select { |permission| permission.action }
+    # First we ask if all the permissions allow 'manage' or the action
+    # if the group has this action or manage allowed, it is considered permitted
+    # but if there is any permission resulting in false, we go into the deep individual permission check
+    if permissions.present?
+      all_actions_permitted? || action_permitted?
     else
       false
     end
@@ -28,6 +30,14 @@ class Authorizer
   end
 
   private
+
+  def all_actions_permitted?
+    permissions.all?(&:permitted?)
+  end
+
+  def action_permitted?
+    permissions.select { |p| p.authorizable == authorizable && p.action == action }.all?(&:permitted?)
+  end
 
   def find_permissions
     @permissions = Permission.find_by_sql(
