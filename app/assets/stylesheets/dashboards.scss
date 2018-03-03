@@ -145,29 +145,39 @@ body, html {
 
 #login-wrapper {
   height: 100%;
+  position:relative;
   #login-box {
-    @include media-breakpoint-up(md) {
+    @include media-breakpoint-up(sm) {
       border-radius: 8px;
       width: 30%;
       -webkit-box-shadow: -1px 4px 17px -1px rgba(0,0,0,0.47);
       -moz-box-shadow: -1px 4px 17px -1px rgba(0,0,0,0.47);
       box-shadow: -1px 4px 17px -1px rgba(0,0,0,0.47);
     }
+    @include media-breakpoint-down(sm) {
+      width: 100%;
+      height: 100%
+    }
   }
 
   #login-box-header{
     #login-box-header-text { color: $login-box-white; padding: 0 8px; margin:0; }
-    @include media-breakpoint-up(md) {
+    @include media-breakpoint-up(sm) {
       padding: 10px;
       height: 200px;
       border: 1px solid $login-box-header-background;
       border-radius: 8px 8px 0 0;
       background-color: $login-box-header-background;
     }
+    @include media-breakpoint-down(sm) { 
+      width: 100%;
+      height: 35%;
+      background-color: $login-box-header-background;
+    }
   }
 
   #login-box-body{
-    @include media-breakpoint-up(md) {
+    @include media-breakpoint-up(sm) {
       padding: 10px;
       border-radius: 0 0 8px 8px;
       border: 1px solid $login-box-body-background;
@@ -177,6 +187,14 @@ body, html {
         &:last-child { margin-bottom: 0; }
       }
     }
+    @include media-breakpoint-down(sm) { 
+      width: 100%;
+      height: 50%;
+      background-color: $login-box-body-background;
+      .field {
+        &:last-child { margin-bottom: 10; }
+      }
+    }
   }
 
   label {
@@ -184,6 +202,10 @@ body, html {
   }
 
   input[type="email"], input[type="password"], input[type="text"] {
+    @include media-breakpoint-down(sm) { 
+      font-size: 1.2em;
+    }
+    font-size: 1em;
     border: none;
     background-color: $login-box-body-background;
     border-bottom: 1px solid  $login-box-body-background;
@@ -216,7 +238,11 @@ body, html {
     }
   }
   // we add this for the form to allow the absolute button to fix to the content
-  form { position: relative; }
+  form { 
+    position: relative;
+    height: 100%;
+    align-content: center;
+  }
   #submit-login-btn {
     @include media-breakpoint-up(md) {
       width: 70px;
@@ -238,13 +264,23 @@ body, html {
       overflow: hidden;
       @include fading-transition(0.1s);
       span { display: none; color: $login-box-dark-blue;  }
-      &:hover {
-        background-color: $login-box-submit-btn-hover;
-        color: $login-box-dark-blue;
-        width: 180px;
-        span { display: inline; }
-      }
     }
+    @include media-breakpoint-down(sm) {
+      background-color: $login-box-submit-btn-hover;
+      width: 100%;
+      height: 15%;
+      color:$login-box-dark-blue;
+      border-radius: 0px; 
+      border: 0px;
+    }
+    &:hover {
+        @include media-breakpoint-up(sm) {
+          background-color: $login-box-submit-btn-hover;
+          color: $login-box-dark-blue;
+          width: 180px;
+          span { display: inline; }
+        }
+      }
   }
 }
 
