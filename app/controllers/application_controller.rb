@@ -6,6 +6,10 @@ class ApplicationController < ActionController::Base
   before_action :set_locale
   before_action :masquerade_user!
 
+  rescue_from Authorizer::AccessDenied do |exception|
+    redirect_to root_path, flash: { alert: exception.message }
+  end
+
   def default_url_options
     { locale: I18n.locale }
   end
@@ -22,7 +26,7 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit :account_update, keys: added_attrs
   end
 
-  def authorize!(resource)
-    binding.pry
+  def authorize!(resource = self.class, action = nil)
+    Authorizer.new(current_user).authorize!(resource, action)
   end
 end

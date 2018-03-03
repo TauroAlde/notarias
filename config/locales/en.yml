@@ -21,7 +21,7 @@
 
 en:
   actions: "Actions"
-  authorization_failed_with: "Access denied trying to make use of %{resource} on %{action}"
+  authorization_failed: "You dont have access to perform this action"
   cant_perform_this_action: "This task can not be performed on the active user!"
   catalogs: "Catalogs"
   confirmation_instructions: "Didn't receive confirmation instructions?"
@@ -50,6 +50,7 @@ en:
   no_resource_passed_as_argument: "There was no resource passed to build a permission"
   password: "Password"
   password_confirmation: "Password_confirmation"
+  permission_already_exists: "El permiso ya existe"
   previous: "Previous"
   profile: "Profile"
   registration: "Record"

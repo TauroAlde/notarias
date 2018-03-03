@@ -5,6 +5,7 @@ class Authorizer
   AUTHORIZABLE_CLASS = User
   AUTHORIZABLE_COLLECTION_CLASS = Group
   MANAGE = 'manage'
+  READ = 'read'
 
   def initialize(authorizable)
     @authorizable = authorizable
@@ -25,11 +26,15 @@ class Authorizer
   end
 
   def authorize!(resource, action = MANAGE)
-    raise AccessDenied.new(I18n.t(:authorization_failed_with, resource: resource.class, action: action)) unless authorize(resource, action)
+    raise AccessDenied.new(I18n.t(:authorization_failed)) unless authorize(resource, action)
     true
   end
 
   private
+
+  def resource_name
+    resource.respond_to?(:new) ? resource.to_s : resource.class
+  end
 
   def all_actions_permitted?
     permissions.all?(&:permitted?)
@@ -61,7 +66,7 @@ class Authorizer
         ( permissions.authorizable_id IN (
             SELECT #{join_table_name}.#{join_table_foreign_key_to_authorizable_collection} FROM #{join_table_name}
             WHERE #{join_table_name}.#{join_table_foreign_key_to_authorizable} = #{authorizable.id}
-          ) AND permissions.authorizable_type = '#{AUTHORIZABLE_COLLECTION_JOINS_CLASS.to_s}'
+          ) AND permissions.authorizable_type = '#{AUTHORIZABLE_COLLECTION_CLASS.to_s}'
         )
       SQL
     end

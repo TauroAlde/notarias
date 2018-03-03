@@ -1,6 +1,6 @@
 es:
   actions: "Acciones"
-  authorization_failed_with: "No tiene permitido acceso a %{resource} en %{action}"
+  authorization_failed: "No tiene acceso a la acción solicitada"
   cant_perform_this_action: "¡Esta tarea no puede realizarse sobre el usuario activo!"
   catalogs: "Catalogos"
   confirmation_instructions: "¿No recibió las instrucciones de confirmación?"
@@ -31,6 +31,7 @@ es:
   next: "Siguiente"
   password: "Contraseña"
   password_confirmation: "Confirmar Contraseña"
+  permission_already_exists: "El permiso ya existe"
   previous: "Anterior"
   profile: "Mi Perfil"
   registration: "Registro"
