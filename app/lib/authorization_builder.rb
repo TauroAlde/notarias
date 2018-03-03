@@ -2,14 +2,18 @@ class AuthorizationBuilder
   # Adds all behaviour of an common model
   include ActiveModel::Model
 
-  attr_accessor :authorizable, :resource, :actions, :permission
+  DEFAULT_ACTION = "read"
 
-  def add_permission
+  attr_accessor :authorizable, :resource, :action, :permission
+
+  validates :authorizable, :resource, :action, presence: true
+
+  def save
     begin
       @permission = Permission.new(
         {
           authorizable: authorizable,
-          permission_tags: build_permission_tags
+          action: action || DEFAULT_ACTION
         }.merge(resource_permission_type)
       )
       @permission.save!
@@ -20,15 +24,15 @@ class AuthorizationBuilder
     end
   end
 
+  def action=(action = DEFAULT_ACTION)
+    @action = action
+  end
+
   def resource_permission_type
-    if resource.respond_to?(:new)
+    if resource.respond_to?(:new) || resource.is_a?(String)
       { featurette_object: resource.to_s }
     else
       { featurette: resource }
     end
-  end
-
-  def build_permission_tags
-    (@actions || [:read]).map { |action| PermissionTag.new(name: action) }
   end
 end
