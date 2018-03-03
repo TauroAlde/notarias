@@ -22,5 +22,9 @@ module ApplicationHelper
         end
       )
     end
+
+    def authorized_for?(resource, action = nil)
+      Authorizer.new(current_user).authorize(resource, action)
+    end
   end
 end
