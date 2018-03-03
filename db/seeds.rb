@@ -5,4 +5,6 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-User.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password', username: "admin") if Rails.env.development?
+admin = User.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password', username: "admin")
+group = Group.create(name: "Administrators")
+UserGroup.create(user: admin, group: group)
