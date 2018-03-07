@@ -13,6 +13,8 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
+    @user.user_groups.build
+    @groups = Group.all
   end
 
   def edit
@@ -70,7 +72,8 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).
-      permit(:username, :email, :password, :password_confirmation, :name, :father_last_name, :mother_last_name)
+      permit(:username, :email, :password, :password_confirmation, :name, :father_last_name, :mother_last_name, 
+              user_group_attributes: [:id, :user_id, :group_id])
   end
 
   def allow_without_password

@@ -16,22 +16,29 @@
           .p-1
             = f.label t(:mother_last_name), class: "label-padding"
             = f.text_field :mother_last_name, class: "field-boxes"
-          .clear-fix
+        .d-inline-flex.flex-row.justify-content-between
+          .p-1
+            = f.label t(:username), class: "label-padding"
+            = f.text_field :username, class: "field-boxes"
+          .p-1
+            = f.label t(:email), class: "label-padding"
+            = f.text_field :email, class: "field-boxes"
+        .d-inline-flex.flex-row.justify-content-between
+          .p-1
+            = f.label t(:password), class: "label-padding"
+            = f.text_field :password, class: "field-boxes"
+          .p-1
+            = f.label t(:password_confirmation), class: "label-padding"
+            = f.text_field :password_confirmation, class: "field-boxes"
     .col-md-6
-      .d-inline-flex.flex-row.justify-content-between.padding-rigth-form
+      .d-inline-flex.flex-row.justify-content-between
         .p-1
-          = f.label t(:username), class: "label-padding"
-          = f.text_field :username, class: "field-boxes"
-        .p-1
-          = f.label t(:email), class: "label-padding"
-          = f.text_field :email, class: "field-boxes"
-      .d-flex.flex-column.padding-rigth-form
-        .p-1
-          = f.label t(:password), class: "label-padding"
-          = f.text_field :password, class: "field-boxes"
-        .p-1
-          = f.label t(:password_confirmation), class: "label-padding"
-          = f.text_field :password_confirmation, class: "field-boxes"
+          #groups
+            = f.fields_for :user_groups do |user_group|
+              = render 'user_group_fields', f: user_group
+            .links
+              = link_to_add_association 'add group', f, :user_groups
+      .d-flex.flex-column
         .p-1.action-buttons
           = f.submit t(:save), class: "btn btn-primary"
           = link_to t(:return), users_path, class: "btn btn-secondary"
