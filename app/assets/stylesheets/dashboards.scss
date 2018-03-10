@@ -38,10 +38,23 @@ body, html {
     background-color: $login-box-dark-blue;
     visibility: visible; 
     height: $top-menu-row-height;
+    -webkit-box-shadow: -1px 4px 17px -1px rgba(0,0,0,0.47);
+    -moz-box-shadow: -1px 4px 17px -1px rgba(0,0,0,0.47);
+    box-shadow: -1px 4px 17px -1px rgba(0,0,0,0.47);
   }
   .menu-button {
+    border-radius:0;
+    visibility: none;
+    display: none;
+    &:focus {
+      outline: none;
+      border: none;
+      box-shadow:none !important;
+    }
     @include media-breakpoint-down(sm) {
       visibility: visible;
+      height: 50px;
+      display: inline-block;
     }
   }
 }

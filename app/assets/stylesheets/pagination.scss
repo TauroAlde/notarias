@@ -1,0 +1,40 @@
+@import "colors";
+.pagination-nav {
+  height: 100%;
+}
+.pagination {
+  margin: 0;
+  height: 100%;
+  display: flex;
+  li {
+    //line-height: 50px;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .page-link{
+    background-color: $green-monochrom-5 !important;
+    color: $green-monochrom-1 !important;
+    border: 1px solid $green-monochrom-5;
+    //height: 50px;
+    //line-height: 30px !important;
+    padding: 10px 16px !important;
+    border-radius: 0 !important;
+    height: 100% !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .active .page-link {
+    background-color: $system-mid-green !important;
+    border: 1px solid $green-monochrom-5 !important;
+    color: $green-monochrom-5 !important;
+  }
+
+  .disabled .page-link {
+    background-color: $system-light-green !important;
+    color: gray !important;
+  }
+}
