@@ -81,7 +81,7 @@ body, html {
 }
 
 .sidebar-container {
-  background-color: $login-box-dark-blue;
+  background-color: $green-monochrom-5;
   @include media-breakpoint-down(md) {
     width: 0px;
     overflow: hidden;
@@ -126,7 +126,10 @@ body, html {
       //font-family: courier, serif; 
       vertical-align: baseline;
     }
-    &:hover { background-color: $system-grey }
+    &:hover {
+      background-color: $system-mid-green;
+      span, i{ color: $green-monochrom-5; }
+    }
   }
   .profile-row { height: 75px; }
   #left-sidebar-content, #right-sidebar-content {

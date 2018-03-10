@@ -17,9 +17,10 @@
 
 .btn-green {
   background-color: $green-monochrom-5;
-  color: $green-monochrom-1;
+  color: white;
   &:hover {
-    color: $system-dark-blue;
+    color: $green-monochrom-5;
+    background-color: $system-mid-green;
   }
 }
 
@@ -34,7 +35,7 @@
   background: none;
   border: 0;
   text-decoration: none !important;
-  color: $system-dark-blue;
+  color: white;
   &:hover { color: $green-monochrom-1; background-color: $green-monochrom-5; }
   &:focus { background-color: $green-monochrom-5; }
 }
