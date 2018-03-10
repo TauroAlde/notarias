@@ -7,5 +7,4 @@ RSpec.describe PoliticalCandidacy, type: :model do
     it { is_expected.to belong_to(:political_party) }
   #  it { is_expected.to belong_to(:candidacy) }
   end
-
 end
