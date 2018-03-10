@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe PoliticalCandidacy, type: :model do
-  #TODO: pruebas de modelo 
+  #TODO: model test 
 
   #describe "asociations" do
   #  it { is_expected.to belong_to(:political_party) }
