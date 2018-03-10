@@ -22,6 +22,7 @@
 $left-menu-hidden-width: 50px;
 $left-menu-width: 200px;
 $left-menu-row-height: 50px;
+$top-menu-row-height: 50px;
 
 body, html {
   height: 100%;
@@ -32,14 +33,13 @@ body, html {
   width: 0%;
   height: 0px;
   visibility: none;
+  width: 100%;
   @include media-breakpoint-down(sm) {
     background-color: $login-box-dark-blue;
     visibility: visible; 
-    width: 100%;
-    height: 50px;
+    height: $top-menu-row-height;
   }
   .menu-button {
-    visibility: hidden;
     @include media-breakpoint-down(sm) {
       visibility: visible;
     }
@@ -54,8 +54,12 @@ body, html {
   #content, #content-with-menu {
     padding: 0;
     height: 100%;
-    //@include media-breakpoint-down(sm) { padding: 0; }
-    //width: 60%;
+  }
+  // reduce height when top menu is present
+  #content-with-menu {
+    @include media-breakpoint-down(sm) {
+      height: calc(100% - 50px);
+    }
   }
 
   #content-with-menu {
@@ -83,6 +87,9 @@ body, html {
     display: inline;
     position: absolute;
     height: 100%;
+    @include media-breakpoint-down(sm) {
+      height: calc(100% - 50px);
+    }
     @include sidebar-transition;
   }
   &#left-sidebar {
