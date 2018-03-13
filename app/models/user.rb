@@ -19,6 +19,7 @@ class User < ApplicationRecord
 
   before_validation :set_username
   accepts_nested_attributes_for :permissions
+  accepts_nested_attributes_for :user_groups, reject_if: :all_blank, allow_destroy: true
   attr_accessor :login, :prevalidate_username_uniqueness
 
   def set_username
