@@ -9,6 +9,7 @@ class User < ApplicationRecord
   has_many :user_preferences
   has_many :preferences, through: :user_preferences
   has_many :permissions, as: :authorizable
+  has_many :featurettes, through: :permissions
   has_many :groups, through: :user_groups
   has_many :user_groups
   
@@ -17,6 +18,7 @@ class User < ApplicationRecord
   validates_format_of :username, with: /^[a-zA-Z0-9_\.]*$/, multiline: true
 
   before_validation :set_username
+  accepts_nested_attributes_for :permissions
   attr_accessor :login, :prevalidate_username_uniqueness
 
   def set_username

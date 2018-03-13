@@ -11,3 +11,6 @@ UserGroup.create!(user: admin, group: group)
 common_user = User.create!(email: 'common@example.com', password: 'password', password_confirmation: 'password', username: "common")
 common_group = Group.create!(name: "Common")
 UserGroup.create!(user: common_user, group: common_group)
+
+# TODO: move all the users creation to this file and iterate to create
+permissions = YAML.load_file(File.join(Rails.root, "db", "permissions.yml"))

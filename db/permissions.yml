@@ -1,0 +1,37 @@
+groups:
+  common:
+    users:
+      [
+        {
+          username: "user1",
+          email: "user1@pv.com",
+          password: "password",
+          password_confirmation: "password",
+          permissions: [
+            # the user is the authorizable, then to enable it to edit itself add it again as the featurette
+            action: "manage"
+          ]
+        }
+      ]
+    permissions:
+      controllers:
+        "UsersController": ["read"]
+        "DashboardsController": ["manage"]
+  admins:
+    users:
+      [
+        {
+          username: "admin1",
+          email: "admin@pv.com",
+          password: "password",
+          password_confirmation: "password",
+          permissions: [
+            # the user is the authorizable, then to enable it to edit itself add it again as the featurette
+            action: "manage"
+          ]
+        }
+      ]
+    permissions:
+      controllers:
+        "UsersController": ["manage"]
+        "DashboardsController": ["manage"]
