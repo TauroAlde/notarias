@@ -11,6 +11,8 @@ class User < ApplicationRecord
   has_many :permissions, as: :authorizable
   has_many :groups, through: :user_groups
   has_many :user_groups
+  has_many :segments, through: :user_segments
+  has_many :user_segments
   
   validates :username, uniqueness: true
   validates :username, presence: :true, uniqueness: { case_sensitive: false }
