@@ -1,0 +1,2 @@
+class SegmentUserImport < ApplicationRecord
+end
