@@ -1,7 +1,6 @@
 @import "colors";
 
 .btn {
-  border-radius: 0 !important;
   &:focus{
     box-shadow: none !important;
   }
@@ -10,13 +9,11 @@
 .btn-group {
   &:focus {
     outline: none !important;
-    border: none !important;
     box-shadow: none;
   }
 }
 
 .btn-green {
-  background-color: $system-green;
   color: white;
   &:hover {
     color: white;
@@ -36,7 +33,7 @@
   border: 0;
   text-decoration: none !important;
   color: $system-green;
-  padding: 15px 24px;
+  padding: 1em 1.5em;
 }
 .table-dropdown-menu {
   border: 0 !important;
@@ -45,4 +42,7 @@
   -webkit-box-shadow: -1px 4px 17px -1px rgba(0,0,0,0.47);
   -moz-box-shadow: -1px 4px 17px -1px rgba(0,0,0,0.47);
   box-shadow: -1px 4px 17px -1px rgba(0,0,0,0.47);
+}
+#dropdown-menu-link {
+  padding: 1em 1.5em;
 }

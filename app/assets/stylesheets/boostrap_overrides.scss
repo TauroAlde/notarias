@@ -1,0 +1,13 @@
+@import "colors";
+
+// https://github.com/twbs/bootstrap-rubygem/blob/master/assets/stylesheets/bootstrap/_variables.scss
+// overrides for bootstrap variables
+$btn-padding-y: 1em;
+$btn-padding-x: 1.5em;
+$btn-border-radius: 0;
+
+$list-group-border-color: none;
+
+$theme-colors: (
+   "primary": $system-green,
+);

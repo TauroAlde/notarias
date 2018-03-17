@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :authorize!
 
   def index
-    @users = User.paginate(page: params[:page], per_page: 10)
+    @users = User.paginate(page: params[:page], per_page: 2)
   end
 
   def show

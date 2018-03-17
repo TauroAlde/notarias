@@ -1,7 +1,7 @@
 .d-flex.flex-column.flex-table-wrapper-parent
   .d-flex.flex-column.flex-table-wrapper
     .index-table-actions
-      = link_to t(:new_user), new_user_path, class: "btn btn-green"
+      = link_to t(:new_user), new_user_path, class: "btn btn-primary"
     .index-table-wrapper
       %table.table.index-table.table-hover.table-responsive-sm
         %thead.thead-light.table-head
@@ -28,7 +28,7 @@
                   = t(:unlocked)
               %td
                 .dropdown.show
-                  %a#dropdownMenuLink.btn.btn-green{ href: "#", "data-toggle" => "dropdown", aria: { expanded: false, haspopup: true } }
+                  %a#dropdown-menu-link.btn.btn-primary{ href: "#", "data-toggle" => "dropdown", aria: { expanded: false, haspopup: true } }
                     = t(:actions)
                   .dropdown-menu.table-dropdown-menu{ "aria-labelledby" => "dropdownMenuLink" }
                     = link_to user_path(user), class: "btn-green-dropdown-item btn-green" do

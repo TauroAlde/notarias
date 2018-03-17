@@ -14,12 +14,12 @@
     text-align: center;
   }
   .page-link{
-    background-color: $green-monochrom-5 !important;
+    background-color: $system-green !important;
     color: white !important;
-    border: 1px solid $green-monochrom-5;
+    border: 1px solid $system-green;
     //height: 50px;
     //line-height: 30px !important;
-    padding: 10px 16px !important;
+    padding: 1em 1.5em !important;
     border-radius: 0 !important;
     height: 100% !important;
     display: flex;
@@ -29,12 +29,13 @@
       border-left:0;
       border-right:0;
       background-color: $system-mid-green !important;
+      border: 1px solid $system-mid-green;
     }
   }
 
   .active .page-link {
     background-color: $system-mid-green !important;
-    border: 1px solid $green-monochrom-5 !important;
+    border: 1px solid $system-mid-green !important;
     color: white !important;
   }
 
