@@ -16,11 +16,11 @@
 }
 
 .btn-green {
-  background-color: $green-monochrom-5;
+  background-color: $system-green;
   color: white;
   &:hover {
-    color: $green-monochrom-5;
-    background-color: $system-mid-green;
+    color: white;
+    background-color: $system-dark-green;
   }
 }
 
@@ -35,9 +35,8 @@
   background: none;
   border: 0;
   text-decoration: none !important;
-  color: white;
-  &:hover { color: $green-monochrom-1; background-color: $green-monochrom-5; }
-  &:focus { background-color: $green-monochrom-5; }
+  color: $system-green;
+  padding: 15px 24px;
 }
 .table-dropdown-menu {
   border: 0 !important;

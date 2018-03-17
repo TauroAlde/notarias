@@ -81,7 +81,7 @@ body, html {
 }
 
 .sidebar-container {
-  background-color: $green-monochrom-5;
+  background-color: $system-green	;
   @include media-breakpoint-down(md) {
     width: 0px;
     overflow: hidden;
@@ -105,14 +105,6 @@ body, html {
     }
     @include sidebar-transition;
   }
-  &#left-sidebar {
-    //left:-150px;
-  }
-  &#right-sidebar {
-    right:  0;
-    width: 10%;
-    z-index: 999;
-  }
   .menu-row {
     cursor: pointer;
     height: $left-menu-hidden-width;
@@ -127,8 +119,8 @@ body, html {
       vertical-align: baseline;
     }
     &:hover {
-      background-color: $system-mid-green;
-      span, i{ color: $green-monochrom-5; }
+      background-color: $system-dark-green;
+      span, i{ color: white; }
     }
   }
   .profile-row { height: 75px; }
@@ -184,7 +176,7 @@ body, html {
   }
 
   #login-box-header{
-    #login-box-header-text { color: $login-box-white; padding: 0 8px; margin:0; }
+    #login-box-header-text { color: $login-box-white; margin:0; }
     @include media-breakpoint-up(sm) {
       padding: 10px;
       height: 200px;
@@ -225,21 +217,22 @@ body, html {
   }
 
   input[type="email"], input[type="password"], input[type="text"] {
-    @include media-breakpoint-down(sm) { 
-      font-size: 1.2em;
-    }
+    @include media-breakpoint-down(sm) { font-size: 1.2em; }
     font-size: 1em;
     border: none;
     background-color: $login-box-body-background;
-    border-bottom: 1px solid  $login-box-body-background;
+    border-bottom: 1px solid  $system-dark-green;
     width: 100%;
     border-radius: 4px 4px 0 0;
-    color: $login-box-white;
+    color: $system-dark-green !important;
     @include fading-transition(0.12s);
+    &::placeholder { color: $system-dark-green !important; }
+    &:-ms-input-placeholder { color: $system-dark-green !important; }
+    &::-ms-input-placeholder { color: $system-dark-green !important; }
     &:focus {
       outline: none;
       border: none;
-      box-shadow:none !important;
+      box-shadow: none !important;
       border-bottom: 1px solid $login-box-green;
     }
     &:valid {
@@ -253,6 +246,8 @@ body, html {
   // Custom checkbox
   .custom-checkbox {
     padding:0;
+    color: $system-dark-green !important;
+    .custom-control-indicator { background-color: white; }
     .custom-control-input:checked ~ .custom-control-indicator{
       background-color: $login-box-green;
     }
@@ -277,7 +272,7 @@ body, html {
       -moz-box-shadow: -1px 4px 17px -1px rgba(0,0,0,0.47);
       box-shadow: -1px 4px 17px -1px rgba(0,0,0,0.47);
       cursor: pointer;
-      background-color: $login-box-submit-btn;
+      background-color: $system-mid-green;
       border: 5px solid $login-box-green;
       color: $login-box-green;
       font-size: 20px;
@@ -297,13 +292,13 @@ body, html {
       border: 0px;
     }
     &:hover {
-        @include media-breakpoint-up(sm) {
-          background-color: $login-box-submit-btn-hover;
-          color: $login-box-dark-blue;
-          width: 180px;
-          span { display: inline; }
-        }
+      @include media-breakpoint-up(sm) {
+        background-color: $login-box-submit-btn-hover;
+        color: white;
+        width: 180px;
+        span { display: inline; }
       }
+    }
   }
 }
 

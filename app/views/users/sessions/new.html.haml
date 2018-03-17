@@ -2,23 +2,23 @@
   #login-box
     = form_for resource, as: resource_name, url: session_path(resource_name), class: "" do |f|
       #login-box-header.d-flex.align-items-end
-        .p-2
+        .p-3
           %h2#login-box-header-text= t(:log_in_title)
       #login-box-body.d-flex.flex-column
-        .p-2.d-flex.flex-column
+        .d-flex.flex-column
         
-          .field.p-2
+          .field.p-3
             = f.text_field :login, autofocus: true, placeholder: t(:email_or_username)
-          .field.p-2
+          .field.p-3
             = f.password_field :password, autocomplete: "off", placeholder: t(:password)
 
           -if devise_mapping.rememberable?
-            .field.p-2
+            .field.p-3
               .custom-control.custom-checkbox
                 = login_checkbox_tag(f)
 
           = render "users/shared/links"
 
-      = button_tag class: 'btn btn-primary', id: "submit-login-btn", type: "submit" do
+      = button_tag id: "submit-login-btn", type: "submit" do
         %span= t(:log_in_button)
         = fa_icon("sign-in")

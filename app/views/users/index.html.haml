@@ -14,7 +14,7 @@
             %th.d-none.d-md-block.d-md-table-cell= t(:status)
             %th= t(:actions)
         %tbody.table-body
-          - @user.each do |user|
+          - @users.each do |user|
             %tr
               %td= user.id
               %td= user.name
@@ -31,21 +31,26 @@
                   %a#dropdownMenuLink.btn.btn-green{ href: "#", "data-toggle" => "dropdown", aria: { expanded: false, haspopup: true } }
                     = t(:actions)
                   .dropdown-menu.table-dropdown-menu{ "aria-labelledby" => "dropdownMenuLink" }
-                    = link_to t(:show), user_path(user), class: "btn-green-dropdown-item btn-green"
-                    = link_to t(:edit), edit_user_path(user), class: "btn-green-dropdown-item btn-green"
+                    = link_to user_path(user), class: "btn-green-dropdown-item btn-green" do
+                      = fa_icon(:eye)
+                      = t(:show)
+                    = link_to edit_user_path(user), class: "btn-green-dropdown-item btn-green" do
+                      = fa_icon(:edit)
+                      = t(:edit)
                     - if current_user != user
-                      = link_to t(:delete), user_path(user), method: :delete, class: "btn-green-dropdown-item btn-green", data: { confirm: '¿Eliminar?'}
+                      = link_to user_path(user), method: :delete, class: "btn-green-dropdown-item btn-green", data: { confirm: '¿Eliminar?'} do
+                        = fa_icon(:trash)
+                        = t(:delete)
                     - if current_user != user
-                      .dropdown-divider
                       = link_to masquerade_path(user), class: "btn-green-dropdown-item btn-green" do
                         .fa.fa-id-badge
                         = t(:masquerade_login)
                       = link_to lock_user_path(user), method: :post, class: "btn-green-dropdown-item btn-green" do
-                        %a.fa.fa-lock
+                        .fa.fa-lock
                         = t(:lock)
                       = link_to unlock_user_path(user), method: :post, class: "btn-green-dropdown-item btn-green" do
-                        %a.fa.fa-unlock
+                        .fa.fa-unlock
                         = t(:unlock)
   %div.index-table-pagination-wrapper
-    = will_paginate(@user, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer, class: 'pagination-nav float-right', previous_label: t(:previous), next_label: t(:next))
+    = will_paginate(@users, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer, class: 'pagination-nav float-right', previous_label: t(:previous), next_label: t(:next))
     %clearfix
