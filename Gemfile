@@ -40,10 +40,9 @@ gem 'devise'
 gem 'devise_masquerade'
 gem 'activeadmin'
 #Use Bootstrap fot templates
-gem 'bootstrap', '~> 4.0.0.alpha6'
+gem 'bootstrap', '~> 4.0.0'
 gem "font-awesome-rails"
 gem 'jquery-rails'
-gem 'popper_js', '~> 1.12.3'
 gem 'pry'
 gem 'rails-i18n', '~> 5.0.0'
 gem 'bootstrap-will_paginate'
