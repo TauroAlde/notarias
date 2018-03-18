@@ -9,7 +9,7 @@ RSpec.describe Segment, type: :model do
     it { is_expected.to have_many(:segments).with_foreign_key('parent_id').class_name('Segment') }
     it { is_expected.to have_many(:segments).inverse_of(:parent_segment) }
     # TODO: with the model user_segment
-    #it { is_expected.to have_many(:representatives).through(:user_segment) }
-    #it { is_expected.to have_many(:user_segments) }
+    it { is_expected.to have_many(:representatives).through(:user_segments) }
+    it { is_expected.to have_many(:user_segments) }
   end
 end
