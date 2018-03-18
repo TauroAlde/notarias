@@ -2,9 +2,11 @@ class UsersController < ApplicationController
 
   before_action :allow_without_password, only: [:update]
   before_action :authorize!
+  before_action :load_groups, only: [:index, :update]
+  before_action :load_users, only: [:index, :update]
 
   def index
-    @users = User.paginate(page: params[:page], per_page: 2)
+    @user = User.find(params[:user_id]) if params[:user_id]
   end
 
   def show
@@ -33,11 +35,16 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    if @user.update(user_params)
-      redirect_to users_path
-    else
-      render :edit
+    begin
+      @user.update(user_params)
+    rescue ActiveRecord::RecordNotUnique => e
+      @user.user_groups.each do |ug|
+        ug.errors.add(:group_id, t(:cant_send_duplicates)) if ug.new_record?
+      end
+      flash[:error] = t(:errors_updating_the_user)
     end
+    flash[:notice] = t(:success_user_update) if flash[:error].blank? && @user.errors.empty?
+    render :index 
   end
 
   #def destroy
@@ -69,6 +76,14 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def load_users
+    @users = User.paginate(page: params[:page], per_page: 2)
+  end
+
+  def load_groups
+    @groups = Group.all
+  end
 
   def user_params
     params.require(:user).

@@ -1,0 +1,47 @@
+= form_for @user, html: { id: "user-form" } do |f|
+  #user-form-actions.row
+    .col-9
+      %h3.text-truncate= @user.name
+    .col-3
+      = f.submit t(:save), class: "btn btn-primary float-right"
+      .clearfix
+
+  #user-form-content.row
+    .col-md-6.col-sm-12
+      .form-group
+        = f.label t(:name)
+        = f.text_field :name, class: "form-control"
+    .col-md-6.col-sm-12
+      .form-group
+        = f.label t(:father_last_name)
+        = f.text_field :father_last_name, class: "form-control"
+    .col-md-6.col-sm-12
+      .form-group
+        = f.label t(:mother_last_name)
+        = f.text_field :mother_last_name, class: "form-control"
+    .col-md-6.col-sm-12
+      .form-group
+        = f.label t(:username)
+        = f.text_field :username, class: "form-control"
+    .col-md-6.col-sm-12
+      .form-group
+        = f.label t(:email)
+        = f.text_field :email, class: "form-control"
+    .col-md-6.col-sm-12
+      .form-group
+        = f.label t(:password)
+        = f.text_field :password, class: "form-control"
+    .col-md-6.col-sm-12
+      .form-group
+        = f.label t(:password_confirmation)
+        = f.text_field :password_confirmation, class: "form-control"
+    .col-md-12.col-sm-12
+      .form-group#groups
+        %h4= t(:groups)
+        .row
+          = f.fields_for :user_groups do |user_group|
+            = render 'user_group_fields', f: user_group, groups: @groups
+          .col-md-12.col-sm-12.nested-fields.links.remove-group-link-wrapper
+            = link_to_add_association t(:add_group), f, :user_groups, render_options: { locals: { groups: @groups } }, class: "btn btn-primary float-right"
+            .clearfix
+  
