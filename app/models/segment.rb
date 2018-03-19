@@ -5,6 +5,8 @@ class Segment < ApplicationRecord
   # o the leaf segment of the tree
   has_many :representatives, foreign_key: :user_id, class_name: "User", through: :user_segments
   has_many :user_segments
+  has_many :users, through: :prep_processes
+  has_many :prep_processes
 
   has_closure_tree
 end
