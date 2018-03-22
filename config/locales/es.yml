@@ -26,7 +26,7 @@ es:
   id: "ID"
   lock: "Bloquear"
   locked: "Bloqueado"
-  lock_access: "El usuario ha sido bloqueado con exito"
+  lock_access: "El usuario ha sido bloqueado con éxito"
   login: "Inicar session con email o correo electronico"
   log_in_button: "Entrar"
   log_in_title: "Inicio de Sesión"
@@ -56,7 +56,7 @@ es:
   success_user_update: "El usuario se actualizó con éxito"
   unlock: "Desbloquear"
   unlocked: "Desbloqueado"
-  unlock_access: "El usuario ha sido desbloqueado con exito"
+  unlock_access: "El usuario ha sido desbloqueado con éxito"
   username: "Nombre de usario"
   users: "Usuarios"
    

@@ -2,8 +2,8 @@ class UsersController < ApplicationController
 
   before_action :allow_without_password, only: [:update]
   before_action :authorize!
-  before_action :load_groups, only: [:index, :update]
-  before_action :load_users, only: [:index, :update]
+  before_action :load_groups, only: [:index, :update, :lock, :unlock]
+  before_action :load_users, only: [:index, :update, :lock, :unlock]
 
   def index
     @user = User.find(params[:user_id]) if params[:user_id]
@@ -61,7 +61,7 @@ class UsersController < ApplicationController
     else
       flash[:notice] = t(:cant_perform_this_action)
     end
-    redirect_to users_path
+    render :index
   end
 
   def unlock
@@ -72,7 +72,7 @@ class UsersController < ApplicationController
     else
       flash[:alert] = t(:cant_perform_this_action)
     end
-    redirect_to users_path
+    render :index
   end
 
   private
