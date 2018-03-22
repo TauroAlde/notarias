@@ -53,13 +53,13 @@ GEM
     arbre (1.1.1)
       activesupport (>= 3.0.0)
     arel (7.1.4)
-    autoprefixer-rails (7.1.6)
+    autoprefixer-rails (8.1.0.1)
       execjs
     bcrypt (3.1.11)
     bindex (0.5.0)
-    bootstrap (4.0.0.beta2.1)
+    bootstrap (4.0.0)
       autoprefixer-rails (>= 6.0.3)
-      popper_js (>= 1.12.3, < 2)
+      popper_js (>= 1.12.9, < 2)
       sass (>= 3.5.2)
     bootstrap-will_paginate (1.0.0)
       will_paginate
@@ -166,7 +166,7 @@ GEM
     pg (0.21.0)
     polyamorous (1.3.1)
       activerecord (>= 3.0)
-    popper_js (1.12.5)
+    popper_js (1.12.9)
     pry (0.11.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
@@ -289,7 +289,7 @@ PLATFORMS
 
 DEPENDENCIES
   activeadmin
-  bootstrap (~> 4.0.0.alpha6)
+  bootstrap (~> 4.0.0)
   bootstrap-will_paginate
   byebug
   cocoon
@@ -303,7 +303,6 @@ DEPENDENCIES
   jquery-rails
   listen (~> 3.0.5)
   pg
-  popper_js (~> 1.12.3)
   pry
   puma (~> 3.0)
   rails (~> 5.0.2)
