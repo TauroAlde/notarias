@@ -23,6 +23,7 @@ en:
   actions: "Actions"
   add_group: "Add Group"
   authorization_failed: "You dont have access to perform this action"
+  back: "Back"
   cant_perform_this_action: "This task can not be performed on the active user!"
   catalogs: "Catalogs"
   confirmation_instructions: "Didn't receive confirmation instructions?"

@@ -2,6 +2,7 @@ es:
   actions: "Acciones"
   add_group: "Nuevo Grupo"
   authorization_failed: "No tiene acceso a la acción solicitada"
+  back: "Regresar"
   cant_perform_this_action: "¡Esta tarea no puede realizarse sobre el usuario activo!"
   cant_send_duplicates: "No puede enviar duplicados en el select"
   catalogs: "Catalogos"
