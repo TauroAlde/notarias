@@ -2,7 +2,13 @@
   #users-index-actions.row
     .col-md-12
       .p-2
-        poner input de busqueda aquí
+        = search_form_for @q do |f|
+          .input-group.mb-3
+            .input-group-prepend
+            = button_tag class:'btn btn-outline-secondary' do
+              = fa_icon "search"
+            = f.search_field(:name_or_father_last_name_or_mother_last_name_or_username_or_email_cont, class: "form-control", type:"text")
+
   #users-index-content.row
     #users-list.col-12.col-md-4.d-md-block{ class: @user ? "d-none" : "" }
       .row#pagination
