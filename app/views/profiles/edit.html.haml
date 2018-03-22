@@ -43,12 +43,14 @@
                   = f.label t(:password_confirmation)
                   = f.text_field :password_confirmation, class: "form-control"
 
+      .separator.d-block.d-md-none
+
       .col-12.col-md-6#user-profile-tabs
         .row
           .col-12
             %ul#pills-tab.nav.nav-pills{ role: "tablist" }
               %li.nav-item
-                %a#pills-groups-tab.nav-link.active{ href: "#groups-tab", role: "tab", data: { toggle: "pill" }, aria: { controls: "home", selected: "true" } }= t(:groups)
+                %a#pills-groups-tab.nav-link.btn-primary.active{ href: "#groups-tab", role: "tab", data: { toggle: "pill" }, aria: { controls: "home", selected: "true" } }= t(:groups)
           .col-12
             #groups-tab.tab-pane.fade.show.active{ role: "tabpanel", aria: { labelledby: "groups-tab" } }
               = f.fields_for :user_groups do |user_group|
