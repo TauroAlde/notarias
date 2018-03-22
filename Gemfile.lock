@@ -65,6 +65,13 @@ GEM
       will_paginate
     builder (3.2.3)
     byebug (9.1.0)
+    carrierwave (1.2.2)
+      activemodel (>= 4.0.0)
+      activesupport (>= 4.0.0)
+      mime-types (>= 1.16)
+    closure_tree (6.6.0)
+      activerecord (>= 4.1.0)
+      with_advisory_lock (>= 3.0.0)
     cocoon (1.2.11)
     coderay (1.1.2)
     coffee-rails (4.2.2)
@@ -283,6 +290,8 @@ GEM
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
     will_paginate (3.1.6)
+    with_advisory_lock (3.2.0)
+      activerecord (>= 3.2)
 
 PLATFORMS
   ruby
@@ -292,6 +301,8 @@ DEPENDENCIES
   bootstrap (~> 4.0.0)
   bootstrap-will_paginate
   byebug
+  carrierwave (~> 1.0)
+  closure_tree
   cocoon
   coffee-rails (~> 4.2)
   devise
