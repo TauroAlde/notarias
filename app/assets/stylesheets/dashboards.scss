@@ -359,3 +359,10 @@ body, html {
     cursor: pointer;
   }
 }
+
+.separator {
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+  border-bottom: 1px solid $system-dark-green-transparent;
+}
+

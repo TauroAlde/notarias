@@ -65,6 +65,10 @@ GEM
       will_paginate
     builder (3.2.3)
     byebug (9.1.0)
+    carrierwave (1.2.2)
+      activemodel (>= 4.0.0)
+      activesupport (>= 4.0.0)
+      mime-types (>= 1.16)
     closure_tree (6.6.0)
       activerecord (>= 4.1.0)
       with_advisory_lock (>= 3.0.0)
@@ -297,6 +301,7 @@ DEPENDENCIES
   bootstrap (~> 4.0.0)
   bootstrap-will_paginate
   byebug
+  carrierwave (~> 1.0)
   closure_tree
   cocoon
   coffee-rails (~> 4.2)
@@ -314,6 +319,7 @@ DEPENDENCIES
   rails (~> 5.0.2)
   rails-controller-testing
   rails-i18n (~> 5.0.0)
+  ransack
   rspec-rails (~> 3.6)
   sass-rails (~> 5.0)
   shoulda-callback-matchers (~> 1.1.1)

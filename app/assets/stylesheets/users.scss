@@ -85,6 +85,21 @@
     margin-bottom: 1em;
   }
 }
+#user-profile, #user-profile form {
+  min-height: 100%;
+}
 
+#user-profile {
+  height: 100%;
+  overflow-y: scroll;
+}
+
+#user-profile-info, #user-profile-tabs {
+  min-height: 100%;
+}
+
+#user-profile-tabs .nav{
+  padding: 1em 0;
+}
 
 

@@ -2,11 +2,12 @@ class UsersController < ApplicationController
 
   before_action :allow_without_password, only: [:update]
   before_action :authorize!
-  before_action :load_groups, only: [:index, :update]
-  before_action :load_users, only: [:index, :update]
+  before_action :load_groups, only: [:index, :update, :lock, :unlock]
+  before_action :load_users, only: [:index, :update, :lock, :unlock]
 
   def index
-    @user = User.find(params[:user_id]) if params[:user_id]
+    @q = User.ransack(params[:q])
+    @users = @q.result(distinct: true).paginate(:page => params[:page], :per_page => 5)
   end
 
   def show
@@ -61,7 +62,7 @@ class UsersController < ApplicationController
     else
       flash[:notice] = t(:cant_perform_this_action)
     end
-    redirect_to users_path
+    render :index
   end
 
   def unlock
@@ -72,13 +73,13 @@ class UsersController < ApplicationController
     else
       flash[:alert] = t(:cant_perform_this_action)
     end
-    redirect_to users_path
+    render :index
   end
 
   private
 
   def load_users
-    @users = User.paginate(page: params[:page], per_page: 2)
+    @users = User.paginate(page: params[:page], per_page: 5)
   end
 
   def load_groups

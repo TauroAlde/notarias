@@ -4,7 +4,7 @@
       .p-2
         poner input de busqueda aquí
   #users-index-content.row
-    #users-list.col-12.col-md-4
+    #users-list.col-12.col-md-4.d-md-block{ class: @user ? "d-none" : "" }
       .row#pagination
 
       - @users.each do |user|
@@ -21,6 +21,6 @@
                 .font-italic= user.email
 
       
-    #user-info.col-12.col-md-8
+    #user-info.col-12.col-md-8.d-md-block{ class: @user ? "" : "d-none" }
       - if @user
         = render "index_form"
