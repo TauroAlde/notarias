@@ -54,6 +54,7 @@ es:
   sign_up: "Regístrate"
   status: "Estatus"
   success_user_update: "El usuario se actualizó con éxito"
+  success_profile_update: "El perfile se actualizó con éxito"
   unlock: "Desbloquear"
   unlocked: "Desbloqueado"
   unlock_access: "El usuario ha sido desbloqueado con éxito"

@@ -73,6 +73,7 @@ en:
   sign_up: "Sign up"
   status: "Status"
   success_user_update: "User updated successfully"
+  success_profile_update: "Profile updated successfully"
   username: "Username"
   users: "Users"
   unlock: "Unlock"
