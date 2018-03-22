@@ -319,6 +319,7 @@ DEPENDENCIES
   rails (~> 5.0.2)
   rails-controller-testing
   rails-i18n (~> 5.0.0)
+  ransack
   rspec-rails (~> 3.6)
   sass-rails (~> 5.0)
   shoulda-callback-matchers (~> 1.1.1)
