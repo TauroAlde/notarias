@@ -10,5 +10,6 @@ RSpec.describe Group, type: :model do
     it {  is_expected.to have_many(:permissions) }
     it {  is_expected.to have_many(:user_groups) }
     it {  is_expected.to have_many(:users).through(:user_groups) }
+    it {  is_expected.to have_many(:segments) }
   end
 end
