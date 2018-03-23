@@ -5,8 +5,8 @@
         = search_form_for @q do |f|
           .input-group.mb-3
             .input-group-prepend
-            = f.search_field(:name_or_father_last_name_or_mother_last_name_or_username_or_email_cont, class: "form-control",placeholder: t(:search) , type:"text")
-            = button_tag class:'btn btn-outline-secondary' do
+            = f.search_field( :name_or_father_last_name_or_mother_last_name_or_username_or_email_cont, class: "form-control", placeholder: t(:search), type: "text" )
+            = button_tag class: 'btn btn-outline-secondary' do
               = fa_icon "search"
 
   #users-index-content.row
