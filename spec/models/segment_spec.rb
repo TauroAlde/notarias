@@ -12,5 +12,6 @@ RSpec.describe Segment, type: :model do
     it { is_expected.to have_many(:user_segments) }
     it { should have_many(:prep_processes) }
     it { should have_many(:users).through(:prep_processes) }
+    it { is_expected.to have_many(:groups) }
   end
 end
