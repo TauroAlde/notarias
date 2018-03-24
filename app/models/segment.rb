@@ -7,6 +7,6 @@ class Segment < ApplicationRecord
   has_many :user_segments
   has_many :users, through: :prep_processes
   has_many :prep_processes
-
+  has_many :groups
   has_closure_tree
 end
