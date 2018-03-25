@@ -25,7 +25,11 @@
                   %span.badge.badge-pill.badge-danger= t(:locked)
               .col-md-12
                 .font-italic= user.email
-
+      .row
+        .col-md-12
+          %div.index-table-pagination-wrapper
+            = will_paginate(@user, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer, class: 'pagination-nav float-right', previous_label: t(:previous), next_label: t(:next))
+            %clearfix
       
     #user-info.col-12.col-md-8.d-md-block{ class: @user ? "" : "d-none" }
       - if @user
