@@ -5,6 +5,7 @@ class UsersController < ApplicationController
   before_action :load_groups
   before_action :load_search
   before_action :load_users
+  before_action :load_segment
   authorize_resource
 
   def index
@@ -94,6 +95,10 @@ class UsersController < ApplicationController
 
   def load_search
     @q = User.ransack(params[:q])
+  end
+
+  def load_segment
+    Segment.find(params[:segment_id]) if params[:segment_id]
   end
 
   def user_params

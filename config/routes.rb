@@ -14,7 +14,9 @@ Rails.application.routes.draw do
   resources :task_catalogs
   resources :procedure_catalogs
   resources :user_preferences
-  resources :segments
+  resources :segments do
+    resources :users
+  end
   resources :profiles, only: [:edit, :update]
 
   post 'users_batch_action', to: 'users_batch_actions#create'
