@@ -98,7 +98,7 @@ class UsersController < ApplicationController
   end
 
   def load_segment
-    @a = Segment.find(params[:segment_id]) if params[:segment_id]
+    @segment = Segment.find(params[:segment_id]) if params[:segment_id]
   end
 
   def user_params
