@@ -16,7 +16,10 @@ class User < ApplicationRecord
   has_many :user_segments
   has_many :segments, through: :prep_processes
   has_many :prep_processes
-  
+
+  has_many :user_roles
+  has_many :roles, through: :user_roles
+
   validates :username, uniqueness: true
   validates :username, presence: :true, uniqueness: { case_sensitive: false }
   validates_format_of :username, with: /^[a-zA-Z0-9_\.]*$/, multiline: true
@@ -63,5 +66,17 @@ class User < ApplicationRecord
 
   def full_name
     [name,father_last_name,mother_last_name].join(" ")
+  end
+
+  def admin?
+    roles.include?(Role.admin)
+  end
+
+  def super_admin?
+    roles.include?(Role.super_admin)
+  end
+
+  def common?
+    roles.include?(Role.common)
   end
 end

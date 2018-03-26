@@ -1,10 +1,11 @@
 class UsersController < ApplicationController
 
   before_action :allow_without_password, only: [:update]
-  before_action :authorize!
+  #before_action :authorize!
   before_action :load_groups
   before_action :load_search
   before_action :load_users
+  authorize_resource
 
   def index
   end
@@ -23,9 +24,9 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params)
     begin
-      @user.save
+      @user = User.create!(user_params)
+      @user.roles << Role.common
     rescue ActiveRecord::RecordNotUnique => e
       @user.user_groups.each do |ug|
         ug.errors.add(:group_id, t(:cant_send_duplicates)) if ug.new_record?
