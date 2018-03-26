@@ -8,7 +8,7 @@ RSpec.describe Segment, type: :model do
     #it { is_expected.to belong_to(:parent_segment).optional }
     it { is_expected.to have_many(:segments).with_foreign_key('parent_id').class_name('Segment') }
     it { is_expected.to have_many(:segments).inverse_of(:parent_segment) }
-    it { is_expected.to have_many(:representative_users).through(:user_segments).with_foreign_key('user_id').class_name('User') }
+    it { is_expected.to have_many(:representatives).through(:user_segments).with_foreign_key('user_id').class_name('User') }
     it { is_expected.to have_many(:user_segments) }
     it { should have_many(:prep_processes) }
     it { should have_many(:users).through(:prep_processes) }
