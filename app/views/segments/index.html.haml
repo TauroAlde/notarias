@@ -1,18 +1,36 @@
-.d-flex.flex-column.flex-table-wrapper-parent
-  .d-flex.flex-column.flex-table-wrapper
-    .index-table-wrapper
-      %table.table.index-table.table-hover.table-responsive-sm
-        %thead.thead-light.table-head
-          %tr
-            %th= :segment_id
-            %th= :parent_id
-            %th= t(:name)
-          %tbody.table-body
-            - @segments.each do |segment|
-              %tr
-                %td= segment.id
-                %td= segment.parent_id
-                %td= segment.name
-                %td
-                  .btn-primary
-                  = link_to t(:show), segment_path(segment)
+#segments-index.h-100
+  #segments-index-actions.row.no-gutters
+    = search_form_for @q, class: "col-8 col-md-10 col-lg-11 users-search-form" do |f|
+      .input-group
+        = f.search_field(:name_cont, class: "form-control", placeholder: t(:search), type: "text" )
+        = button_tag class: 'btn btn-outline-secondary' do
+          = fa_icon "search"
+        .clearfix
+
+    %a#action-dropdown-btn.btn.btn-primary.dropdown-toggle.col{ href: "#", "data-toggle" => "dropdown", "data-resource" => "segment", aria: { expanded: false, haspopup: true } }
+      = t(:actions)
+
+    .dropdown-menu.table-dropdown-menu{ "aria-labelledby" => "dropdownMenuLink" }
+      = link_to "#", class: "btn-green-dropdown-item btn-green batch-action-btn d-none", data: { action: "delete" } do
+        = fa_icon(:trash)
+        = t(:delete)
+
+      = link_to new_segment_path, class: "btn-green-dropdown-item btn-green single-action-btn", remote: true do
+        = fa_icon(:plus)
+        = t(:new)
+
+  #segments-index-content.container-fluid
+    .row
+      #segments-list.col-12.col-md-4.d-md-block.resource-list{ class: @segment ? "d-none" : "" }
+        #segments-filters.row
+          filtros
+        #segments-pool.row
+          CARGAR JSTREE AQUI
+
+      #segment-info.col-12.col-md-8.d-md-block.resource-info{ class: @segment ? "" : "d-none" }
+        - if @segment
+          = render @segment
+        - else
+          .row.align-items-center.h-100
+            .col
+              %h1.text-center= t(:select_one_or_more_elements)

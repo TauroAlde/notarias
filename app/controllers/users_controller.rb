@@ -2,12 +2,11 @@ class UsersController < ApplicationController
 
   before_action :allow_without_password, only: [:update]
   before_action :authorize!
-  before_action :load_groups, only: [:index, :update, :lock, :unlock]
-  before_action :load_users, only: [:index, :update, :lock, :unlock]
+  before_action :load_groups
+  before_action :load_search
+  before_action :load_users
 
   def index
-    @q = User.ransack(params[:q])
-    @users = @q.result(distinct: true).paginate(:page => params[:page], :per_page => 5)
   end
 
   def show
@@ -17,21 +16,24 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
-    @groups = Group.all
   end
 
   def edit
     @user = User.find(params[:id])
-    @groups = Group.all
   end
 
   def create
     @user = User.new(user_params)
-    if @user.save
-      redirect_to users_path
-    else
-      render :new
+    begin
+      @user.save
+    rescue ActiveRecord::RecordNotUnique => e
+      @user.user_groups.each do |ug|
+        ug.errors.add(:group_id, t(:cant_send_duplicates)) if ug.new_record?
+      end
+      flash[:error] = t(:errors_creating_the_user)
     end
+    flash[:notice] = t(:success_user_create) if flash[:error].blank? && @user.errors.empty?
+    render :index
   end
 
   def update
@@ -48,11 +50,12 @@ class UsersController < ApplicationController
     render :index 
   end
 
-  #def destroy
-  #  @user = User.find(params[:id])
-  #  @user.destroy
-  #  redirect_to users_path
-  #end
+  def destroy
+    @user = User.find(params[:id])
+    @user.destroy
+    flash[:notice] = t(:deleted_users_successfully)
+    render :index
+  end
 
   def lock
     @user = User.find(params[:id])
@@ -79,11 +82,17 @@ class UsersController < ApplicationController
   private
 
   def load_users
-    @users = User.paginate(page: params[:page], per_page: 5)
+    @users = @q
+      .result(distinct: true).paginate(page: params[:page], per_page: 20)
+      .where('id NOT in (?)', [current_user.id])
   end
 
   def load_groups
     @groups = Group.all
+  end
+
+  def load_search
+    @q = User.ransack(params[:q])
   end
 
   def user_params

@@ -27,4 +27,8 @@ module ApplicationHelper
   def authorized_for?(resource, action = nil)
     Authorizer.new(current_user).authorize(resource, action)
   end
+
+  def filter_active?(filter_key)
+    params[:q] ? params[:q].keys.map(&:to_sym).include?(filter_key) : false
+  end
 end

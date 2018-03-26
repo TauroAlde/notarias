@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180316142747) do
+ActiveRecord::Schema.define(version: 20180326024725) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,10 +36,20 @@ ActiveRecord::Schema.define(version: 20180316142747) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "candidates", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "candidacy_id"
+    t.integer  "political_party_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
   create_table "groups", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "segment_id"
+    t.index ["segment_id"], name: "index_groups_on_segment_id", using: :btree
   end
 
   create_table "permissions", force: :cascade do |t|
@@ -81,6 +91,15 @@ ActiveRecord::Schema.define(version: 20180316142747) do
     t.datetime "updated_at",     null: false
   end
 
+  create_table "prep_processes", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "segment_id"
+    t.integer  "current_step"
+    t.datetime "completed_at"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
   create_table "procedures", force: :cascade do |t|
     t.string   "name"
     t.integer  "creator_user_id"
@@ -93,6 +112,22 @@ ActiveRecord::Schema.define(version: 20180316142747) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "segment_hierarchies", id: false, force: :cascade do |t|
+    t.integer "ancestor_id",   null: false
+    t.integer "descendant_id", null: false
+    t.integer "generations",   null: false
+    t.index ["ancestor_id", "descendant_id", "generations"], name: "segment_anc_desc_idx", unique: true, using: :btree
+    t.index ["descendant_id"], name: "segment_desc_idx", using: :btree
+  end
+
+  create_table "segment_user_imports", force: :cascade do |t|
+    t.integer  "segment_id"
+    t.integer  "uploader_id"
+    t.string   "file"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "segments", force: :cascade do |t|

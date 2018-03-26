@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   root 'dashboards#index' 
 
-  resources :users, except: [:destroy] do
+  resources :users do
     post :lock, on: :member
     post :unlock, on: :member
   end
@@ -14,8 +14,10 @@ Rails.application.routes.draw do
   resources :task_catalogs
   resources :procedure_catalogs
   resources :user_preferences
-  resources :segments, only: [:index, :show]
+  resources :segments
   resources :profiles, only: [:edit, :update]
+
+  post 'users_batch_action', to: 'users_batch_actions#create'
 
   # handles /
   get '', to: redirect("/#{I18n.locale}")

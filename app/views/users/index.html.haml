@@ -1,32 +1,37 @@
-#users-index.container-fluid
-  #users-index-actions.row
-    .col-md-12
-      .p-2
-        = search_form_for @q do |f|
-          .input-group.mb-3
-            .input-group-prepend
-            = f.search_field( :name_or_father_last_name_or_mother_last_name_or_username_or_email_cont, class: "form-control", placeholder: t(:search), type: "text" )
-            = button_tag class: 'btn btn-outline-secondary' do
-              = fa_icon "search"
+#users-index
+  #users-index-actions.row.no-gutters
+    = search_form_for @q, class: "col-8 col-md-10 col-lg-11 users-search-form" do |f|
+      .input-group
+        = f.search_field( :name_or_father_last_name_or_mother_last_name_or_username_or_email_cont, class: "form-control", placeholder: t(:search), type: "text" )
+        = button_tag class: 'btn btn-outline-secondary' do
+          = fa_icon "search"
+        .clearfix
 
-  #users-index-content.row
-    #users-list.col-12.col-md-4.d-md-block{ class: @user ? "d-none" : "" }
-      .row#pagination
+    %a#action-dropdown-btn.btn.btn-primary.dropdown-toggle.col{ href: "#", "data-toggle" => "dropdown", aria: { expanded: false, haspopup: true } }
+      = t(:actions)
 
-      - @users.each do |user|
-        = link_to edit_user_path(user), class: "users-list-row row #{@user == user ? 'active' : '' }", data: { "user-id": user.id }, remote: true do
-          .col-3.image-wrapper
-            = image_tag "user.gif", alt: "AB", class: "rounded-circle"
-          .col-9
-            .row
-              .col-md-12
-                %strong= user.username
-                - if user.access_locked?
-                  %span.badge.badge-pill.badge-danger= t(:locked)
-              .col-md-12
-                .font-italic= user.email
+    .dropdown-menu.table-dropdown-menu{ "aria-labelledby" => "dropdownMenuLink" }
+      = link_to "#", class: "btn-green-dropdown-item btn-green batch-action-btn d-none", data: { action: "delete" } do
+        = fa_icon(:trash)
+        = t(:delete)
 
-      
-    #user-info.col-12.col-md-8.d-md-block{ class: @user ? "" : "d-none" }
-      - if @user
-        = render "index_form"
+      = link_to new_user_path, class: "btn-green-dropdown-item btn-green single-action-btn", data: { action: "delete" }, remote: true do
+        = fa_icon(:plus)
+        = t(:new)
+
+  #users-index-content.container-fluid
+    .row
+      #users-list.col-12.col-md-4.d-md-block.resource-list{ class: @user ? "d-none" : "" }
+        #users-filters.row
+          = link_to t(:active), users_index_filter_path({ deleted_at_null: 1 }, :deleted_at_not_null), class: "col-6 btn #{filter_active?(:deleted_at_null) ? 'btn-outline-success active-filter' : ''}"
+          = link_to t(:inactive), users_index_filter_path({ deleted_at_not_null: 1 }, :deleted_at_null), class: "col-6 btn #{filter_active?(:deleted_at_not_null) ? 'btn-outline-success active-filter' : ''}"
+        #users-pool.row
+          = render @users
+
+      #user-info.col-12.col-md-8.d-md-block.resource-info{ class: @user ? "" : "d-none" }
+        - if @user
+          = render "index_form"
+        - else
+          .row.align-items-center.h-100
+            .col
+              %h1.text-center= t(:select_one_or_more_elements)
