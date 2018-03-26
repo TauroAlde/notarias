@@ -14,7 +14,6 @@ class User < ApplicationRecord
   has_many :user_groups, inverse_of: :user
   has_many :segments, through: :user_segments
   has_many :user_segments
-  has_many :segments, through: :prep_processes
   has_many :prep_processes
   
   validates :username, uniqueness: true
