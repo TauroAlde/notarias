@@ -15,7 +15,10 @@ Rails.application.routes.draw do
   resources :procedure_catalogs
   resources :user_preferences
   resources :segments do
-    resources :users
+    resources :users do
+      post :lock, on: :member
+      post :unlock, on: :member
+    end
   end
   resources :profiles, only: [:edit, :update]
 

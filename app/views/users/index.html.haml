@@ -1,6 +1,6 @@
 #users-index
   #users-index-actions.row.no-gutters
-    = search_form_for @q, class: "col-8 col-md-10 col-lg-11 users-search-form" do |f|
+    = search_form_for @q, url: users_search_url, class: "col-8 col-md-10 col-lg-11 users-search-form" do |f|
       .input-group
         = f.search_field( :name_or_father_last_name_or_mother_last_name_or_username_or_email_cont, class: "form-control", placeholder: t(:search), type: "text" )
         = button_tag class: 'btn btn-outline-secondary' do
