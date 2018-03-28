@@ -25,7 +25,7 @@ module UsersHelper
     end
   end
 
-  def delete_user_url
+  def delete_user_link_url
     if @segment
       segment_user_path(@segment, @user)
     else
@@ -33,35 +33,35 @@ module UsersHelper
     end    
   end
 
-  def lock_user_url
+  def lock_user_link_url
     if @segment
-      lock_segment_user(@segment, @user)
+      lock_segment_user_path(@segment, @user)
     else
       lock_user_path(@user)
     end    
   end
 
-  def unlock_user_url
+  def unlock_user_link_url
     if @segment
-      unlock_segment_user(@segment, @user)
+      unlock_segment_user_path(@segment, @user)
     else
       unlock_user_path(@user)
     end
   end
 
-  def return_form
+  def return_link_url
     if @segment
-      segment_users_path
+      segment_users_path(@segment, @user)
     else
-      users_path
+      users_path(@user)
     end
   end
 
-  def new_user_url
+  def new_user_link_url
     if @segment
-      new_segment_user_path
+      new_segment_user_path(@segment, @user)
     else
-      new_user_path
+      new_user_path(@user)
     end
   end
 end
