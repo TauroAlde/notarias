@@ -14,7 +14,9 @@ Rails.application.routes.draw do
   resources :task_catalogs
   resources :procedure_catalogs
   resources :user_preferences
+  resources :prep_processes, only: [:new]
   resources :segments do
+    resources :prep_processes
     resources :users do
       post :lock, on: :member
       post :unlock, on: :member

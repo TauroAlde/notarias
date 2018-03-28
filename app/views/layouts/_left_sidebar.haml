@@ -5,6 +5,7 @@
   = left_sidebar_link(t(:users), users_path , "users")
   = left_sidebar_link(t(:catalogs), procedure_catalogs_path , "book")
   = left_sidebar_link(t(:segments), segments_path , "map")
+  = left_sidebar_link(t(:capture), prep_capture_process_route, "pencil")
 
   .mt-auto.d-flex.flex-column
     = left_sidebar_link(t(:sign_out), logout_path(current_user), "sign-out", wrapper_options: { class: "sidebar-bottom-link" }, method: :delete)

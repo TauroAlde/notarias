@@ -6,4 +6,12 @@ module DashboardsHelper
       concat(content_tag(:span, t(:remember_me), class: "custom-control-description"))
     end
   end
+
+  def prep_capture_process_route
+    if current_user.segments.present?
+      new_segment_prep_process_path(current_user.segments.last)
+    else
+      new_prep_process_path
+    end
+  end
 end
