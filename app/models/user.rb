@@ -15,6 +15,9 @@ class User < ApplicationRecord
   has_many :segments, through: :user_segments
   has_many :user_segments
   has_many :prep_processes
+  # The idea is that the user is assigned to the Segment through :user_segment but also
+  # the prep_processes are linked to :users and :segments as the tasks that they do for the segment
+  has_many :processed_segments, through: :prep_processes, foreign_key: :user_id, class_name: 'Segment'
 
   has_many :user_roles
   has_many :roles, through: :user_roles
