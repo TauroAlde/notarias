@@ -11,9 +11,57 @@ module UsersHelper
 
   def users_search_url
     if @segment
-      # TODO: complete this behavior
+      segment_users_path(@segment, q: params[:q] || {})
     else
       users_path(q: params[:q] || {})
+    end
+  end
+
+  def users_form_resources
+    if @segment
+      [@segment, @user]
+    else
+      @user
+    end
+  end
+
+  def delete_user_link_url
+    if @segment
+      segment_user_path(@segment, @user)
+    else
+      user_path(@user)
+    end    
+  end
+
+  def lock_user_link_url
+    if @segment
+      lock_segment_user_path(@segment, @user)
+    else
+      lock_user_path(@user)
+    end    
+  end
+
+  def unlock_user_link_url
+    if @segment
+      unlock_segment_user_path(@segment, @user)
+    else
+      unlock_user_path(@user)
+    end
+  end
+
+  def return_link_url
+    if @segment
+      segment_users_path(@segment, @user)
+    else
+      users_path(@user)
+    end
+  end
+
+  def new_user_link_url
+    if @segment
+      new_segment_user_path(@segment, @user)
+    else
+      new_user_path(@user)
     end
   end
 end

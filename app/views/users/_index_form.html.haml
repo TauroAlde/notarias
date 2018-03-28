@@ -1,4 +1,5 @@
-= form_for @user, url: "fdsfds",html: { id: "user-form", class: "one-page-resource-form" } do |f|
+
+= form_for users_form_resources, html: { id: "user-form", class: "one-page-resource-form" } do |f|
   #user-form-actions.row
     - if !@user.new_record?
       .col-12
@@ -17,17 +18,17 @@
               = fa_icon(:eye)
               = t(:show)
             - if current_user != @user
-              = link_to user_path(@user), method: :delete, class: "btn-green-dropdown-item btn-green", data: { confirm: '¿Eliminar?'} do
+              = link_to delete_user_link_url, method: :delete, class: "btn-green-dropdown-item btn-green", data: { confirm: '¿Eliminar?'} do
                 = fa_icon(:trash)
                 = t(:delete)
             - if current_user != @user
               = link_to masquerade_path(@user), class: "btn-green-dropdown-item btn-green" do
                 .fa.fa-id-badge
                 = t(:masquerade_login)
-              = link_to lock_user_path(@user), method: :post, class: "btn-green-dropdown-item btn-green" do
+              = link_to lock_user_link_url, method: :post, class: "btn-green-dropdown-item btn-green" do
                 .fa.fa-lock
                 = t(:lock)
-              = link_to (@segment ? unlock_segment_user(@segment, @user) : unlock_user_path(@user)), method: :post, class: "btn-green-dropdown-item btn-green" do
+              = link_to unlock_user_link_url, method: :post, class: "btn-green-dropdown-item btn-green" do
                 .fa.fa-unlock
                 = t(:unlock)
       .clearfix
