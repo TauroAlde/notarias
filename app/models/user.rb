@@ -4,6 +4,8 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :lockable, :masqueradable,
          :rememberable, :trackable, :validatable
+  
+  acts_as_paranoid
 
   has_many :procedures, class_name: "Procedure", foreign_key: :creator_user
   has_many :user_preferences
