@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180326051445) do
+ActiveRecord::Schema.define(version: 20180331193744) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -100,6 +100,12 @@ ActiveRecord::Schema.define(version: 20180326051445) do
     t.datetime "updated_at",   null: false
   end
 
+  create_table "prep_step_ones", force: :cascade do |t|
+    t.integer  "prep_process_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
   create_table "procedures", force: :cascade do |t|
     t.string   "name"
     t.integer  "creator_user_id"
@@ -186,8 +192,9 @@ ActiveRecord::Schema.define(version: 20180326051445) do
   create_table "user_segments", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "segment_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.boolean  "representative"
   end
 
   create_table "users", force: :cascade do |t|
@@ -206,6 +213,8 @@ ActiveRecord::Schema.define(version: 20180326051445) do
     t.inet     "last_sign_in_ip"
     t.datetime "locked_at"
     t.string   "username"
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_users_on_deleted_at", using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
     t.index ["username"], name: "index_users_on_username", unique: true, using: :btree

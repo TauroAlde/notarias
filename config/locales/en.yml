@@ -77,6 +77,7 @@ en:
   sign_out: "Sign Out"
   sign_up: "Sign up"
   status: "Status"
+  step_limit_rollbacked: "The step was rollbacked and fixed"
   success_user_update: "User updated successfully"
   success_profile_update: "Profile updated successfully"
   username: "Username"

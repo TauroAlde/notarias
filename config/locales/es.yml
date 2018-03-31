@@ -59,6 +59,7 @@ es:
   sign_out: "Salir"  
   sign_up: "Regístrate"
   status: "Estatus"
+  step_limit_rollbacked: "El paso en el que se encontraba el proceso fue arreglado"
   success_user_update: "El usuario se actualizó con éxito"
   success_user_create: "El usuario se guardo con éxito"
   success_profile_update: "El perfile se actualizó con éxito"

@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :segment do
     name "segment name"
+    group { create(:group) }
     trait :parent_segment do
       segments { [create(:segment)] }
     end
