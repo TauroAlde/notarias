@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :users do
     post :lock, on: :member
     post :unlock, on: :member
+    collection { post :import_file }
   end
   resources :dashboards
   resources :task_catalogs
@@ -37,6 +38,7 @@ Rails.application.routes.draw do
   resources :prep_step_threes, only: [:update]
   resources :prep_step_twos, only: [:update]
   resources :profiles, only: [:edit, :update]
+  resources :import_users, only: [:new, :create]
 
   post 'users_batch_action', to: 'users_batch_actions#create'
 

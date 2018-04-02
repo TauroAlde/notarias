@@ -19,6 +19,10 @@ gem 'coffee-rails', '~> 4.2'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 gem 'carrierwave', '~> 1.0'
+# Roo implements read access for all common spreadsheet in Excelx, OpenOffice and CSV
+gem "roo", "~> 2.7.0"
+# Add Roo file format Excel xls
+gem 'roo-xls'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
