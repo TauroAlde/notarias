@@ -25,7 +25,25 @@
         #segments-filters.row
           filtros
         #segments-pool.row
-          CARGAR JSTREE AQUI
+          #container
+            %ul
+              %li
+                ESTADO
+                %ul
+                  %li 
+                    Municipio A
+                    %ul
+                      %li 
+                        distrito.- 1
+                        %ul
+                          %li casilla#1
+                          %li casilla#2
+                          %li casilla#3
+                  %li 
+                    Municipio B
+                    %ul
+                      %li distrito.- 2
+
 
       #segment-info.col-12.col-md-8.d-md-block.resource-info{ class: @segment ? "" : "d-none" }
         - if @segment
