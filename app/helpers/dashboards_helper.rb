@@ -11,7 +11,8 @@ module DashboardsHelper
     if current_user.segments.present?
       new_segment_prep_process_path(current_user.segments.last)
     else
-      new_prep_process_path
+      # Cambiar el numero 1 por el nodo raiz del arbol de segments
+      new_segment_prep_process_path(1)
     end
   end
 end
