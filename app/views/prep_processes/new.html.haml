@@ -1,0 +1,13 @@
+.container-fluid.h-25
+  .row
+    .col
+      %h2= t("step_#{@prep_process_machine.prep_process.current_step}".to_sym)
+
+.container-fluid.h-75
+  .row.h-100
+    .col-12.h-50
+      = render @prep_process_machine.step_string
+    .col-12.h-50
+      .row.h-100.justify-content-end
+        = link_to t(:next), "#", class: "btn btn-primary pull-right col-3 align-self-end"
+          

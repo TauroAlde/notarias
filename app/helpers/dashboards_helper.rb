@@ -11,8 +11,14 @@ module DashboardsHelper
     if current_user.segments.present?
       new_segment_prep_process_path(current_user.segments.last)
     else
-      # Cambiar el numero 1 por el nodo raiz del arbol de segments
-      new_segment_prep_process_path(1)
+      new_segment_prep_process_path(root_segment)
     end
+  end
+
+  private
+
+  def root_segment
+    root = Segment.find_by(parent_id: nil)
+    root ? root : Segment.create(name: "Quintana Roo", group: Group.create(name: "Quintana Roo"))
   end
 end
