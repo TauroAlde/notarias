@@ -9,11 +9,12 @@ class Segment < ApplicationRecord
   has_many :users, through: :user_segments
   has_many :prep_processes
   has_many :segment_processors, through: :prep_processes, foreign_key: :segment_id, class_name: 'User'
-  has_one :group
+
   has_many :evidences, through: :segment_messages
   has_many :segment_messages
 
-  validates :group, presence: true
+
+  validates :name, uniqueness: true
 
   has_closure_tree
 end

@@ -24,6 +24,9 @@ class SegmentsController < ApplicationController
   def load_segments
     @q = Segment.ransack(params[:q])
     @segments = @q.result(distinct: true)
+    if !@segment
+      @segments = @segments.where(parent_id: nil)
+    end
   end
 
   def segment_params

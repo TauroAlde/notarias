@@ -1,0 +1,5 @@
+%ul
+  %li
+    = segment.name
+    - if segment.children.present?
+      = render segment.children

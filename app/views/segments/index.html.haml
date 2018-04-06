@@ -25,7 +25,8 @@
         #segments-filters.row
           filtros
         #segments-pool.row
-          CARGAR JSTREE AQUI
+          #jstree-container
+            = render @segments
 
       #segment-info.col-12.col-md-8.d-md-block.resource-info{ class: @segment ? "" : "d-none" }
         - if @segment
