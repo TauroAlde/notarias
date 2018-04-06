@@ -4,5 +4,5 @@
 
 
 $ ->
-  $('#container').jstree()
+  $('#jstree-container').jstree()
   return
