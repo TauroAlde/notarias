@@ -1,0 +1,35 @@
+.overflow-scroll-container.h-100
+  .container-fluid
+    .row
+      .col-12
+        #acordion
+          .card
+            #headingOne.card-header
+              %h5.mb-0
+                %button.btn.btn-link{ data: { toggle: "collapse", target: "#collapseOne" }, aria: { expanded: "true", controls: "collapseOne" } }
+                  Historial de Mensajes
+            #collapseOne.collapse{ aria: { labelledby: "headingOne" }, data: { parent: "#accordion" } }
+              .card-body
+                .row
+                  - @previous_messages.each do |message|
+                    .col-12.col-md-3
+                      - message.evidences.each do |evidence|
+                        = link_to evidence.file.url do
+                          = image_tag evidence.file.url, class: "img-thumbnail mx-auto"
+                      %strong= message.created_at.strftime("%l:%M %P - %d/%b/%Y")
+                      %p= message.message
+
+  #step-header.container-fluid.mt-3
+    .row
+      .col-7.col-md-10
+        %h2= t("step_#{@prep_process_machine.prep_process.current_step}".to_sym)
+      - if @prep_process_machine.next_step_exist?
+        .col-5.col-md-2
+          = link_to next_segment_prep_process_path(@segment, @prep_process_machine.prep_process), method: :post, class: "btn btn-primary w-100", "data-confirm" => "¿Esta seguro? Tendra que contactar a su administrador si desea regresar al paso anterior" do
+            = t(:next)
+            = fa_icon("arrow-circle-right")
+
+  #step-content.container-fluid
+    .row.h-100
+      .col-12.h-100
+        = render @prep_process_machine.step_string

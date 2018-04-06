@@ -6,7 +6,7 @@ class PrepProcessMachine
   def find_or_create
     @prep_process = PrepProcess.
       find_or_create_by!(processed_segment: segment, segment_processor: user)
-    prep_process_step
+    create_prep_process_step_object
     @prep_process
   rescue ActiveRecord::RecordInvalid => e
     errors.add(:base, e.message)
@@ -18,10 +18,10 @@ class PrepProcessMachine
     errors.add(:base, e.message)
   end
 
-  def prep_process_step
+  def create_prep_process_step_object
     PrepProcess.transaction do
       begin
-        @current_step = @prep_process.current_step_objects.order(:created_at).last
+        @current_step = @prep_process.current_step_last_object
         @current_step = @prep_process.create_step_object if @current_step.blank?
       rescue NoMethodError, ActiveRecord::RecordInvalid => e
         raise ActiveRecord::Rollback
@@ -32,14 +32,43 @@ class PrepProcessMachine
     end
   end
 
+  def step_string
+    case
+    when current_step.is_a?(Prep::StepOne)
+      "step_one"
+    else
+      "step_one"
+    end
+  end
+
+  def next_step_exist?
+    @prep_process.next_step? < PrepProcess::STEPS_LIMIT
+  end
+
+  def previous_step_exist?
+    @prep_process.previous_step? > 1
+  end
+
   def next!
+    previous_step = @prep_process.current_step
     @prep_process.next_step
-    prep_process_step
+    create_prep_process_step_object
+    errors.add(
+      :current_step,
+      "El paso del proceso no púdo cambiar, el paso anterior al intento es: #{previous_step} y el limite de pasos es de 1 a #{PrepProcess::STEPS_LIMIT}") if !step_changed?(previous_step)
   end
 
   def previous!
+    previous_step = @prep_process.current_step
     @prep_process.previous_step
-    prep_process_step
+    create_prep_process_step_object
+    errors.add(
+      :current_step,
+      "El paso del proceso no púdo cambiar, el paso anterior al intento es: #{previous_step} y el limite de pasos es de 1 a #{PrepProcess::STEPS_LIMIT}") if !step_changed?(previous_step)
+  end
+
+  def step_changed?(previous_step)
+    @prep_process.current_step != previous_step
   end
 
   def finish!

@@ -40,6 +40,10 @@ class PrepProcess < ApplicationRecord
     send("prep_step_" + current_step.humanize.pluralize)
   end
 
+  def current_step_last_object
+    current_step_objects.order(:created_at).last
+  end
+
   def create_step_object
     current_step_objects.create!
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180331193744) do
+ActiveRecord::Schema.define(version: 20180406034635) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,16 @@ ActiveRecord::Schema.define(version: 20180331193744) do
     t.integer  "political_party_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+  end
+
+  create_table "evidences", force: :cascade do |t|
+    t.string   "file"
+    t.integer  "user_id"
+    t.integer  "segment_message_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["segment_message_id"], name: "index_evidences_on_segment_message_id", using: :btree
+    t.index ["user_id"], name: "index_evidences_on_user_id", using: :btree
   end
 
   create_table "groups", force: :cascade do |t|
@@ -127,6 +137,18 @@ ActiveRecord::Schema.define(version: 20180331193744) do
     t.integer "generations",   null: false
     t.index ["ancestor_id", "descendant_id", "generations"], name: "segment_anc_desc_idx", unique: true, using: :btree
     t.index ["descendant_id"], name: "segment_desc_idx", using: :btree
+  end
+
+  create_table "segment_messages", force: :cascade do |t|
+    t.integer  "segment_id"
+    t.integer  "segment_message_id"
+    t.integer  "user_id"
+    t.text     "message"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["segment_id"], name: "index_segment_messages_on_segment_id", using: :btree
+    t.index ["segment_message_id"], name: "index_segment_messages_on_segment_message_id", using: :btree
+    t.index ["user_id"], name: "index_segment_messages_on_user_id", using: :btree
   end
 
   create_table "segment_user_imports", force: :cascade do |t|
