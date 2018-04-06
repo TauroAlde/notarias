@@ -16,9 +16,12 @@ Rails.application.routes.draw do
   resources :user_preferences
 
   resources :segments do
-    resources :prep_processes
+    resources :prep_processes do
+      post :next, on: :member # :collection doesn't require resource id "on: :collection"
+    end
+    resources :segment_messages, only: [:create]
     resources :users do
-      post :lock, on: :member
+      post :lock, on: :member # requires id of the resource "on: :member"
       post :unlock, on: :member
     end
   end
