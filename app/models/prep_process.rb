@@ -3,10 +3,11 @@ class PrepProcess < ApplicationRecord
   belongs_to :processed_segment, foreign_key: :segment_id, class_name: 'Segment'
 
   has_many :prep_step_ones, class_name: 'Prep::StepOne'
+  has_many :prep_step_twos, class_name: 'Prep::StepTwo'
 
   before_create :set_start_step
 
-  STEPS_LIMIT = 1
+  STEPS_LIMIT = 2
 
   def set_start_step
     self.current_step = 1 if current_step.nil?

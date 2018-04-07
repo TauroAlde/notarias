@@ -25,6 +25,8 @@ Rails.application.routes.draw do
       post :unlock, on: :member
     end
   end
+
+  resources :prep_step_twos, only: [:update]
   resources :profiles, only: [:edit, :update]
 
   post 'users_batch_action', to: 'users_batch_actions#create'

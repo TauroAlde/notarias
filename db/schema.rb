@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180406034635) do
+ActiveRecord::Schema.define(version: 20180407210324) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,8 +58,6 @@ ActiveRecord::Schema.define(version: 20180406034635) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "segment_id"
-    t.index ["segment_id"], name: "index_groups_on_segment_id", unique: true, using: :btree
   end
 
   create_table "permissions", force: :cascade do |t|
@@ -114,6 +112,16 @@ ActiveRecord::Schema.define(version: 20180406034635) do
     t.integer  "prep_process_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+  end
+
+  create_table "prep_step_twos", force: :cascade do |t|
+    t.integer  "prep_process_id"
+    t.integer  "males",           default: 0
+    t.integer  "females",         default: 0
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.index ["females"], name: "index_prep_step_twos_on_females", using: :btree
+    t.index ["males"], name: "index_prep_step_twos_on_males", using: :btree
   end
 
   create_table "procedures", force: :cascade do |t|

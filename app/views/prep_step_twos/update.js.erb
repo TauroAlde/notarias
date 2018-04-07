@@ -1,0 +1,4 @@
+<% if @step_two.errors.empty? %>
+  $("#next-step-wrapper").removeClass("d-none");
+  $("#edit_prep_step_two_1").replaceWith("<%= j render '/prep_processes/step_two_form' %>");
+<% end %>

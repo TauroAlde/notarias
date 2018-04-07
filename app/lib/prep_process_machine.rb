@@ -33,16 +33,11 @@ class PrepProcessMachine
   end
 
   def step_string
-    case
-    when current_step.is_a?(Prep::StepOne)
-      "step_one"
-    else
-      "step_one"
-    end
+    "step_" + prep_process.current_step.humanize
   end
 
   def next_step_exist?
-    @prep_process.next_step? < PrepProcess::STEPS_LIMIT
+    @prep_process.current_step < PrepProcess::STEPS_LIMIT
   end
 
   def previous_step_exist?
