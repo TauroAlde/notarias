@@ -6,6 +6,10 @@ class SegmentsController < ApplicationController
 
   def show
     @segment = Segment.find(params[:id])
+    respond_to do |format|
+      format.html { render :index }
+      format.js
+    end
   end
 
   def new

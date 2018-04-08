@@ -1,5 +1,5 @@
 %ul
-  %li
-    = segment.name
+  %li{ class: segment == @segment ? 'jstree-open' : '' }
+    = link_to segment.name, segment_path(segment)
     - if segment.children.present?
       = render segment.children

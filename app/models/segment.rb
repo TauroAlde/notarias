@@ -13,6 +13,8 @@ class Segment < ApplicationRecord
   has_many :evidences, through: :segment_messages
   has_many :segment_messages
 
+  has_many :candidacies
+
 
   validates :name, uniqueness: true
 

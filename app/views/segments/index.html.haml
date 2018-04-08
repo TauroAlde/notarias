@@ -1,13 +1,13 @@
 #segments-index.h-100
   #segments-index-actions.row.no-gutters
-    = search_form_for @q, class: "col-8 col-md-10 col-lg-11 users-search-form" do |f|
+    = search_form_for @q, class: "col-8 col-md-10 users-search-form" do |f|
       .input-group
         = f.search_field(:name_cont, class: "form-control", placeholder: t(:search), type: "text" )
         = button_tag class: 'btn btn-outline-secondary' do
           = fa_icon "search"
         .clearfix
 
-    %a#action-dropdown-btn.btn.btn-primary.dropdown-toggle.col{ href: "#", "data-toggle" => "dropdown", "data-resource" => "segment", aria: { expanded: false, haspopup: true } }
+    %a#action-dropdown-btn.btn.btn-primary.dropdown-toggle.col-4.col-md-2{ href: "#", "data-toggle" => "dropdown", "data-resource" => "segment", aria: { expanded: false, haspopup: true } }
       = t(:actions)
 
     .dropdown-menu.table-dropdown-menu{ "aria-labelledby" => "dropdownMenuLink" }
@@ -30,7 +30,7 @@
 
       #segment-info.col-12.col-md-8.d-md-block.resource-info{ class: @segment ? "" : "d-none" }
         - if @segment
-          = render @segment
+          = render 'segment_info'
         - else
           .row.align-items-center.h-100
             .col
