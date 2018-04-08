@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180407210324) do
+ActiveRecord::Schema.define(version: 20180408193457) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,14 +31,12 @@ ActiveRecord::Schema.define(version: 20180407210324) do
 
   create_table "candidacies", force: :cascade do |t|
     t.string   "name"
-    t.integer  "segment_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "candidates", force: :cascade do |t|
     t.string   "name"
-    t.integer  "candidacy_id"
     t.integer  "political_party_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
@@ -75,18 +73,20 @@ ActiveRecord::Schema.define(version: 20180407210324) do
   end
 
   create_table "political_candidacies", force: :cascade do |t|
-    t.integer  "political_party_id"
     t.integer  "candidacy_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "candidate_id"
+    t.integer  "segment_id"
+    t.index ["segment_id", "candidacy_id", "candidate_id"], name: "political_candidacies_by_assignations", unique: true, using: :btree
   end
 
   create_table "political_parties", force: :cascade do |t|
     t.string   "name"
     t.boolean  "coalition"
-    t.string   "parties_ids"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.text     "parties_ids", default: [],              array: true
   end
 
   create_table "preferences", force: :cascade do |t|
@@ -137,6 +137,16 @@ ActiveRecord::Schema.define(version: 20180407210324) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "priority"
+  end
+
+  create_table "segment_candidacies", force: :cascade do |t|
+    t.integer  "segment_id"
+    t.integer  "candidacy_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["candidacy_id"], name: "index_segment_candidacies_on_candidacy_id", using: :btree
+    t.index ["segment_id", "candidacy_id"], name: "index_segment_candidacies_on_segment_id_and_candidacy_id", unique: true, using: :btree
+    t.index ["segment_id"], name: "index_segment_candidacies_on_segment_id", using: :btree
   end
 
   create_table "segment_hierarchies", id: false, force: :cascade do |t|

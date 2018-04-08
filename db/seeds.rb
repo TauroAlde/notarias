@@ -14,3 +14,15 @@ UserGroup.create!(user: common_user, group: common_group)
 
 # TODO: move all the users creation to this file and iterate to create
 permissions = YAML.load_file(File.join(Rails.root, "db", "permissions.yml"))
+
+
+Candidacy.create([{name: 'Diputado'}, {name: 'Diputado 2'}, {name: 'Diputado 3'}])
+PoliticalParty.create([
+  { name: 'Partido Verde' },
+  { name: 'PRI' },
+  { name: 'PAN' },
+  { name: 'PRD' },
+  { name: 'Morena'},
+  { name: 'PT' },
+  { name: 'Movimiento Ciudadano' }
+])

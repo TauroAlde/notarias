@@ -2,6 +2,16 @@
   .col-12.pt-3.pb-2
     %h3.mb-0= @segment.name
   .col-12.separator
-  .col-12
-    %h5 Candidatos
-    
+
+  - if @segment.leaf?
+    .col-12
+      %h5 Candidatos
+    .col-12
+      %ul#pills-tab.nav.nav-pills.mb-3{role: "tablist"}
+        - @segment.candidacies.each do |candidacy|
+          %li.nav-item
+            %a.nav-link.active{ id: "#pills-#{candidacy.name}-tab",  "aria-controls" => "pills-home", "aria-selected" => "true", "data-toggle" => "pill", href: "\#pills-#{candidacy.name}", role: "tab"}= candidacy.name
+
+      - @segment.candidacies.each do |candidacy|
+        #pills-tabContent.tab-content
+          .tab-pane.fade.show.active{id: "#pills-#{candidacy.name}", "aria-labelledby" => "pills-#{candidacy.name}-tab", :role => "tabpanel"} fdsafdsafdsafdsa

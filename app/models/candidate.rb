@@ -1,4 +1,4 @@
 class Candidate < ApplicationRecord
-  belongs_to :candidacy
+  has_one :political_candidacy
   belongs_to :political_party
 end

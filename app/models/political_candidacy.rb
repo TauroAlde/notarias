@@ -1,4 +1,6 @@
 class PoliticalCandidacy < ApplicationRecord
-  belongs_to :political_party
+  has_many :political_parties, through: :candidate
+  belongs_to :candidate
+  belongs_to :segment
   belongs_to :candidacy
 end
