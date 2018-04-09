@@ -87,12 +87,12 @@ class UsersController < ApplicationController
     @users = @q
       .result(distinct: true).paginate(page: params[:page], per_page: 20)
       #.where('id NOT in (?)', [current_user.id])
-    if current_user.super_admin?
-      User.all
+    @users = if current_user.super_admin?
+      @users
     elsif current_user.represented_segments.present?
       segments_ids = current_user.represented_segments_and_descendant_ids
-      @users = @users.joins(:user_segments)
-                 .where(user_segments: { segment_id: segments_ids })
+      @users.joins(:user_segments)
+        .where(user_segments: { segment_id: segments_ids })
     end
   end
 
