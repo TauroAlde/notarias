@@ -15,6 +15,8 @@ class User < ApplicationRecord
   has_many :groups, through: :user_groups
   has_many :user_groups, inverse_of: :user
   has_many :segments, through: :user_segments
+  has_many :represented_segments, ->(o) { where('user_segments.representative = ?', true) }, through: :user_segments, class_name: "Segment"
+
   has_many :user_segments
   has_many :prep_processes
   has_many :evidences
@@ -46,6 +48,10 @@ class User < ApplicationRecord
     end
   end
 
+  def represented_segments_and_descendant_ids
+    self.represented_segments
+      .map { |segment| segment.self_and_descendant_ids }.flatten
+  end
 
   def login
     @login || self.username || self.email
