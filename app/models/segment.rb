@@ -11,10 +11,10 @@ class Segment < ApplicationRecord
   has_many :segment_processors, through: :prep_processes, foreign_key: :segment_id, class_name: 'User'
 
   has_many :evidences, through: :segment_messages
-  has_many :segment_messages
 
-  has_many :candidacies, through: :segment_candidacies
-  has_many :segment_candidacies
+  has_many :political_candidacies
+  has_many :candidacies, through: :political_candidacies
+  has_many :candidates, through: :political_candidacies
 
   validates :name, uniqueness: true
 
