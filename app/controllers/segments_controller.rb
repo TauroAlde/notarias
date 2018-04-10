@@ -6,6 +6,7 @@ class SegmentsController < ApplicationController
 
   def show
     @segment = Segment.find(params[:id])
+    load_candidacies
     respond_to do |format|
       format.html { render :index }
       format.js
@@ -31,6 +32,10 @@ class SegmentsController < ApplicationController
     if !@segment
       @segments = @segments.where(parent_id: nil)
     end
+  end
+
+  def load_candidacies
+    @political_candidacies_loader = PoliticalCandidaciesLoader.new(@segment)
   end
 
   def segment_params
