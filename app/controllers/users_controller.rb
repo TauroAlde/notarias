@@ -87,7 +87,7 @@ class UsersController < ApplicationController
     @users = @q
       .result(distinct: true).paginate(page: params[:page], per_page: 20)
       #.where('id NOT in (?)', [current_user.id])
-    @users = if current_user.super_admin? or current_user.admin?
+    @users = if current_user.super_admin? || current_user.admin?
       @users
     elsif current_user.represented_segments.present?
       segments_ids = current_user.represented_segments_and_descendant_ids
