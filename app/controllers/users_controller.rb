@@ -93,6 +93,9 @@ class UsersController < ApplicationController
       segments_ids = current_user.represented_segments_and_descendant_ids
       @users.joins(:user_segments)
         .where(user_segments: { segment_id: segments_ids })
+    else
+      flash[:alert] = t(:cant_perform_this_action)
+      redirect_to root_path
     end
   end
 
