@@ -3,35 +3,32 @@ groups:
     users:
       [
         {
-          username: "user1",
-          email: "user1@pv.com",
+          username: "user",
+          email: "user@pv.com",
           password: "password",
-          password_confirmation: "password",
-          permissions: [
-            # the user is the authorizable, then to enable it to edit itself add it again as the featurette
-            action: "manage"
-          ]
+          password_confirmation: "password"
         }
       ]
-    permissions:
-      controllers:
-        "UsersController": ["read"]
-        "DashboardsController": ["manage"]
-  admins:
+    roles: ["common"]
+  admin:
     users:
       [
         {
-          username: "admin1",
+          username: "admin",
           email: "admin@pv.com",
           password: "password",
-          password_confirmation: "password",
-          permissions: [
-            # the user is the authorizable, then to enable it to edit itself add it again as the featurette
-            action: "manage"
-          ]
+          password_confirmation: "password"
         }
       ]
-    permissions:
-      controllers:
-        "UsersController": ["manage"]
-        "DashboardsController": ["manage"]
+    roles: ["admin"]
+  super_admin:
+    users: 
+      [
+        {
+          username: "super_admin",
+          email: "super_admin@pv.com",
+          password: "password",
+          password_confirmation: "password"
+        }
+      ]
+    roles: ["super_admin"]
