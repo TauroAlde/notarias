@@ -4,10 +4,11 @@ class PrepProcess < ApplicationRecord
 
   has_many :prep_step_ones, class_name: 'Prep::StepOne'
   has_many :prep_step_twos, class_name: 'Prep::StepTwo'
+  has_many :prep_step_threes, class_name: 'Prep::StepThree'
 
   before_create :set_start_step
 
-  STEPS_LIMIT = 2
+  STEPS_LIMIT = 3
 
   def set_start_step
     self.current_step = 1 if current_step.nil?

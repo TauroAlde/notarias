@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :prep_step_threes, only: [:update]
   resources :prep_step_twos, only: [:update]
   resources :profiles, only: [:edit, :update]
 
