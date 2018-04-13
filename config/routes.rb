@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   resources :user_preferences
 
   resources :segments do
-    resources :prep_step_threes, only: [:update] # we need the segment to load the candidacies
+    resources :prep_step_fours, only: [:update] # we need the segment to load the candidacies
 
     resources :prep_processes do
       post :next, on: :member # :collection doesn't require resource id "on: :collection"
@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :prep_step_threes, only: [:update]
   resources :prep_step_twos, only: [:update]
   resources :profiles, only: [:edit, :update]
 

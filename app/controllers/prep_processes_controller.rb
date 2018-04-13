@@ -4,7 +4,7 @@ class PrepProcessesController < ApplicationController
   before_action :load_segment_message
   before_action :load_prep_process_machine
   before_action :load_message_history
-  before_action :load_political_candidacies_loader, if: -> { @prep_process_machine.current_step.is_a?(Prep::StepThree) }
+  before_action :load_political_candidacies_loader, if: -> { @prep_process_machine.current_step.is_a?(Prep::StepFour) }
 
   def new
   end

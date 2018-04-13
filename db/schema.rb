@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180410045918) do
+ActiveRecord::Schema.define(version: 20180413013403) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -108,6 +108,13 @@ ActiveRecord::Schema.define(version: 20180410045918) do
     t.datetime "updated_at",   null: false
   end
 
+  create_table "prep_step_fours", force: :cascade do |t|
+    t.integer  "prep_process_id"
+    t.text     "data",            default: "{}"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
   create_table "prep_step_ones", force: :cascade do |t|
     t.integer  "prep_process_id"
     t.datetime "created_at",      null: false
@@ -116,9 +123,9 @@ ActiveRecord::Schema.define(version: 20180410045918) do
 
   create_table "prep_step_threes", force: :cascade do |t|
     t.integer  "prep_process_id"
-    t.text     "data",            default: "{}"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.integer  "voters_count",    default: 0
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   create_table "prep_step_twos", force: :cascade do |t|
