@@ -1,34 +1,30 @@
-groups:
-  common:
-    users:
-      [
-        {
-          username: "user",
-          email: "user@pv.com",
-          password: "password",
-          password_confirmation: "password"
-        }
-      ]
-    roles: ["common"]
-  admin:
-    users:
-      [
-        {
-          username: "admin",
-          email: "admin@pv.com",
-          password: "password",
-          password_confirmation: "password"
-        }
-      ]
-    roles: ["admin"]
-  super_admin:
-    users: 
-      [
-        {
-          username: "super_admin",
-          email: "super_admin@pv.com",
-          password: "password",
-          password_confirmation: "password"
-        }
-      ]
-    roles: ["super_admin"]
+common:
+  users:
+    [
+      {
+        username: "user",
+        email: "user@pv.com",
+        password: "password",
+        password_confirmation: "password"
+      }
+    ]
+admin:
+  users:
+    [
+      {
+        username: "admin",
+        email: "admin@pv.com",
+        password: "password",
+        password_confirmation: "password"
+      }
+    ]
+super_admin:
+  users: 
+    [
+      {
+        username: "super_admin",
+        email: "super_admin@pv.com",
+        password: "password",
+        password_confirmation: "password"
+      }
+    ]
