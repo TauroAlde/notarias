@@ -6,10 +6,11 @@ class PrepProcess < ApplicationRecord
   has_many :prep_step_twos, class_name: 'Prep::StepTwo'
   has_many :prep_step_threes, class_name: 'Prep::StepThree'
   has_many :prep_step_fours, class_name: 'Prep::StepFour'
+  has_many :prep_step_fours, class_name: 'Prep::StepFive'
 
   before_create :set_start_step
 
-  STEPS_LIMIT = 4
+  STEPS_LIMIT = 5
 
   def set_start_step
     self.current_step = 1 if current_step.nil?
@@ -59,5 +60,9 @@ class PrepProcess < ApplicationRecord
     else
       true
     end
+  end
+
+  def complete!
+    update(completed_at: DateTime.now)
   end
 end

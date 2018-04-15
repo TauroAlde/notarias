@@ -62,6 +62,14 @@ class PrepProcessMachine
       "El paso del proceso no púdo cambiar, el paso anterior al intento es: #{previous_step} y el limite de pasos es de 1 a #{PrepProcess::STEPS_LIMIT}") if !step_changed?(previous_step)
   end
 
+  def complete!
+    if prep_process.current_step == PrepProcess::STEPS_LIMIT
+      prep_process.complete!
+    else
+      errors.add(:current_step, "El proceso de captura no pudo completarse, el paso actual es #{prep_process.current_step} y el limite es #{PrepProcess::STEPS_LIMIT}")
+    end
+  end
+
   def step_changed?(previous_step)
     @prep_process.current_step != previous_step
   end

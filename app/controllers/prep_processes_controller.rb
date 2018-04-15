@@ -23,6 +23,14 @@ class PrepProcessesController < ApplicationController
     @prep_process_machine.previous!
   end
 
+  def complete
+    if !@prep_process_machine.complete!
+      flash[:warning] = "No pudo completarse la captura de datos"
+      redirect_to :new
+    end
+    flasn[:notice] = "¡Gracias por completar la captura de información de su casilla!"
+  end
+
   private
 
   def load_message_history
