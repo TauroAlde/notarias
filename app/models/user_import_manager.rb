@@ -5,6 +5,18 @@ class UserImportManager
     @user_import = UserImport.find(user_import_id)
   end
 
+  def execute_import
+    begin
+      User.transaction do
+        @import = UserImportManager.new(user_import_id)
+        @import.import
+      end
+    rescue Exception => exeption_msgs
+      @user_import = SegmentUserImport.find(user_import_id)
+      @user_import.update_attributes(status: SegmentUserImport.statuses["failed"])
+    end
+  end
+
   # Import data from the file to database
   def import
     spreadsheet = open_spreadsheet
