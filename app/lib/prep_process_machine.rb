@@ -23,6 +23,11 @@ class PrepProcessMachine
       begin
         @current_step = @prep_process.current_step_last_object
         @current_step = @prep_process.create_step_object if @current_step.blank?
+        if @current_step.is_a?(Prep::StepThree) && @current_step.voters_count <= 0
+          step_two = prep_process.prep_step_twos.order(:created_at).last
+          @current_step.update(voters_count: step_two.males + step_two.females)
+        end
+        return true
       rescue NoMethodError, ActiveRecord::RecordInvalid => e
         raise ActiveRecord::Rollback
         @prep_process.fix_current_step
@@ -48,9 +53,13 @@ class PrepProcessMachine
     previous_step = @prep_process.current_step
     @prep_process.next_step
     create_prep_process_step_object
-    errors.add(
-      :current_step,
-      "El paso del proceso no púdo cambiar, el paso anterior al intento es: #{previous_step} y el limite de pasos es de 1 a #{PrepProcess::STEPS_LIMIT}") if !step_changed?(previous_step)
+    if !step_changed?(previous_step)
+      errors.add(:current_step,
+        "El paso del proceso no púdo cambiar, el paso anterior al intento es: #{previous_step} y el limite de pasos es de 1 a #{PrepProcess::STEPS_LIMIT}")
+      false
+    else
+      true
+    end
   end
 
   def previous!

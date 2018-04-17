@@ -3,11 +3,11 @@ class ProfilesController < ApplicationController
   before_action :load_groups
 
   def edit
-    @user = User.find(params[:id])
+    @user = User.unscoped.find(params[:id])
   end
 
   def update
-    @user = User.find(params[:id])
+    @user = User.unscoped.find(params[:id])
     begin
       @user.update(user_params)
     rescue ActiveRecord::RecordNotUnique => e

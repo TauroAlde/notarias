@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
 
+  before_action :set_default_load_scope, only: [:index]
   before_action :allow_without_password, only: [:update]
   #before_action :authorize!
   before_action :load_groups
@@ -12,7 +13,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    @user = User.unscoped.find(params[:id])
     @groups = @user.groups
   end
 
@@ -21,7 +22,7 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
+    @user = User.unscoped.find(params[:id])
   end
 
   def create
@@ -39,7 +40,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user = User.find(params[:id])
+    @user = User.unscoped.find(params[:id])
     begin
       @user.update(user_params)
     rescue ActiveRecord::RecordNotUnique => e
@@ -54,31 +55,34 @@ class UsersController < ApplicationController
 
   def destroy
     @user = User.find(params[:id])
+    @user.lock_access!
     @user.destroy
     flash[:notice] = t(:deleted_users_successfully)
-    render :index
+    redirect_to users_path
   end
 
   def lock
     @user = User.find(params[:id])
     if !(current_user == @user)
       @user.lock_access!
+      @user.destroy
       flash[:success] = t(:lock_access)
     else
       flash[:notice] = t(:cant_perform_this_action)
     end
-    render :index
+    redirect_to users_path
   end
 
   def unlock
-    @user = User.find(params[:id])
+    @user = User.unscoped.find(params[:id])
     if !(current_user == @user)
       @user.unlock_access!
+      @user.restore
       flash[:success] = t(:unlock_access)
     else
       flash[:alert] = t(:cant_perform_this_action)
     end
-    render :index
+    redirect_to users_path
   end
 
   private
@@ -104,7 +108,7 @@ class UsersController < ApplicationController
   end
 
   def load_search
-    @q = User.ransack(params[:q])
+    @q = User.unscoped.ransack(params[:q])
   end
 
   def load_segment
@@ -122,5 +126,9 @@ class UsersController < ApplicationController
       params[:user].delete(:password)
       params[:user].delete(:password_confirmation)
     end
+  end
+
+  def set_default_load_scope
+    params[:q] = { deleted_at_null: 1 } unless params[:q]
   end
 end
