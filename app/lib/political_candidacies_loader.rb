@@ -4,7 +4,7 @@ class PoliticalCandidaciesLoader
   def initialize(segment)
     @segment = segment
     load_candidacies
-    load_political_candidacies_from_candidacies_and_segment
+    load_political_candidacies_from_candidacies_and_segment_upstream
   end
 
   def filter_by_political_party(political_party)
@@ -29,7 +29,7 @@ class PoliticalCandidaciesLoader
                      .where(political_candidacies: { id: load_full_branch.pluck(:id) }).uniq
   end
 
-  def load_political_candidacies_from_candidacies_and_segment
-    @political_candidacies = PoliticalCandidacy.where(candidacy: candidacies, segment: segment)
+  def load_political_candidacies_from_candidacies_and_segment_upstream
+    @political_candidacies = PoliticalCandidacy.where(candidacy: candidacies, segment_id: segment.self_and_ancestors_ids)
   end
 end

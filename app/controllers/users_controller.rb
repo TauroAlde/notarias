@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  before_action :set_default_load_scope, only: [:index, :create]
+  before_action :set_default_load_scope
   before_action :allow_without_password, only: [:update]
   #before_action :authorize!
   before_action :load_groups
@@ -29,6 +29,7 @@ class UsersController < ApplicationController
     @user = User.new user_params
     begin
       @user.save!
+      @user.segments << @segment if @segment
       @user.roles << Role.common
     rescue ActiveRecord::RecordNotUnique => e
       @user.user_groups.each do |ug|

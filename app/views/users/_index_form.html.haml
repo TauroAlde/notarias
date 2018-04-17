@@ -61,13 +61,3 @@
       .form-group
         = f.label t(:password_confirmation)
         = f.text_field :password_confirmation, class: "form-control"
-    .col-md-12.col-sm-12
-      .form-group#groups
-        %h4= t(:groups)
-        .row
-          = f.fields_for :user_groups do |user_group|
-            = render 'user_group_fields', f: user_group, groups: @groups
-          .col-md-12.col-sm-12.nested-fields.links.remove-group-link-wrapper
-            = link_to_add_association t(:add_group), f, :user_groups, render_options: { locals: { groups: @groups } }, class: "btn btn-primary float-right"
-            .clearfix
-  

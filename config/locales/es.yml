@@ -42,7 +42,7 @@ es:
   masquerade_message: "Estas personificando a %{fullname}"
   mother_last_name: "Apellido Materno"
   name: "Nombre(s)"
-  new: "New"
+  new: "Nuevo"
   new_user: "Nuevo Usuario"
   next: "Siguiente"
   password: "Contraseña"
