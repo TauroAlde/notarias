@@ -134,6 +134,7 @@ class UsersController < ApplicationController
   end
 
   def set_default_load_scope
-    params[:q] = { deleted_at_null: 1 } unless params[:q]
+    params[:q] = {} if params[:q].nil?
+    params[:q].merge!({ deleted_at_null: 1 }) unless (params[:q].keys.map(&:to_sym) & [:deleted_at_null, :deleted_at_not_null]).any?
   end
 end

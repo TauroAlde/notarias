@@ -28,7 +28,11 @@ module ApplicationHelper
     Authorizer.new(current_user).authorize(resource, action)
   end
 
-  def filter_active?(filter_key)
-    params[:q] ? params[:q].keys.map(&:to_sym).include?(filter_key.to_sym) : false
+  def filter_active?(filter_key, values = [])
+    params[:q] ? filter_in_params?(filter_key) && values.map(&:to_s).include?(params[:q][filter_key].to_s) : false
+  end
+
+  def filter_in_params?(filter_key)
+    params[:q].keys.map(&:to_sym).include?(filter_key.to_sym)
   end
 end
