@@ -23,6 +23,8 @@ permissions.each do |roles_key, role_value|
   end
 end
 
+segments = YAML.load_file(File.join(Rails.root, "db", "segments.yml"))
+
 Candidacy.create([{name: 'Diputado'}, {name: 'Diputado 2'}, {name: 'Diputado 3'}])
 PoliticalParty.create([
   { name: 'Partido Verde' },
