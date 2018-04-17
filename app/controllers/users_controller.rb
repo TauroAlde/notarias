@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  before_action :set_default_load_scope, only: [:index]
+  before_action :set_default_load_scope, only: [:index, :create]
   before_action :allow_without_password, only: [:update]
   #before_action :authorize!
   before_action :load_groups
@@ -26,13 +26,16 @@ class UsersController < ApplicationController
   end
 
   def create
+    @user = User.new user_params
     begin
-      @user = User.create!(user_params)
+      @user.save!
       @user.roles << Role.common
     rescue ActiveRecord::RecordNotUnique => e
       @user.user_groups.each do |ug|
         ug.errors.add(:group_id, t(:cant_send_duplicates)) if ug.new_record?
       end
+      flash[:error] = t(:errors_creating_the_user)
+    rescue ActiveRecord::RecordInvalid => e
       flash[:error] = t(:errors_creating_the_user)
     end
     flash[:notice] = t(:success_user_create) if flash[:error].blank? && @user.errors.empty?
@@ -47,6 +50,8 @@ class UsersController < ApplicationController
       @user.user_groups.each do |ug|
         ug.errors.add(:group_id, t(:cant_send_duplicates)) if ug.new_record?
       end
+      flash[:error] = t(:errors_updating_the_user)
+    rescue ActiveRecord::RecordInvalid => e
       flash[:error] = t(:errors_updating_the_user)
     end
     flash[:notice] = t(:success_user_update) if flash[:error].blank? && @user.errors.empty?

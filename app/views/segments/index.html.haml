@@ -11,13 +11,7 @@
       = t(:actions)
 
     .dropdown-menu.table-dropdown-menu{ "aria-labelledby" => "dropdownMenuLink" }
-      = link_to "#", class: "btn-green-dropdown-item btn-green batch-action-btn d-none", data: { action: "delete" } do
-        = fa_icon(:trash)
-        = t(:delete)
-
-      = link_to new_segment_path, class: "btn-green-dropdown-item btn-green single-action-btn", remote: true do
-        = fa_icon(:plus)
-        = t(:new)
+      =# link_to "#", class: "btn-green-dropdown-item btn-green batch-action-btn", data: { action: "delete" } do
 
   #segments-index-content.container-fluid
     .row

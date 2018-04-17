@@ -29,6 +29,6 @@ module ApplicationHelper
   end
 
   def filter_active?(filter_key)
-    params[:q] ? params[:q].keys.map(&:to_sym).include?(filter_key) : false
+    params[:q] ? params[:q].keys.map(&:to_sym).include?(filter_key.to_sym) : false
   end
 end
