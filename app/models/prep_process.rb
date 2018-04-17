@@ -6,7 +6,7 @@ class PrepProcess < ApplicationRecord
   has_many :prep_step_twos, class_name: 'Prep::StepTwo'
   has_many :prep_step_threes, class_name: 'Prep::StepThree'
   has_many :prep_step_fours, class_name: 'Prep::StepFour'
-  has_many :prep_step_fours, class_name: 'Prep::StepFive'
+  has_many :prep_step_fives, class_name: 'Prep::StepFive'
 
   before_create :set_start_step
 

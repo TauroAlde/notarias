@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180413013403) do
+ActiveRecord::Schema.define(version: 20180415190019) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,6 +106,13 @@ ActiveRecord::Schema.define(version: 20180413013403) do
     t.datetime "completed_at"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+  end
+
+  create_table "prep_step_fives", force: :cascade do |t|
+    t.integer  "prep_process_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["prep_process_id"], name: "index_prep_step_fives_on_prep_process_id", using: :btree
   end
 
   create_table "prep_step_fours", force: :cascade do |t|

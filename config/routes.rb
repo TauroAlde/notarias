@@ -20,6 +20,7 @@ Rails.application.routes.draw do
 
     resources :prep_processes do
       post :next, on: :member # :collection doesn't require resource id "on: :collection"
+      get :complete, on: :member
     end
     resources :segment_messages, only: [:create]
     resources :users do

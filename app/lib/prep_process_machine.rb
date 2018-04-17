@@ -70,8 +70,16 @@ class PrepProcessMachine
     end
   end
 
+  def complete?
+    !@prep_process.completed_at.blank?
+  end
+
   def step_changed?(previous_step)
     @prep_process.current_step != previous_step
+  end
+
+  def last_step?
+    prep_process.last_step?
   end
 
   def finish!

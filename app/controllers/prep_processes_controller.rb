@@ -7,6 +7,9 @@ class PrepProcessesController < ApplicationController
   before_action :load_political_candidacies_loader, if: -> { @prep_process_machine.current_step.is_a?(Prep::StepFour) }
 
   def new
+    if @prep_process_machine.complete?
+      redirect_to complete_segment_prep_process_path(@segment, @prep_process_machine.prep_process)
+    end
   end
 
   def next
@@ -16,7 +19,7 @@ class PrepProcessesController < ApplicationController
     else
       flash[:warning] = @prep_process_machine.errors.full_messages.last
     end
-    render :new
+    redirect_to new_segment_prep_process_path(@segment)
   end
 
   def previous
@@ -28,7 +31,7 @@ class PrepProcessesController < ApplicationController
       flash[:warning] = "No pudo completarse la captura de datos"
       redirect_to :new
     end
-    flasn[:notice] = "¡Gracias por completar la captura de información de su casilla!"
+    flash[:notice] = "¡Gracias por completar la captura de información de su casilla!"
   end
 
   private
