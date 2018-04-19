@@ -1,11 +1,13 @@
 class SegmentsController < ApplicationController
+  before_action :load_segment, only: [:show]
   before_action :load_segments
+  #before_action :representative_restrictions, only: [:show]
 
   def index
   end
 
   def show
-    @segment = Segment.find(params[:id])
+    authorize! :read, @segment
     load_candidacies
     respond_to do |format|
       format.html { render :index }
@@ -26,6 +28,10 @@ class SegmentsController < ApplicationController
 
   private
 
+  def load_segment
+    @segment = Segment.find(params[:id])
+  end
+
   def load_segments
     @q = Segment.ransack(params[:q])
     @segments = @q.result(distinct: true)
@@ -40,5 +46,9 @@ class SegmentsController < ApplicationController
 
   def segment_params
     params.require(:segment).permit(:name, :parent_id)
+  end
+
+  def representative_restrictions
+    
   end
 end
