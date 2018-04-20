@@ -32,6 +32,9 @@ class User < ApplicationRecord
   validates :username, presence: :true, uniqueness: { case_sensitive: false }
   validates_format_of :username, with: /^[a-zA-Z0-9_\.]*$/, multiline: true
 
+  scope :common_users, -> { joins(user_roles: :role).where(roles: { id: Role.common.id }) }
+  scope :admin_users, -> { joins(user_roles: :role).where(roles: { id: Role.admin.id }) }
+
   before_validation :set_username
   accepts_nested_attributes_for :permissions
   accepts_nested_attributes_for :user_groups, reject_if: :all_blank, allow_destroy: true
@@ -90,5 +93,9 @@ class User < ApplicationRecord
 
   def common?
     roles.include?(Role.common)
+  end
+
+  def representative?
+    represented_segments.any? && common?
   end
 end

@@ -6,19 +6,4 @@ module DashboardsHelper
       concat(content_tag(:span, t(:remember_me), class: "custom-control-description"))
     end
   end
-
-  def prep_capture_process_route
-    if current_user.segments.present?
-      new_segment_prep_process_path(current_user.segments.last)
-    else
-      new_segment_prep_process_path(root_segment)
-    end
-  end
-
-  private
-
-  def root_segment
-    root = Segment.find_by(parent_id: nil)
-    root ? root : Segment.create(name: "Quintana Roo", group: Group.create(name: "Quintana Roo"))
-  end
 end

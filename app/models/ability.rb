@@ -30,10 +30,11 @@ class Ability
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
     if user.admin? || user.super_admin?
       can :manage, User
+      can :manage, Segment
     end
 
-    if user.common?
-      can :read, Segment do |segment|
+    if user.representative?
+      can :manage, Segment do |segment|
         represented_tree = user.represented_segments.map do |represented_segment|
           represented_segment.self_and_descendants
         end.flatten

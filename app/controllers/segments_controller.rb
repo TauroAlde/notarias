@@ -4,10 +4,11 @@ class SegmentsController < ApplicationController
   #before_action :representative_restrictions, only: [:show]
 
   def index
+    authorize! :index, @segments
   end
 
   def show
-    authorize! :read, @segment
+    authorize! :show, @segment
     load_candidacies
     respond_to do |format|
       format.html { render :index }
@@ -33,11 +34,14 @@ class SegmentsController < ApplicationController
   end
 
   def load_segments
-    @q = Segment.ransack(params[:q])
-    @segments = @q.result(distinct: true)
-    if !@segment
-      @segments = @segments.where(parent_id: nil)
+    @segments = if current_user.representative?
+      current_user.represented_segments
+    else
+      Segment.roots
     end
+
+    @q = @segments.ransack(params[:q])
+    @segments = @q.result(distinct: true)
   end
 
   def load_candidacies

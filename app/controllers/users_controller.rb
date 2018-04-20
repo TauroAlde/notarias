@@ -2,11 +2,9 @@ class UsersController < ApplicationController
 
   before_action :set_default_load_scope
   before_action :allow_without_password, only: [:update]
-  #before_action :authorize!
-  before_action :load_groups
-  before_action :load_search
-  before_action :load_users
   before_action :load_segment
+  before_action :load_users
+  before_action :load_search
   authorize_resource
 
   def index
@@ -94,27 +92,27 @@ class UsersController < ApplicationController
   private
 
   def load_users
-    @users = @q
-      .result(distinct: true).paginate(page: params[:page], per_page: 20)
-      #.where('id NOT in (?)', [current_user.id])
-    @users = if current_user.super_admin? || current_user.admin?
-      @users
-    elsif current_user.represented_segments.present?
+    @users = if @segment
+      authorize! :manage, @segment if @segment
+      load_segment_users
+    elsif current_user.representative?
       segments_ids = current_user.represented_segments_and_descendant_ids
-      @users.joins(:user_segments)
-        .where(user_segments: { segment_id: segments_ids })
+      User.unscoped.joins(:user_segments).where(user_segments: { segment_id: segments_ids })
+    elsif current_user.admin? || current_user.super_admin?
+      User.unscoped
     else
       flash[:alert] = t(:cant_perform_this_action)
       redirect_to root_path
     end
   end
 
-  def load_groups
-    @groups = Group.all
+  def load_segment_users
+    User.unscoped.joins(:user_segments).where(user_segments: { segment_id: @segment.id })
   end
 
   def load_search
-    @q = User.unscoped.ransack(params[:q])
+    @q = @users.ransack(params[:q])
+    @users = @q.result(distinct: true).paginate(page: params[:page], per_page: 20)
   end
 
   def load_segment
