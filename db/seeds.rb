@@ -7,31 +7,45 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 # TODO: move all the users creation to this file and iterate to create
-permissions = YAML.load_file(File.join(Rails.root, "db", "permissions.yml"))
-permissions.each do |roles_key, role_value|
-  role_value.each do |users_key, users_array|
-    users_array.each do |user_hash|
-      current_user = User.create(user_hash)
-      if roles_key == "common"
-        current_user.roles << Role.common
-      elsif roles_key == "admin"
-        current_user.roles << Role.admin
-      elsif roles_key == "super_admin"
-        current_user.roles << Role.super_admin
-      end
+#permissions = YAML.load_file(File.join(Rails.root, "db", "permissions.yml"))
+#permissions.each do |roles_key, role_value|
+  #role_value.each do |users_key, users_array|
+    #users_array.each do |user_hash|
+      #current_user = User.create(user_hash)
+      #if roles_key == "common"
+        #current_user.roles << Role.common
+      #elsif roles_key == "admin"
+        #current_user.roles << Role.admin
+      #elsif roles_key == "super_admin"
+        #current_user.roles << Role.super_admin
+      #end
+    #end
+  #end
+#end
+
+segments = YAML.load_file(File.join(Rails.root, "db", "segments.yml"))
+
+def imprimir_array(array)
+  array.each do |objeto_de_array|
+    if objeto_de_array.class == Array
+      imprimir_array(objeto_de_array)
+    else
+      puts objeto_de_array
     end
   end
 end
 
-segments = YAML.load_file(File.join(Rails.root, "db", "segments.yml"))
+imprimir_array(segments)
 
-Candidacy.create([{name: 'Diputado'}, {name: 'Diputado 2'}, {name: 'Diputado 3'}])
-PoliticalParty.create([
-  { name: 'Partido Verde' },
-  { name: 'PRI' },
-  { name: 'PAN' },
-  { name: 'PRD' },
-  { name: 'Morena'},
-  { name: 'PT' },
-  { name: 'Movimiento Ciudadano' }
-])
+#Candidacy.create([{name: 'Diputado'}, {name: 'Diputado 2'}, {name: 'Diputado 3'}])
+#PoliticalParty.create([
+  #{ name: 'Partido Verde' },
+  #{ name: 'PRI' },
+  #{ name: 'PAN' },
+  #{ name: 'PRD' },
+  #{ name: 'Morena'},
+  #{ name: 'PT' },
+  #{ name: 'Movimiento Ciudadano' }
+#])
+
+
