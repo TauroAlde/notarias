@@ -31,5 +31,15 @@ class Ability
     if user.admin? || user.super_admin?
       can :manage, User
     end
+
+    if user.common?
+      can :read, Segment do |segment|
+        represented_tree = user.represented_segments.map do |represented_segment|
+          represented_segment.self_and_descendants
+        end.flatten
+
+        represented_tree.include? segment
+      end
+    end
   end
 end
