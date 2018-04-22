@@ -11,10 +11,18 @@
       = t(:actions)
 
     .dropdown-menu.table-dropdown-menu{ "aria-labelledby" => "dropdownMenuLink" }
-      - if @segment
-        = link_to segment_users_path(@segment), class: "btn-green-dropdown-item btn-green batch-action-btn", data: { action: "delete" } do
-          = fa_icon(:users)
-          = t(:users)
+      = link_to new_transfer_user_path, class: "btn-green-dropdown-item btn-green" do
+        = fa_icon('exchange')
+        Transferir Usuarios
+      = link_to segment_users_path(@segment), class: "btn btn-green-dropdown-item btn-green" do
+        = fa_icon(:users)
+        = t(:users)
+      = link_to new_representative_assignation_path(@segment), class: "btn btn-green-dropdown-item btn-green" do
+        = fa_icon(:users)
+        Asignar Administrador
+      #hide-resource-mobile.btn.btn-green.btn-green-dropdown-item.d-block.d-md-none
+        = fa_icon("undo")
+        = t(:back)
 
   #segments-index-content.container-fluid
     .row

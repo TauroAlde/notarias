@@ -5,6 +5,8 @@ class Segment < ApplicationRecord
   # o the leaf segment of the tree
   has_many :representative_users, ->(o) { where('user_segments.representative = ?', true) }, 
                           through: :user_segments, class_name: "User", foreign_key: :user_id
+  has_many :non_representative_users, ->(o) { where('user_segments.representative = ? OR user_segments.representative IS NULL', false) }, 
+                          through: :user_segments, class_name: "User", foreign_key: :user_id
   has_many :user_segments
   has_many :users, through: :user_segments
   has_many :prep_processes

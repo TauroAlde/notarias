@@ -1,6 +1,14 @@
 .row
-  .col-12.pt-3.pb-2
+  .col-12.pt-3.pb-2.mt-2
     %h3.mb-0= @segment.name
+  /
+    .col-3.mt-2
+      .float-right
+        %a.btn.btn-primary.dropdown-toggle.d-block.d-md-none{ href: "#", "data-toggle" => "dropdown", aria: { expanded: false, haspopup: true } }
+          = t(:actions)
+        .dropdown-menu.table-dropdown-menu{ "aria-labelledby" => "dropdownMenuLink" }
+       
+
   .col-12.separator
 
   .col-12

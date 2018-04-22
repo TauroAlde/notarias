@@ -9,8 +9,10 @@ module UsersHelper
     end
   end
 
-  def users_search_url
-    if @segment
+  def users_search_url(from_segment = nil, to_segment = nil)
+    if from_segment && to_segment
+      select_transfer_users_path(from_id: from_segment, to_id: to_segment)
+    elsif @segment
       segment_users_path(@segment, q: params[:q] || {})
     else
       users_path(q: params[:q] || {})

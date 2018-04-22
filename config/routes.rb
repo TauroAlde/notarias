@@ -17,6 +17,7 @@ Rails.application.routes.draw do
 
   resources :segments do
     resources :prep_step_fours, only: [:update] # we need the segment to load the candidacies
+    resources :transfer_users, except: [:new, :create]
 
     resources :prep_processes do
       post :next, on: :member # :collection doesn't require resource id "on: :collection"
@@ -27,6 +28,10 @@ Rails.application.routes.draw do
       post :lock, on: :member # requires id of the resource "on: :member"
       post :unlock, on: :member
     end
+  end
+
+  resources :transfer_users, only: [:new, :create] do
+    get :select, on: :collection
   end
 
   resources :prep_step_threes, only: [:update]
