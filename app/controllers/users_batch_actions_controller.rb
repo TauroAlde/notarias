@@ -8,12 +8,14 @@ class UsersBatchActionsController < ApplicationController
     @users_with_errors = []
     User.transaction do
       send(params[:batch_action])
-      @users.first.errors.add(:name)
       @users.each do |user|
         @users_with_errors << user if !user.errors.empty?
       end
       set_action_message
-      raise ActiveRecord::Rollback, "Call tech support!" if @users_with_errors.present?
+      if @users_with_errors.present?
+        flash[:warning] = "Lláme a soporte técnico"
+        raise ActiveRecord::Rollback
+      end
     end
   end
 
