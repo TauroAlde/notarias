@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resources :user_preferences
 
   resources :segments do
+    resources :users_imports, only: [:new, :update]
     resources :prep_step_fours, only: [:update] # we need the segment to load the candidacies
     resources :representative_assignations, only: [:new, :update, :destroy]
 
@@ -37,7 +38,6 @@ Rails.application.routes.draw do
   resources :prep_step_threes, only: [:update]
   resources :prep_step_twos, only: [:update]
   resources :profiles, only: [:edit, :update]
-  resources :users_imports, only: [:new, :create]
 
   post 'users_batch_action', to: 'users_batch_actions#create'
 

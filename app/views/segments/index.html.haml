@@ -18,8 +18,11 @@
         = fa_icon(:users)
         = t(:users)
       = link_to new_segment_representative_assignation_path(@segment), class: "btn-green-dropdown-item btn-green" do
-        = fa_icon(:users)
+        = fa_icon("address-book")
         Administradores
+      = link_to new_segment_users_import_path(@segment), class: "btn-green-dropdown-item btn-green" do
+        = fa_icon("upload")
+        Importar Usuarios
       #hide-resource-mobile.btn-green.btn-green-dropdown-item.d-block.d-md-none
         = fa_icon("undo")
         = t(:back)

@@ -21,6 +21,9 @@
         = link_to new_transfer_user_path, class: "btn-green-dropdown-item btn-green" do
           = fa_icon('exchange')
           Transferir Usuarios
+        = link_to new_segment_users_import_path(@segment), class: "btn-green-dropdown-item btn-green" do
+          = fa_icon("upload")
+          Importar Usuarios
 
       = link_to "#", class: "btn-green-dropdown-item btn-green batch-action-btn d-none", data: { action: "delete" } do
         = fa_icon(:trash)
