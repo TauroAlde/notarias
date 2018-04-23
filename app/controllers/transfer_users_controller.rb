@@ -8,7 +8,7 @@ class TransferUsersController < ApplicationController
 
   def select
     @q = User.non_representative_users_from_segment(@from_segment).ransack(params[:q])
-    @users = @q.result
+    @users = @q.result(distinct: true)
   end
 
   def create

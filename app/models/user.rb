@@ -40,6 +40,10 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :user_groups, reject_if: :all_blank, allow_destroy: true
   attr_accessor :login, :prevalidate_username_uniqueness
 
+  def represents_segment?(segment)
+    user_segments.where(segment: segment, representative: true).present?
+  end
+
   def self.from_segment(segment)
     joins(:user_segments).where(user_segments: { segment_id: segment.id })
   end
