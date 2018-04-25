@@ -25,6 +25,18 @@ end
 
 segments = YAML.load_file(File.join(Rails.root, "db", "segments.yml"))
 
+#def ponle un nombre descriptivo al metodo(array)
+  #array.each do |objeto_de_array|
+    #if objeto_de_array.class == Array
+      #imprimir_array(objeto_de_array)
+    #else
+      #puts objeto_de_array
+    #end
+  #end
+#end
+
+#y lo ejecutas(segments)
+
 Candidacy.create([{name: 'Diputado'}, {name: 'Diputado 2'}, {name: 'Diputado 3'}])
 PoliticalParty.create([
   { name: 'Partido Verde' },
@@ -35,3 +47,5 @@ PoliticalParty.create([
   { name: 'PT' },
   { name: 'Movimiento Ciudadano' }
 ])
+
+
