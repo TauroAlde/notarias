@@ -1,6 +1,7 @@
 class UsersBatchActionsController < ApplicationController
   def create
     @users = User.where(id: params[:users_ids])
+    authorize! :manage_user_batch_action, @users
     run_batch_action
   end
 
