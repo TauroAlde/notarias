@@ -2,7 +2,7 @@ class UserImportManager
   attr_accessor :segment_user_import, :errors, :failed_user, :completed_users
 
   HEADERS = {
-    "Coreo" => "email",
+    "Correo" => "email",
     "Contraseña (opcional)" => "password",
     "Nombre" => "name",
     "Apellido Paterno" => "father_last_name",

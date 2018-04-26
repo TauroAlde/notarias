@@ -13,7 +13,7 @@ class UsersBatchActionsController < ApplicationController
       end
       set_action_message
       if @users_with_errors.present?
-        flash[:warning] = "Lláme a soporte técnico"
+        flash[:warning] = "Llame al soporte técnico"
         raise ActiveRecord::Rollback
       end
     end
