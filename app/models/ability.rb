@@ -31,6 +31,7 @@ class Ability
     if user.admin? || user.super_admin?
       can :manage, User
       can :manage, Segment
+      can :manage_user_batch_action, User
     end
 
     if user.representative?
