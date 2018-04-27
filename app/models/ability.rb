@@ -47,10 +47,10 @@ class Ability
       can :manage_profile, User
     else
       can :manage_profile, User do |user_profile|
-        if user.common?
-          if user_profile == user
-            true
-          end
+        if user.common? && user_profile == user
+          true
+        else
+          false
         end
       end
     end
