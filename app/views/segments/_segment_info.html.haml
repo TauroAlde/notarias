@@ -15,17 +15,19 @@
     %h5 Candidatos
   .col-12
     %ul#pills-tab.nav.nav-pills.mb-3{role: "tablist"}
-      - @political_candidacies_loader.candidacies.each do |candidacy|
+      - @political_candidacies_loader.candidacies.uniq.each do |candidacy|
         %li.nav-item.pr-4
-          %a.nav-link.active{ id: "#pills-#{candidacy.name}-tab",  "aria-controls" => "pills-home", "aria-selected" => "true", "data-toggle" => "pill", href: "\#pills-#{candidacy.name}", role: "tab"}= candidacy.name
-    - @political_candidacies_loader.candidacies.uniq.each do |candidacy|
-      #pills-tabContent.tab-content
-        .tab-pane.fade.show.active{id: "#pills-#{candidacy.name}", "aria-labelledby" => "pills-#{candidacy.name}-tab", :role => "tabpanel"}
-        
-        = segment_bar_chart(@political_candidacies_loader.candidacies.uniq)
-        /
-          - @political_candidacies_loader.filter_by_candidacy(candidacy).each do |political_candidacy|
-            .row
-              .col
-                %p.text-success= political_candidacy.candidate.political_party.name
-                %p.text-warning= political_candidacy.candidate.name
+          %a.nav-link.active{ id: "pills-#{candidacy.name}-tab",  "aria-controls" => "pills-#{candidacy.name}", "aria-selected" => "true", "data-toggle" => "pill", href: "#pills-#{candidacy.name}", role: "tab"}= candidacy.name
+
+    .separator
+    #pills-tabContent.tab-content
+      - @political_candidacies_loader.candidacies.uniq.each do |candidacy|
+        .tab-pane.fade.show.active{id: "pills-#{candidacy.name}", "aria-labelledby" => "pills-#{candidacy.name}-tab", :role => "tabpanel"}
+          = render partial: "candidacy_charts", locals: { candidacy: candidacy }
+
+          /
+            - @political_candidacies_loader.filter_by_candidacy(candidacy).each do |political_candidacy|
+              .row
+                .col
+                  %p.text-success= political_candidacy.candidate.political_party.name
+                  %p.text-warning= political_candidacy.candidate.name

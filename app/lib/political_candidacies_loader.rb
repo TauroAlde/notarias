@@ -17,18 +17,27 @@ class PoliticalCandidaciesLoader
     political_candidacies.where(candidacy: candidacies).uniq
   end
 
-  def political_candidacies_data(candidacies = nil)
+  def political_candidacy_data(candidacy = nil)
     @data_hash = ActiveRecord::Base.connection.execute(
-      "SELECT #{candidacies_fields_queries(filter_by_candidacy(candidacies))} FROM \"prep_step_fours\""
+      "SELECT #{candidacies_fields_queries(filter_by_candidacy(candidacy))} FROM \"prep_step_fours\""
     ).to_a[0]
     {
       labels: @data_hash.keys,
       datasets: [{
-        label: candidacies.try(:first).try(:name) || "Candidaturas",
+        label: candidacy.try(:first).try(:name) || "Candidaturas",
         data: @data_hash.values,
         backgroundColor: data_colors,
         borderColor: data_colors
       }]
+    }
+  end
+
+  def political_candidacy_data_by_time(candidacy = nil)
+    dates = (DateTime.now.beginning_of_day.to_i..DateTime.now.end_of_day.to_i).
+      to_a.in_groups_of(2.hours).collect(&:first).collect { |t| Time.at(t) }
+    {
+      labels: dates,
+      datasets: dataset_by_date(candidacy, dates)
     }
   end
 
@@ -37,6 +46,33 @@ class PoliticalCandidaciesLoader
   end
 
   private
+
+  def dataset_by_date(candidacy, dates)
+    political_candidacies_list = filter_by_candidacy(candidacy)
+    political_candidacies_list.map do |political_candidacy|
+      @data_hash = ActiveRecord::Base.connection.execute(
+        "SELECT #{candidacies_fields_queries_by_date(political_candidacy, dates)}"
+      ).to_a[0]
+
+      {
+        label: political_candidacy.candidate.name,
+        data: @data_hash.values
+      }
+    end
+  end
+
+  def candidacies_fields_queries_by_date(political_candidacy, dates_list)
+    dates_list.map do |date|
+      <<-SQL
+        (
+          SELECT COALESCE(sum((prep_step_fours.data ->> '#{political_candidacy.id}')::int), 0) AS \"#{date}\"
+          FROM prep_step_fours
+          WHERE prep_step_fours.updated_at > DATE('#{date - 2.hours}')
+          AND prep_step_fours.updated_at < DATE('#{date + 2.hours}')
+        ) AS \"#{date}\"
+      SQL
+    end.join(", ")
+  end
 
   def candidacies_fields_queries(political_candidacies = nil)
     (political_candidacies || @political_candidacies).map do |political_candidacy|
