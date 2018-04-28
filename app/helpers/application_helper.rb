@@ -73,6 +73,8 @@ module ApplicationHelper
       current_user.represented_segments.first
     elsif current_user.admin? || current_user.super_admin?
       Segment.find_by(parent_id: nil)
+    elsif current_user.common?
+      current_user.segments.last
     else
       nil
     end

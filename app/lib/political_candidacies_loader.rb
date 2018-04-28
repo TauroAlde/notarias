@@ -1,5 +1,6 @@
 class PoliticalCandidaciesLoader
-  attr_accessor :segment, :political_candidacies, :candidacies
+  attr_accessor :segment, :political_candidacies, :candidacies, :data_hash
+  COLORS=["#1e5839", "#292828", "#d87e7e", "#628b9f", "#19455a", "#a5c392"]
 
   def initialize(segment)
     @segment = segment
@@ -11,11 +12,37 @@ class PoliticalCandidaciesLoader
     political_candidacies.joins(candidate: :political_party).where("political_parties.id = ?", political_party).uniq
   end
 
-  def filter_by_candidacy(candidacy)
-    political_candidacies.where(candidacy: candidacy).uniq
+  def filter_by_candidacy(candidacies)
+    return political_candidacies unless candidacies
+    political_candidacies.where(candidacy: candidacies).uniq
+  end
+
+  def political_candidacies_data(candidacies = nil)
+    @data_hash = ActiveRecord::Base.connection.execute(
+      "SELECT #{candidacies_fields_queries(filter_by_candidacy(candidacies))} FROM \"prep_step_fours\""
+    ).to_a[0]
+    {
+      labels: @data_hash.keys,
+      datasets: [{
+        label: candidacies.try(:first).try(:name) || "Candidaturas",
+        data: @data_hash.values,
+        backgroundColor: data_colors,
+        borderColor: data_colors
+      }]
+    }
+  end
+
+  def data_colors
+    COLORS[0..@data_hash.length]
   end
 
   private
+
+  def candidacies_fields_queries(political_candidacies = nil)
+    (political_candidacies || @political_candidacies).map do |political_candidacy|
+      "sum((prep_step_fours.data ->> '#{political_candidacy.id}')::int) as #{political_candidacy.candidate.name}"
+    end.join(", ")
+  end
 
   def load_full_branch
     PoliticalCandidacy.where(

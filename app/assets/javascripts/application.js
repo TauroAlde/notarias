@@ -18,4 +18,5 @@
 //= require jquery-ui
 //= require jstree.min
 //= require notify
+//= require Chart.min
 //= require_tree .

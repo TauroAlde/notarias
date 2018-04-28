@@ -21,8 +21,11 @@
     - @political_candidacies_loader.candidacies.uniq.each do |candidacy|
       #pills-tabContent.tab-content
         .tab-pane.fade.show.active{id: "#pills-#{candidacy.name}", "aria-labelledby" => "pills-#{candidacy.name}-tab", :role => "tabpanel"}
-        - @political_candidacies_loader.filter_by_candidacy(candidacy).each do |political_candidacy|
-          .row
-            .col
-              %p.text-success= political_candidacy.candidate.political_party.name
-              %p.text-warning= political_candidacy.candidate.name
+        
+        = segment_bar_chart(@political_candidacies_loader.candidacies.uniq)
+        /
+          - @political_candidacies_loader.filter_by_candidacy(candidacy).each do |political_candidacy|
+            .row
+              .col
+                %p.text-success= political_candidacy.candidate.political_party.name
+                %p.text-warning= political_candidacy.candidate.name

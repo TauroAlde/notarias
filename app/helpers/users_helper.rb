@@ -61,9 +61,9 @@ module UsersHelper
 
   def new_user_link_url
     if @segment
-      new_segment_user_path(@segment, @user)
+      new_segment_user_path(@segment)
     else
-      new_user_path(@user)
+      new_user_path
     end
   end
 end
