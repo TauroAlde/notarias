@@ -20,7 +20,20 @@ module SegmentsHelper
 
   def default_options
     {
-      height: "200"
+      height: "200",
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }],
+        xAxes: [{
+          ticks: {
+            autoSkip: false,
+            beginAtZero: true
+          }
+        }]
+      }
     }
     #{
     #  scales: {
