@@ -33,7 +33,7 @@ class PoliticalCandidaciesLoader
   end
 
   def political_candidacy_data_by_time(candidacy = nil)
-    dates = ((DateTime.now - 1.day).beginning_of_day.to_i..(DateTime.now  - 1.day).end_of_day.to_i).
+    dates = (DateTime.now.beginning_of_day.to_i..DateTime.now.end_of_day.to_i).
       to_a.in_groups_of(2.hours).collect(&:first).collect { |t| Time.at(t).strftime("%Y-%m-%d %H:%M:%S") }
     {
       labels: dates.map { |date| date },
