@@ -76,7 +76,7 @@ class PoliticalCandidaciesLoader
 
   def candidacies_fields_queries(political_candidacies = nil)
     (political_candidacies || @political_candidacies).map do |political_candidacy|
-      "sum((prep_step_fours.data ->> '#{political_candidacy.id}')::int) as #{political_candidacy.candidate.name}"
+      "sum((prep_step_fours.data ->> '#{political_candidacy.id}')::int) as \"#{political_candidacy.candidate.name.downcase}\""
     end.join(", ")
   end
 
