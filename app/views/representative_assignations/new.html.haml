@@ -18,12 +18,12 @@
         %span.font-weight-bold= @segment.name
         Dándo clic en los botones a la derecha de cada usuario
     - if @users.empty?
-      .container.messenger
+      .container.representative_assignations_text
         .card.text-center
           .card-body
             %h5.card-title No hay usuarios
             %p.card-text La lista de usuarios esta vacía, para llenarla elíge una de las siguientes dos opciones.
-            = link_to segment_users_path(@segment), class: "btn btn-primary margen" do
+            = link_to segment_users_path(@segment), class: "btn btn-primary margin_create_user_button" do
               = fa_icon("users")
               Crear Usuarios
             = link_to new_segment_users_import_path, class:  "btn btn-primary" do

@@ -2,7 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.messenger 
+.representative_assignations_text
   {
     height: 25em;
     display: flex;
@@ -10,6 +10,6 @@
     justify-content: center
   }
 
-.margen {
+.margin_create_user_button {
   margin-right: ($spacer * .25) !important;
 }
