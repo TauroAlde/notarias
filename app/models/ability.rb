@@ -43,5 +43,17 @@ class Ability
         represented_tree.include? segment
       end
     end
+    
+    if user.representative? || user.admin? || user.super_admin?
+      can :manage_profile, User
+    else
+      can :manage_profile, User do |user_profile|
+        if user.common? && user_profile == user
+          true
+        else
+          false
+        end
+      end
+    end
   end
 end

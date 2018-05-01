@@ -4,10 +4,12 @@ class ProfilesController < ApplicationController
 
   def edit
     @user = User.unscoped.find(params[:id])
+    authorize! :manage_profile, @user
   end
 
   def update
     @user = User.unscoped.find(params[:id])
+    authorize! :manage_profile, @user
     begin
       @user.update(user_params)
     rescue ActiveRecord::RecordNotUnique => e
