@@ -11,4 +11,9 @@ $ ->
     .on  'changed.jstree', (e, data) ->
       window.location.pathname = data.node.a_attr.href
     .jstree
-      "plugins" : [ "changed" ]
+      "plugins": [ "changed" ],
+      "core":
+        "data":
+          "url": "/segments/jstree_segment.html",
+          "data": (node) ->
+            { 'id': node.id, 'current-segment-id': $("#segments-index").attr("data-current-segment-id") }

@@ -1,11 +1,6 @@
 class SegmentsController < ApplicationController
-  before_action :load_segment, only: [:show]
-  before_action :load_segments
+  before_action :load_segment, only: [:show, :jstree_segment]
   #before_action :representative_restrictions, only: [:show]
-
-  def index
-    authorize! :index, @segments
-  end
 
   def show
     authorize! :show, @segment
@@ -27,21 +22,15 @@ class SegmentsController < ApplicationController
     render :index
   end
 
+  def jstree_segment
+    @current_segment = Segment.find(params[:"current-segment-id"])
+    render layout: false
+  end
+
   private
 
   def load_segment
-    @segment = Segment.find(params[:id])
-  end
-
-  def load_segments
-    @segments = if current_user.representative?
-      current_user.represented_segments
-    else
-      Segment.roots
-    end
-
-    @q = @segments.ransack(params[:q])
-    @segments = @q.result(distinct: true)
+    @segment = params[:id] == "#" ? Segment.root : Segment.find(params[:id])
   end
 
   def load_candidacies

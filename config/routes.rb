@@ -15,7 +15,8 @@ Rails.application.routes.draw do
   resources :procedure_catalogs
   resources :user_preferences
 
-  resources :segments do
+  resources :segments, only: [:show] do
+    get :jstree_segment, on: :collection
     resources :users_imports, only: [:new, :update]
     resources :prep_step_fours, only: [:update] # we need the segment to load the candidacies
     resources :representative_assignations, only: [:new, :update, :destroy]

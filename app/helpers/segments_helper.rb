@@ -1,4 +1,24 @@
 module SegmentsHelper
+  def jstree_segment_class(segment)
+    if is_segment_open?(segment)
+      'jstree-open'
+    elsif !segment.leaf?
+      'jstree-closed'
+    end
+  end
+
+  def is_segment_open?(segment)
+    !segment.leaf? && (current_branch?(segment) || !@segment.root?)
+  end
+
+  def current_branch?(segment)
+    segment.self_and_descendant_ids.include?(@current_segment.id)
+  end
+
+  def jstree_data(segment)
+    
+  end
+
   def segment_bar_chart(candidacy)
     bar_chart(candidacies_loader.political_candidacy_data(candidacy), default_options)
   end

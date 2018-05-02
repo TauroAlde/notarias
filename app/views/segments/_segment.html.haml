@@ -1,5 +1,6 @@
+
 %ul
-  %li{ class: @segment && @segment.self_and_ancestors.include?(segment) ? 'jstree-open' : '', "segment-id" => segment.id }
+  %li{ class: jstree_segment_class(segment), "segment-id" => segment.id, id: segment.id }
     = link_to segment.name, segment_path(segment)
-    - if segment.children.present?
+    - if is_segment_open?(segment)
       = render segment.children
