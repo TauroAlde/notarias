@@ -34,6 +34,7 @@ Rails.application.routes.draw do
 
   resources :transfer_users, only: [:new, :create] do
     get :select, on: :collection
+    get :jstree_segment, on: :collection
   end
 
   resources :prep_step_threes, only: [:update]

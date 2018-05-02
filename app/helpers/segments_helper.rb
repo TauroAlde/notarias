@@ -7,12 +7,19 @@ module SegmentsHelper
     end
   end
 
+  def segment_link_class(segment)
+    base_class = []
+    base_class << "jstree-disabled" if is_segment_disabled?(segment) 
+    base_class << "jstree-clicked" if segment == @current_segment
+    base_class.join(" ")
+  end
+
   def is_segment_open?(segment)
     !segment.leaf? && (current_branch?(segment) || !@segment.root?)
   end
 
   def current_branch?(segment)
-    segment.self_and_descendant_ids.include?(@current_segment.id)
+    segment.self_and_descendant_ids.include?(@current_segment ? @current_segment.id : @segment.id)
   end
 
   def is_segment_disabled?(segment)

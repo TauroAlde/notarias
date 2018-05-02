@@ -5,14 +5,49 @@ $ ->
   $('#from-tree')
     .on 'changed.jstree', (e, data) ->
       window.from_segment = data.node.li_attr["segment-id"]
+    .on "redraw.jstree", (e, data) ->
+      $("#from-tree .jstree-node").each (i, el) ->
+        badge_class = null
+
+        if $(el).attr("data-users-count") == "0"
+          badge_class = "secondary"
+        else
+          badge_class = "success"
+
+        html = "<span class=\"badge badge-pill badge-#{badge_class} ml-2\"><i class=\"fa fa-users mr-1\"></i>#{$(el).attr("data-users-count")} </span>"
+        if $(el).children(".jstree-anchor").children("span").length
+          $(el).children(".jstree-anchor").children("span").replaceWith(html)
+        else
+          $(el).children(".jstree-anchor").append(html)
     .jstree
-      "plugins" : [ "changed" ]
+      "plugins": [ "changed", "wholerow" ],
+      "core":
+        "data":
+          "url": "/transfer_users/jstree_segment.html",
+          "data": (node) -> { 'id': node.id }
 
   $('#to-tree')
     .on 'changed.jstree', (e, data) ->
       window.to_segment = data.node.li_attr["segment-id"]
+    .on "redraw.jstree", (e, data) ->
+      $("#to-tree .jstree-node").each (i, el) ->
+        badge_class = null
+
+        if $(el).attr("data-users-count") == "0"
+          badge_class = "secondary"
+        else
+          badge_class = "success"
+        html = "<span class=\"badge badge-pill badge-#{badge_class} ml-2\"><i class=\"fa fa-users mr-1\"></i>#{$(el).attr("data-users-count")} </span>"
+        if $(el).children(".jstree-anchor").children("span").length
+          $(el).children(".jstree-anchor").children("span").replaceWith(html)
+        else
+          $(el).children(".jstree-anchor").append(html)
     .jstree
-      "plugins" : [ "changed" ]
+      "plugins": [ "changed", "wholerow" ],
+      "core":
+        "data":
+          "url": "/transfer_users/jstree_segment.html",
+          "data": (node) -> { 'id': node.id }
 
   $('#transfer-users-select').click (e)->
     e.preventDefault()

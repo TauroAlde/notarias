@@ -3,6 +3,7 @@ class TransferUsersController < ApplicationController
   before_action :load_from_to_segments, only: [:select, :create]
 
   def new
+    @segment = Segment.root
     @segments = load_managed_segments_tree
   end
 
@@ -18,6 +19,11 @@ class TransferUsersController < ApplicationController
       @user_segments.update(segment_id: @to_segment.id)
       raise ActiveRecord::Rollback if @user_segments.any? { |user_segment| !user_segment.errors.blank? }
     end
+  end
+
+  def jstree_segment
+    @segment = params[:id] == "#" ? Segment.root : Segment.find(params[:id])
+    render layout: false
   end
 
   private
