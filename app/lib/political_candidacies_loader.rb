@@ -39,7 +39,7 @@ class PoliticalCandidaciesLoader
   end
 
   def political_candidacy_data_by_time(candidacy = nil)
-    dates = ((DateTime.now - 1.day).beginning_of_day.to_i..(DateTime.now  - 1.day).end_of_day.to_i).
+    dates = (DateTime.now.beginning_of_day.to_i..DateTime.now.end_of_day.to_i).
       to_a.in_groups_of(2.hours).collect(&:first).collect { |t| Time.at(t).strftime("%Y-%m-%d %H:%M:%S") }
     {
       labels: dates.map { |date| date },
@@ -82,7 +82,7 @@ class PoliticalCandidaciesLoader
 
   def candidacies_fields_queries(political_candidacies = nil)
     (political_candidacies || @political_candidacies).map do |political_candidacy|
-      "sum((prep_step_fours.data ->> '#{political_candidacy.id}')::int) as #{political_candidacy.candidate.name}"
+      "sum((prep_step_fours.data ->> '#{political_candidacy.id}')::int) as \"#{political_candidacy.candidate.name.downcase}\""
     end.join(", ")
   end
 
