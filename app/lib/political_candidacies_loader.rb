@@ -19,7 +19,13 @@ class PoliticalCandidaciesLoader
 
   def political_candidacy_data(candidacy = nil)
     @data_hash = ActiveRecord::Base.connection.execute(
-      "SELECT #{candidacies_fields_queries(filter_by_candidacy(candidacy))} FROM \"prep_step_fours\""
+      <<-SQL
+        SELECT #{candidacies_fields_queries(filter_by_candidacy(candidacy))} 
+        FROM prep_step_fours
+        INNER JOIN prep_processes ON prep_processes.id = prep_step_fours.prep_process_id
+        INNER JOIN segments ON segments.id = prep_processes.segment_id
+        WHERE segments.id IN (#{segment.self_and_descendant_ids.join(", ")})
+      SQL
     ).to_a[0]
     {
       labels: @data_hash.keys,
