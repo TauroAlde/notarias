@@ -1,6 +1,5 @@
-
 %ul
   %li{ class: jstree_segment_class(segment), "segment-id" => segment.id, id: segment.id }
-    = link_to segment.name, segment_path(segment)
+    = link_to segment.name, segment_path(segment), class: is_segment_disabled?(segment) ? "jstree-disabled" : ""
     - if is_segment_open?(segment)
       = render segment.children

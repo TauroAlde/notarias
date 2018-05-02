@@ -15,8 +15,21 @@ module SegmentsHelper
     segment.self_and_descendant_ids.include?(@current_segment.id)
   end
 
-  def jstree_data(segment)
-    
+  def is_segment_disabled?(segment)
+    if available_segments_ids.include?(:all) || available_segments_ids.include?(segment.id)
+      false
+    else
+      true
+    end
+  end
+
+  def available_segments_ids
+    return @available_segments_ids if @available_segments_ids
+    @available_segments_ids = if current_user.admin? || current_user.super_admin?
+      [:all]
+    else
+      current_user.represented_segments.map(&:self_and_descendant_ids).flatten.uniq
+    end
   end
 
   def segment_bar_chart(candidacy)
