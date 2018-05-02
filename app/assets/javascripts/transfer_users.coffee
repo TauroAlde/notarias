@@ -18,7 +18,7 @@ $ ->
         if $(el).children(".jstree-anchor").children("span").length
           $(el).children(".jstree-anchor").children("span").replaceWith(html)
         else
-          $(el).children(".jstree-anchor").append(html)
+          $(el).children(".jstree-anchor").prepend(html)
     .jstree
       "plugins": [ "changed", "wholerow" ],
       "core":
@@ -41,7 +41,7 @@ $ ->
         if $(el).children(".jstree-anchor").children("span").length
           $(el).children(".jstree-anchor").children("span").replaceWith(html)
         else
-          $(el).children(".jstree-anchor").append(html)
+          $(el).children(".jstree-anchor").prepend(html)
     .jstree
       "plugins": [ "changed", "wholerow" ],
       "core":
