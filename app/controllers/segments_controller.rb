@@ -23,8 +23,13 @@ class SegmentsController < ApplicationController
   end
 
   def jstree_segment
-    @current_segment = Segment.find(params[:"current-segment-id"])
+    @current_segments = Segment.find(params[:"current-segment-id"])
     render layout: false
+  end
+
+  def jstree_search
+    @segments = Segment.ransack(name_cont: params[:str]).result(distinct: true).map(&:self_and_ancestor_ids).flatten.uniq
+    render json: @segments
   end
 
   private

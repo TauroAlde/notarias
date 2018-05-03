@@ -1,6 +1,6 @@
-#segments-index.h-100{ "data-current-segment-id": @segment.id}
+#segments-index.h-100{ "data-current-segment-id": @segment.id, "data-filtered-segments": @search_segments.blank? ? [] : @search_segments.pluck(:id) }
   #segments-index-actions.row.no-gutters
-    = search_form_for Segment.ransack(params[:q]), url: segment_path(@segment), class: "col-8 col-md-10 col-lg-11 users-search-form" do |f|
+    = search_form_for Segment.ransack(params[:q]), url: "#", class: "col-8 col-md-10 col-lg-11 users-search-form", id: "segments-search-form"  do |f|
       .input-group
         = f.search_field(:name_cont, class: "form-control", placeholder: t(:search), type: "text" )
         = button_tag class: 'btn btn-outline-secondary' do

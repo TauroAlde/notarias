@@ -3,6 +3,7 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 redrawNode = (el) ->
   node = $(el)
+
   anchor = node.children(".jstree-anchor")
   badge_class = null
 
@@ -28,11 +29,28 @@ $ ->
     .on  'changed.jstree', (e, data) ->
       return if !data.node
       window.location.pathname = data.node.a_attr.href
-    .on "redraw.jstree", (e, data) -> $(".jstree-node").each (i, el) -> redrawNode(el)
+    .on "redraw.jstree", (e, data) ->
+      $(".jstree-node").each (i, el) -> redrawNode(el)
     .jstree
-      "plugins": [ "changed", "wholerow" ],
-      "core":
+      "plugins": [ "changed", "wholerow", "search" ],
+      "search":
+        "show_only_matches": true
+        "ajax":
+          "url": "/segments/jstree_search.json",
+          'data' : (str) -> { "search_str" : str }
+      ,"core":
         "data":
           "url": "/segments/jstree_segment.html",
           "data": (node) ->
             { 'id': node.id, 'current-segment-id': $("#segments-index").attr("data-current-segment-id") }
+
+  $("#segments-search-form").submit (e)-> e.preventDefault()
+  to = false;
+  $("#segments-search-form").keyup (e)->
+    if to then clearTimeout(to)
+    to = setTimeout =>
+      
+      v = $(this).find("#q_name_cont").val();
+      $('#jstree-container').jstree(true).search(v);
+    , 250
+
