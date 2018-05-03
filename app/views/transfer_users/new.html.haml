@@ -3,13 +3,13 @@
     .row
       .col
         %h3 Transferencia de usuarios
-        %p Elije de donde a donde deseas transferir usuarios
 
   .container-fluid.h-100
     .row.h-100
       .col-12.col-md-5.col-lg-5.h-50
         .w-100.h-100.card
           .card-header De donde deseas mover usuarios
+          %input#from-segments-search-input.w-100{ type: "text" }
           .card-body#from-tree
 
 
@@ -20,6 +20,7 @@
       .col-12.col-md-5.col-lg-5.h-50
         .w-100.h-100.card
           .card-header Hacia donde deseas moverlos
+          %input#to-segments-search-input.w-100{ type: "text" }
           .card-body#to-tree
 
 

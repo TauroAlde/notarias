@@ -21,6 +21,12 @@ redrawNode = (el) ->
 
   anchor.prepend(html)
 
+runSearch = ->
+  to = false
+  v = $("#segments-search-form").find("#q_name_cont").val()
+  $('#jstree-container').jstree(true).search(v)
+  
+
 $ ->
   #chart = Object.values(Chartkick.charts)[0]
   #chart.chart.generateLegend()
@@ -49,8 +55,7 @@ $ ->
   $("#segments-search-form").keyup (e)->
     if to then clearTimeout(to)
     to = setTimeout =>
-      
-      v = $(this).find("#q_name_cont").val();
-      $('#jstree-container').jstree(true).search(v);
+      runSearch()
     , 250
+
 

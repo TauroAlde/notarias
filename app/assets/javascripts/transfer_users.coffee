@@ -21,23 +21,12 @@ redrawNode = (el) ->
   anchor.prepend(html)
 
 $ ->
-  bindSearch = (element, source_tree)->
-    to = false;
-    element.keyup (e)->
-      if to then clearTimeout(to)
-      to = setTimeout =>
-        v = $(this).find("#q_name_cont").val();
-        $(source_tree).jstree(true).search(v);
-      , 250
-
-  bindSearch($("#form-segments-search-input"), "#from-tree")
-  bindSearch($("#to-segments-search-input"), "#to-tree")
 
   $('#from-tree')
     .on 'changed.jstree', (e, data) -> window.from_segment = data.node.li_attr["segment-id"]
     .on "redraw.jstree", (e, data) -> $("#from-tree .jstree-node").each (i, el) -> redrawNode(el)
     .jstree
-      "plugins": [ "changed", "wholerow" ],
+      "plugins": [ "changed", "wholerow", "search" ],
       "search":
         "show_only_matches": true
         "ajax":
@@ -52,7 +41,7 @@ $ ->
     .on 'changed.jstree', (e, data) -> window.to_segment = data.node.li_attr["segment-id"]
     .on "redraw.jstree", (e, data) -> $("#to-tree .jstree-node").each (i, el) -> redrawNode(el)
     .jstree
-      "plugins": [ "changed", "wholerow" ],
+      "plugins": [ "changed", "wholerow", "search" ],
       "search":
         "show_only_matches": true
         "ajax":
@@ -62,6 +51,18 @@ $ ->
         "data":
           "url": "/transfer_users/jstree_segment.html",
           "data": (node) -> { 'id': node.id }
+
+  bindSearch = (element, source_tree)->
+    to = false;
+    element.keyup (e)->
+      if to then clearTimeout(to)
+      to = setTimeout =>
+        v = element.val();
+        $(source_tree).jstree(true).search(v);
+      , 250
+
+  bindSearch($("#from-segments-search-input"), "#from-tree")
+  bindSearch($("#to-segments-search-input"), "#to-tree")
 
   $('#transfer-users-select').click (e)->
     e.preventDefault()

@@ -23,7 +23,7 @@ class SegmentsController < ApplicationController
   end
 
   def jstree_segment
-    @current_segments = Segment.find(params[:"current-segment-id"])
+    @current_segment = Segment.find(params[:"current-segment-id"])
     render layout: false
   end
 
