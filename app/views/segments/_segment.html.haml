@@ -1,5 +1,5 @@
 %ul
-  %li{ class: jstree_segment_class(segment), "segment-id" => segment.id, id: segment.id, "data-users-count" => segment.users.count }
+  %li{ class: jstree_segment_class(segment), "segment-id" => segment.id, id: segment.id, "data-users-count" => segment.non_representative_users.count, "data-admins-count" => segment.leaf? ? "null" : segment.representative_users.count }
     = link_to segment.name, segment_path(segment), class: segment_link_class(segment)
     - if is_segment_open?(segment)
       = render segment.children
