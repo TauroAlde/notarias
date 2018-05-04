@@ -1,4 +1,4 @@
-.container-fluid
+.container-fluid#messages-tab
   .row
     .col-12
       #acordion
@@ -7,7 +7,7 @@
             %h5.mb-0
               %button.btn.btn-link{ data: { toggle: "collapse", target: "#collapseOne" }, aria: { expanded: "true", controls: "collapseOne" } }
                 Historial de Mensajes
-          #collapseOne.collapse{ aria: { labelledby: "headingOne" }, data: { parent: "#accordion" } }
+          #collapseOne{ class: request.format.to_s == "text/javascript" ? "collapse show" : "collapse", aria: { labelledby: "headingOne" }, data: { parent: "#accordion" } }
             .card-body
               .row
                 - @previous_messages.each do |message|
@@ -17,3 +17,4 @@
                         = image_tag evidence.file.url, class: "img-thumbnail mx-auto"
                     %strong= message.created_at.strftime("%l:%M %P - %d/%b/%Y")
                     %p= message.message
+              = render '/prep_processes/segment_message_form'

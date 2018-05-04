@@ -64,15 +64,13 @@ module ApplicationHelper
     end
   end
 
-  private
-
   def root_segment
     if current_user.representative?
       current_user.represented_segments.first
     elsif current_user.admin? || current_user.super_admin?
       Segment.root
-    else
-      nil
+    elsif current_user.common? && current_user.segments.present?
+      current_user.segments.last
     end
   end
 end

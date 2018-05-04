@@ -19,4 +19,5 @@
 //= require jstree.min
 //= require notify
 //= require Chart.min
+//= require jquery-fileupload/basic
 //= require_tree .

@@ -26,7 +26,9 @@ Rails.application.routes.draw do
       post :next, on: :member # :collection doesn't require resource id "on: :collection"
       get :complete, on: :member
     end
-    resources :segment_messages, only: [:create]
+    resources :segment_messages, only: [:create, :index] do
+      post :evidence, on: :collection
+    end
     resources :users do
       post :lock, on: :member # requires id of the resource "on: :member"
       post :unlock, on: :member

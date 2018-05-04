@@ -30,7 +30,8 @@
                   .fa.fa-unlock
                   = t(:unlock)
       .clearfix
-  = render partial: '/shared/errors', locals: { record: @user }
+  /
+    = render partial: '/shared/errors', locals: { record: @user }
 
   #user-form-content.row
     .col-md-6.col-sm-12

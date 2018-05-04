@@ -4,4 +4,6 @@ class SegmentMessage < ApplicationRecord
   belongs_to :segment
 
   has_many :evidences
+
+  validates :message, presence: true, allow_blank: false
 end
