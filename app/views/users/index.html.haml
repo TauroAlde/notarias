@@ -9,29 +9,29 @@
           = fa_icon "search"
         .clearfix
 
-    %a#action-dropdown-btn.btn.btn-primary.dropdown-toggle.col{ href: "#", "data-toggle" => "dropdown", aria: { expanded: false, haspopup: true } }
+    %a#action-dropdown-btn.btn.btn-primary.dropdown-toggle.col-4.col-md-2.col-lg-1{ href: "#", "data-toggle" => "dropdown", aria: { expanded: false, haspopup: true } }
       = t(:actions)
 
     .dropdown-menu.table-dropdown-menu{ "aria-labelledby" => "dropdownMenuLink" }
       //TODO verify this link_to
       - if @segment
-        = link_to segment_path(@segment), class: "btn-green-dropdown-item btn-green" do
-          = fa_icon('undo')
+        = link_to :back, class: "btn-green-dropdown-item btn-green" do
           Regresar
+          %span.pull-right= fa_icon('undo') 
         = link_to new_transfer_user_path, class: "btn-green-dropdown-item btn-green" do
-          = fa_icon('exchange')
-          Transferir Usuarios
+          Transferir
+          %span.pull-right= fa_icon('exchange')
         = link_to new_segment_users_import_path(@segment), class: "btn-green-dropdown-item btn-green" do
-          = fa_icon("upload")
-          Importar Usuarios
+          Importar
+          %span.pull-right= fa_icon("upload") 
 
       = link_to "#", class: "btn-green-dropdown-item btn-green batch-action-btn d-none", data: { action: "delete" } do
         = fa_icon(:trash)
-        = t(:delete)
+        %span.pull-right= t(:delete)
 
       = link_to new_user_link_url, class: "btn-green-dropdown-item btn-green single-action-btn", data: { action: "delete" }, remote: true do
-        = fa_icon(:plus)
-        = t(:new_user)
+        Nuevo
+        %span.pull-right= fa_icon(:plus) 
 
   #users-index-content.container-fluid
     .row

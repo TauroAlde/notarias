@@ -7,25 +7,25 @@
           = fa_icon "search"
         .clearfix
 
-    %a#action-dropdown-btn.btn.btn-primary.dropdown-toggle.col{ href: "#", "data-toggle" => "dropdown", "data-resource" => "segment", aria: { expanded: false, haspopup: true } }
+    %a#action-dropdown-btn.btn.btn-primary.dropdown-toggle.col-4.col-md-2.col-lg-1{ href: "#", "data-toggle" => "dropdown", "data-resource" => "segment", aria: { expanded: false, haspopup: true } }
       = t(:actions)
 
     .dropdown-menu.table-dropdown-menu{ "aria-labelledby" => "dropdownMenuLink" }
       = link_to new_transfer_user_path, class: "btn-green-dropdown-item btn-green" do
-        = fa_icon('exchange')
-        Transferir Usuarios
+        Transferir
+        %span.pull-right= fa_icon('exchange')
       = link_to segment_users_path(@segment), class: "btn-green-dropdown-item btn-green" do
-        = fa_icon(:users)
         = t(:users)
+        %span.pull-right= fa_icon(:users)
       = link_to new_segment_representative_assignation_path(@segment), class: "btn-green-dropdown-item btn-green" do
-        = fa_icon("address-book")
-        Administradores
+        Admin
+        %span.pull-right= fa_icon("address-book")
       = link_to new_segment_users_import_path(@segment), class: "btn-green-dropdown-item btn-green" do
-        = fa_icon("upload")
-        Importar Usuarios
+        Importar
+        %span.pull-right= fa_icon("upload")
       #hide-resource-mobile.btn-green.btn-green-dropdown-item.d-block.d-md-none
-        = fa_icon("undo")
         = t(:back)
+        %span.pull-right= fa_icon("undo")
 
   #segments-index-content.container-fluid
     .row
