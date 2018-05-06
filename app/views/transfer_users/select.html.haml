@@ -28,11 +28,9 @@
             = link_to segment_users_path(@from_segment), class: "btn btn-primary margin_create_user_button" do
               = fa_icon("users")
               Crear Usuarios
-/ Esta seccion no esta funcionando porque el path requiere params[segment_id],
-/ y en este controlador no se encuentra, no lo pude agregar
-/           = link_to new_segment_users_import_path, class:  "btn btn-primary" do
-/             = fa_icon("upload")
-/             Importar Usuarios
+            = link_to new_segment_users_import_path(@from_segment), class:  "btn btn-primary" do
+              = fa_icon("upload")
+              Importar Usuarios
     - else
       %ul.list-group.user-transfer-list
         = render partial: "user", collection: @users
