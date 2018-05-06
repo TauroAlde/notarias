@@ -1,30 +1,30 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
-redrawNode = (el) ->
-  node = $(el)
-  anchor = node.children(".jstree-anchor")
-  badge_class = null
-
-  if node.attr("data-users-count") == "0"
-    badge_class = "secondary"
-  else
-    badge_class = "success"
-
-  html = "<span class=\"badge badge-pill badge-#{badge_class} ml-2\"><i class=\"fa fa-users mr-1\"></i>#{node.attr("data-users-count")} </span>"
-  if $(el).attr("data-admins-count") != "null"
-    html += "<span class=\"badge badge-pill badge-warning ml-2\"><i class=\"fa fa-address-book mr-1\"></i>#{node.attr("data-admins-count")} </span>"
-
-  if anchor.children("span").length
-    spans = anchor.children("span").remove()
-
-  anchor.prepend(html)
+#redrawNode = (el) ->
+#  node = $(el)
+#  anchor = node.children(".jstree-anchor")
+#  badge_class = null
+#
+#  if node.attr("data-users-count") == "0"
+#    badge_class = "secondary"
+#  else
+#    badge_class = "success"
+#
+#  html = "<span class=\"badge badge-pill badge-#{badge_class} ml-2\"><i class=\"fa fa-users mr-1\"></i>#{node.attr("data-users-count")} </span>"
+#  if $(el).attr("data-admins-count") != "null"
+#    html += "<span class=\"badge badge-pill badge-warning ml-2\"><i class=\"fa fa-address-book mr-1\"></i>#{node.attr("data-admins-count")} </span>"
+#
+#  if anchor.children("span").length
+#    spans = anchor.children("span").remove()
+#
+#  anchor.prepend(html)
 
 $ ->
 
   $('#from-tree')
     .on 'changed.jstree', (e, data) -> window.from_segment = data.node.li_attr["segment-id"]
-    .on "redraw.jstree", (e, data) -> $("#from-tree .jstree-node").each (i, el) -> redrawNode(el)
+    #.on "redraw.jstree", (e, data) -> $("#from-tree .jstree-node").each (i, el) -> redrawNode(el)
     .jstree
       "plugins": [ "changed", "wholerow", "search" ],
       "search":
@@ -39,7 +39,7 @@ $ ->
 
   $('#to-tree')
     .on 'changed.jstree', (e, data) -> window.to_segment = data.node.li_attr["segment-id"]
-    .on "redraw.jstree", (e, data) -> $("#to-tree .jstree-node").each (i, el) -> redrawNode(el)
+    #.on "redraw.jstree", (e, data) -> $("#to-tree .jstree-node").each (i, el) -> redrawNode(el)
     .jstree
       "plugins": [ "changed", "wholerow", "search" ],
       "search":
@@ -79,13 +79,16 @@ $ ->
 
   $("#transfer-users-link").click (e) ->
     e.preventDefault()
-    $.post $(e.currentTarget).attr("data-path"),
-      { users_ids: $.map $(".user-transfer-list-item.active"), (val, i)-> $(val).attr("user-id") },
-      ((a, b, c) ->
-        console.log(a)
-        console.log b
-        console.log c
-      ),
-      "script"
+    if $(".user-transfer-list-item.active").length
+      $.post $(e.currentTarget).attr("data-path"),
+        { users_ids: $.map $(".user-transfer-list-item.active"), (val, i)-> $(val).attr("user-id") },
+        ((a, b, c) ->
+          console.log(a)
+          console.log b
+          console.log c
+        ),
+        "script"
+    else
+      $.notify("Por favor elija ususarios para transferir", { globalPosition: "top center" });
 
       

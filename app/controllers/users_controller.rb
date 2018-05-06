@@ -3,28 +3,31 @@ class UsersController < ApplicationController
   before_action :set_default_load_scope
   before_action :allow_without_password, only: [:update]
   before_action :load_segment
-  before_action :load_users
-  before_action :load_search
-  authorize_resource
+  before_action :load_users, only: [:index, :create, :update]
+  before_action :load_search, only: [:index, :create, :update]
 
   def index
   end
 
   def show
     @user = User.unscoped.find(params[:id])
+    authorize! :manage, @user
     @groups = @user.groups
   end
 
   def new
     @user = User.new
+    authorize! :manage, @segment
   end
 
   def edit
     @user = User.unscoped.find(params[:id])
+    authorize! :manage, @user
   end
 
   def create
     @user = User.new user_params
+    authorize! :manage, @segment
     begin
       @user.save!
       @user.segments << @segment if @segment
@@ -43,6 +46,7 @@ class UsersController < ApplicationController
 
   def update
     @user = User.unscoped.find(params[:id])
+    authorize! :manage, @user
     begin
       @user.update(user_params)
     rescue ActiveRecord::RecordNotUnique => e
@@ -59,6 +63,7 @@ class UsersController < ApplicationController
 
   def destroy
     @user = User.find(params[:id])
+    authorize! :manage, @user
     @user.lock_access!
     @user.destroy
     flash[:notice] = t(:deleted_users_successfully)
@@ -67,6 +72,7 @@ class UsersController < ApplicationController
 
   def lock
     @user = User.find(params[:id])
+    authorize! :manage, @user
     if !(current_user == @user)
       @user.lock_access!
       @user.destroy
@@ -74,35 +80,30 @@ class UsersController < ApplicationController
     else
       flash[:notice] = t(:cant_perform_this_action)
     end
-    redirect_to users_path
+    redirect_to segment_users_path(@segment)
   end
 
   def unlock
     @user = User.unscoped.find(params[:id])
+    authorize! :unlock, @user
     if !(current_user == @user)
       @user.unlock_access!
       @user.restore
       flash[:success] = t(:unlock_access)
-    else
-      flash[:alert] = t(:cant_perform_this_action)
     end
-    redirect_to users_path
+    redirect_to segment_users_path(@segment)
   end
 
   private
 
   def load_users
     @users = if @segment
-      authorize! :manage, @segment if @segment
       load_segment_users
     elsif current_user.representative?
       segments_ids = current_user.represented_segments_and_descendant_ids
       User.unscoped.joins(:user_segments).where(user_segments: { segment_id: segments_ids })
     elsif current_user.admin? || current_user.super_admin?
       User.unscoped
-    else
-      flash[:alert] = t(:cant_perform_this_action)
-      redirect_to root_path
     end
   end
 
@@ -116,7 +117,7 @@ class UsersController < ApplicationController
   end
 
   def load_segment
-    @segment = Segment.find(params[:segment_id]) if params[:segment_id]
+    @segment = Segment.find(params[:segment_id])
   end
 
   def user_params

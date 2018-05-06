@@ -32,28 +32,48 @@ class Ability
       can :manage, User
       can :manage, Segment
       can :manage_user_batch_action, User
-    end
-
-    if user.representative?
-      can :manage, Segment do |segment|
-        represented_tree = user.represented_segments.map do |represented_segment|
-          represented_segment.self_and_descendants
-        end.flatten
-
-        represented_tree.include? segment
+      can :unlock, User do |unlockable_user|
+        user != unlockable_user
       end
-    end
-    
-    if user.representative? || user.admin? || user.super_admin?
+      can :lock, User do |lockable_user|
+        user != lockable_user
+      end
       can :manage_profile, User
+    elsif user.representative?
+      can :manage, Segment do |segment|
+        represented_segments_trees_ids(user).include? segment.id
+      end
+
+      can :manage, User do |authorizable_user|
+        within_representative_tree?(authorizable_user)
+      end
+
+      can :unlock, User do |unlockable_user|
+        within_representative_tree?(unlockable_user) && user != unlockable_user
+      end
+
+      can :lock, User do |lockable_user|
+        within_representative_tree?(lockable_user) && user != lockable_user
+      end
+
+      can :manage_profile, User do |profileable_user|
+        within_representative_tree?(lockable_user)
+      end
     else
       can :manage_profile, User do |user_profile|
-        if user.common? && user_profile == user
-          true
-        else
-          false
-        end
+        user_profile == user
       end
+    end
+
+    def within_representative_tree?(authorizable_user)
+      !User.unscoped.joins(:user_segments)
+        .where(user_segments: { segment_id: represented_segments_trees_ids(user), user_id: authorizable_user.id }).empty?
+    end
+
+    def represented_segments_trees_ids(user)
+      user.represented_segments.map do |represented_segment|
+        represented_segment.self_and_descendant_ids
+      end.flatten
     end
   end
 end

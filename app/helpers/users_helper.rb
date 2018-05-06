@@ -1,12 +1,8 @@
 module UsersHelper
-  def users_index_filter_path(filter, clear = nil)
+  def users_index_filter_path(segment, filter, clear = nil)
     window_filters = clear ? params[:q].except(clear) : params[:q] if params[:q]
     # This is the helper for the route
-    if @segment
-      segment_users_path(@segment, q: filter.merge(window_filters || {}))
-    else
-      users_path(q: filter.merge(window_filters || {}))
-    end
+    segment_users_path(segment, q: filter.merge(window_filters || {}))
   end
 
   def users_search_url(from_segment = nil, to_segment = nil)

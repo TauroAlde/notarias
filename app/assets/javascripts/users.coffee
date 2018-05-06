@@ -34,7 +34,7 @@
       if selectedUsersNodes().length == 1
         $(".batch-action-btn").addClass("d-none")
         $(".single-action-btn").removeClass("d-none")
-        $.getScript "/users/#{selectedUsersIds()[0]}/edit"
+        $.getScript "/segments/#{$("#users-index").attr("data-current-segment-id")}/users/#{selectedUsersIds()[0]}/edit"
       else if $(".users-list-row.ui-selected").length > 1
         $(".batch-action-btn").removeClass("d-none")
         $(".single-action-btn").addClass("d-none")

@@ -2,6 +2,7 @@ class SegmentMessagesController < ApplicationController
   before_action :load_segment
   before_action :load_previous_messages
   respond_to :json, :html, :js
+
   def create
     @segment_message = SegmentMessage.new(segment_message_params)
     @segment_message.user = current_user
@@ -17,7 +18,6 @@ class SegmentMessagesController < ApplicationController
   end
 
   def index
-    
   end
 
   private

@@ -1,4 +1,4 @@
-#users-index
+#users-index{ "data-current-segment-id" => @segment.id }
   #users-index-actions.row.no-gutters
     = search_form_for @q, url: users_search_url, class: "col-8 col-md-10 col-lg-11 users-search-form" do |f|
       .input-group
@@ -14,16 +14,15 @@
 
     .dropdown-menu.table-dropdown-menu{ "aria-labelledby" => "dropdownMenuLink" }
       //TODO verify this link_to
-      - if @segment
-        = link_to :back, class: "btn-green-dropdown-item btn-green" do
-          Regresar
-          %span.pull-right= fa_icon('undo') 
-        = link_to new_transfer_user_path, class: "btn-green-dropdown-item btn-green" do
-          Transferir
-          %span.pull-right= fa_icon('exchange')
-        = link_to new_segment_users_import_path(@segment), class: "btn-green-dropdown-item btn-green" do
-          Importar
-          %span.pull-right= fa_icon("upload") 
+      = link_to segment_path(@segment), class: "btn-green-dropdown-item btn-green" do
+        Regresar
+        %span.pull-right= fa_icon('undo') 
+      = link_to new_transfer_user_path, class: "btn-green-dropdown-item btn-green" do
+        Transferir
+        %span.pull-right= fa_icon('exchange')
+      = link_to new_segment_users_import_path(@segment), class: "btn-green-dropdown-item btn-green" do
+        Importar
+        %span.pull-right= fa_icon("upload") 
 
       = link_to "#", class: "btn-green-dropdown-item btn-green batch-action-btn d-none", data: { action: "delete" } do
         = fa_icon(:trash)
@@ -33,12 +32,15 @@
         Nuevo
         %span.pull-right= fa_icon(:plus) 
 
+  #users-index-actions.row.no-gutters
+    Breadcrumbs
+
   #users-index-content.container-fluid
     .row
       #users-list.col-12.col-md-4.d-md-block.resource-list{ class: @user ? "d-none" : "" }
         #users-filters.row
-          = link_to t(:active), users_index_filter_path({ deleted_at_null: 1 }, :deleted_at_not_null), class: "col-6 btn #{filter_active?(:deleted_at_null, [1, true]) ? 'btn-outline-success active-filter' : ''}"
-          = link_to t(:inactive), users_index_filter_path({ deleted_at_not_null: 1 }, :deleted_at_null), class: "col-6 btn #{filter_active?(:deleted_at_not_null, [1, true]) ? 'btn-outline-success active-filter' : ''}"
+          = link_to t(:active), users_index_filter_path(@segment, { deleted_at_null: 1 }, :deleted_at_not_null), class: "col-6 btn #{filter_active?(:deleted_at_null, [1, true]) ? 'btn-outline-success active-filter' : ''}"
+          = link_to t(:inactive), users_index_filter_path(@segment, { deleted_at_not_null: 1 }, :deleted_at_null), class: "col-6 btn #{filter_active?(:deleted_at_not_null, [1, true]) ? 'btn-outline-success active-filter' : ''}"
         #users-pool.row
           = render @users
 

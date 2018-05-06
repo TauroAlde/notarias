@@ -1,30 +1,34 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
-redrawNode = (el) ->
-  node = $(el)
-
-  anchor = node.children(".jstree-anchor")
-  badge_class = null
-
-  if node.attr("data-users-count") == "0"
-    badge_class = "secondary"
-  else
-    badge_class = "success"
-
-  html = "<span class=\"badge badge-pill badge-#{badge_class} ml-2\"><i class=\"fa fa-users mr-1\"></i>#{node.attr("data-users-count")} </span>"
-  if $(el).attr("data-admins-count") != "null"
-    html += "<span class=\"badge badge-pill badge-warning ml-2\"><i class=\"fa fa-address-book mr-1\"></i>#{node.attr("data-admins-count")} </span>"
-
-  if anchor.children("span").length
-    spans = anchor.children("span").remove()
-
-  anchor.prepend(html)
-
-runSearch = ->
-  to = false
-  v = $("#segments-search-form").find("#q_name_cont").val()
-  $('#jstree-container').jstree(true).search(v)
+#class JstreeNode
+#  $el = ->
+#    
+#
+#
+#redrawNode = (el) ->
+#  node = $(el)
+#
+#  anchor = node.children(".jstree-anchor")
+#  badge_class = null
+#
+#  if node.attr("data-users-count") == "0"
+#    badge_class = "secondary"
+#  else
+#    badge_class = "success"
+#
+#  html = "<span class=\"badge badge-pill badge-#{badge_class} ml-2\"><i class=\"fa fa-users mr-1\"></i>#{node.attr("data-users-count")} </span>"
+#  html += "<span class=\"badge badge-pill badge-warning ml-2\"><i class=\"fa fa-address-book mr-1\"></i>#{node.attr("data-admins-count")} </span>"
+#
+#  if anchor.children("span").length
+#    spans = anchor.children("span").remove()
+#
+#  anchor.prepend(html)
+#
+#runSearch = ->
+#  to = false
+#  v = $("#segments-search-form").find("#q_name_cont").val()
+#  $('#jstree-container').jstree(true).search(v)
   
 
 $ ->
@@ -35,8 +39,9 @@ $ ->
     .on  'changed.jstree', (e, data) ->
       return if !data.node
       window.location.pathname = data.node.a_attr.href
-    .on "redraw.jstree", (e, data) ->
-      $(".jstree-node").each (i, el) -> redrawNode(el)
+    #.on "redraw.jstree", (e, data) ->
+    #  #$(".jstree-node").each (i, el) -> redrawNode(el)
+    #  return
     .jstree
       "plugins": [ "changed", "wholerow", "search" ],
       "search":

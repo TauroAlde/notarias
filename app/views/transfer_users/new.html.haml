@@ -2,7 +2,11 @@
   .container-fluid.mt-3
     .row
       .col
-        %h3 Transferencia de usuarios
+        %h3.mb-2 Transferencia de usuarios
+      .col
+        = link_to :back, class: "btn btn-primary pull-right mb-2", id: "assign-users-link" do
+          = fa_icon('undo')
+          Regresar
 
   .container-fluid.h-100
     .row.h-100
