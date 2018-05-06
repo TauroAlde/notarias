@@ -47,4 +47,8 @@ class TransferUsersController < ApplicationController
     @from_segment = Segment.find(params[:from_id])
     @to_segment = Segment.find(params[:to_id])
   end
+
+  def upload_segment_id
+    params.required(:segment).permit(:segment_id)
+  end
 end
