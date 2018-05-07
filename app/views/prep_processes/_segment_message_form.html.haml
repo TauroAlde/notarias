@@ -4,8 +4,9 @@
 = form_for [@segment, (@segment_message && @segment_message.new_record? ? @segment_message : SegmentMessage.new)], html: { class: "row h-75", id: "segment_message_form" }, remote: true, authenticity_token: true do |f|
   .col-12
     = f.label "Mensaje", for: "step-one-textarea"
+  .col-12.mb-2
     = f.text_area :message, class: "form-control w-100", id: "step-one-textarea"
-  .col-12.pt-3
+  .col-12
     .row.justify-content-end
       .col-md-3.col-12
         = f.label :photo_evidence, id: "evidence-label", class: "btn btn-secondary w-100", for: "fileupload-evidence" do

@@ -60,7 +60,7 @@ module ApplicationHelper
     if current_user.segments.present?
       new_segment_prep_process_path(current_user.segments.last)
     elsif current_user.admin? || current_user.super_admin?
-      segment_path(root_segment)
+      new_segment_prep_process_path(root_segment)
     end
   end
 

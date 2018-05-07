@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
   #end
 
   rescue_from CanCan::AccessDenied do |exception|
+    binding.pry
     respond_to do |format|
       format.html { redirect_to main_app.root_url, alert: exception.message }
       format.js   { head :forbidden, content_type: 'text/html' }
