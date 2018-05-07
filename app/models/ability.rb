@@ -29,7 +29,9 @@ class Ability
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
     
-    can :manage, DashboardsController
+    if user.present?
+      can :manage, DashboardsController
+    end
 
     if user.admin? || user.super_admin?
       can :manage, User
