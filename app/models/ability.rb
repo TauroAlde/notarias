@@ -39,6 +39,7 @@ class Ability
         user != lockable_user
       end
       can :manage_profile, User
+      can :manage, ActiveAdmin::Page if user.super_admin?
     elsif user.representative?
       can :manage, Segment do |segment|
         represented_segments_trees_ids(user).include? segment.id
