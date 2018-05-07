@@ -1,4 +1,4 @@
-#users-index{ "data-current-segment-id" => @segment.id }
+#users-index.h-100.w-100{ "data-current-segment-id" => @segment.id }
   #users-index-actions.row.no-gutters
     = search_form_for @q, url: users_search_url, class: "col-8 col-md-10 col-lg-11 users-search-form" do |f|
       .input-group
@@ -30,10 +30,25 @@
 
       = link_to new_user_link_url, class: "btn-green-dropdown-item btn-green single-action-btn", data: { action: "delete" }, remote: true do
         Nuevo
-        %span.pull-right= fa_icon(:plus) 
+        %span.pull-right= fa_icon(:plus)
 
-  #users-index-actions.row.no-gutters
-    Breadcrumbs
+  #users-index-breadcrumbs.row.justify-content-start.no-gutters
+    - @segment.self_and_ancestors.reverse.each_with_index do |segment, index|
+      - if segment == @segment
+        .col-auto.breadcrumb-el{ "aria-current" => "page" }
+          = link_to segment.name, segment_users_path(segment), class: "h-100"
+        - if segment.children.present?
+          .col-auto.breadcrumb-el
+            %a.h-100
+              %select.select2.breadcrumb-select2
+                - segment.children.each do |child_segment|
+                  %option{ "data-users-count" => child_segment.non_representative_users.count, "data-messages-count" => child_segment.segment_messages.count, "data-id" => child_segment.id }
+                    = child_segment.name
+              
+      - else
+        .col-auto.breadcrumb-el
+          = link_to segment_users_path(segment), class: "h-100" do
+            segment.name
 
   #users-index-content.container-fluid
     .row

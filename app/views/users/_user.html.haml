@@ -7,9 +7,14 @@
       .row
         .col-md-12
           %strong= user.full_name
+        .col-md-12
           - if user.access_locked?
             %span.badge.badge-pill.badge-danger= t(:locked)
           - if user.representative?
-            %span.badge.badge-pill.badge-warning Representante
+            %span.badge.badge-pill.badge-info Representante
+          - if !user.segment_messages.where(segment: @segment).empty?
+            %span.badge.badge-pill.badge-warning
+              = fa_icon("comment")
+              = user.segment_messages.where(segment: @segment).count
         .col-md-12
           .font-italic= user.email

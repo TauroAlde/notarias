@@ -17,6 +17,7 @@ class Segment < ApplicationRecord
   has_many :political_candidacies
   has_many :candidacies, through: :political_candidacies
   has_many :candidates, through: :political_candidacies
+  has_many :segment_messages
 
   validates :name, uniqueness: true
 
