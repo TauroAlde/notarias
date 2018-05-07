@@ -96,15 +96,15 @@ class User < ApplicationRecord
   end
 
   def admin?
-    roles.include?(Role.admin)
+    roles.any?(&:is_admin?)
   end
 
   def super_admin?
-    roles.include?(Role.super_admin)
+    roles.any?(&:is_super_admin?)
   end
 
   def common?
-    roles.include?(Role.common)
+    roles.any?(&:is_common?)
   end
 
   def representative?
