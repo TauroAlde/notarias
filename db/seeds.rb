@@ -59,5 +59,3 @@ PoliticalParty.create([
   political_party.parties_ids = coalition_ids
   political_party.save!
 end
-
-
