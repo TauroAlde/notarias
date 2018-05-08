@@ -38,7 +38,19 @@ class User < ApplicationRecord
   before_validation :set_username
   accepts_nested_attributes_for :permissions
   accepts_nested_attributes_for :user_groups, reject_if: :all_blank, allow_destroy: true
-  attr_accessor :login, :prevalidate_username_uniqueness
+  attr_accessor :login, :prevalidate_username_uniqueness, :pre_encrypted_password
+
+  def represents_segment?(segment)
+    user_segments.where(segment: segment, representative: true).present?
+  end
+
+  def self.from_segment(segment)
+    joins(:user_segments).where(user_segments: { segment_id: segment.id })
+  end
+
+  def self.non_representative_users_from_segment(segment)
+    from_segment(segment).where("user_segments.representative = ? OR user_segments.representative IS NULL", false)
+  end
 
   def set_username
     if prevalidate_username_uniqueness  == true
@@ -84,18 +96,28 @@ class User < ApplicationRecord
   end
 
   def admin?
-    roles.include?(Role.admin)
+    roles.any?(&:is_admin?)
   end
 
   def super_admin?
-    roles.include?(Role.super_admin)
+    roles.any?(&:is_super_admin?)
   end
 
   def common?
-    roles.include?(Role.common)
+    roles.any?(&:is_common?)
   end
 
   def representative?
     represented_segments.any? && common?
+  end
+
+  def root_segment
+    if representative?
+      represented_segments.first
+    elsif admin? || super_admin?
+      Segment.find_by(parent_id: nil)
+    else
+      nil
+    end
   end
 end

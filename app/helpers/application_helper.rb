@@ -50,10 +50,8 @@ module ApplicationHelper
   end
 
   def root_segment_users_route
-    return "#" if !current_user.representative? && !current_user.admin? && !current_user.super_admin?
+    return "#" if !current_user.representative? && current_user.common?
     if current_user.admin? || current_user.super_admin?
-      users_path
-    else
       segment_users_path(root_segment)
     end
   end
@@ -62,19 +60,17 @@ module ApplicationHelper
     if current_user.segments.present?
       new_segment_prep_process_path(current_user.segments.last)
     elsif current_user.admin? || current_user.super_admin?
-      segment_path(root_segment)
+      new_segment_prep_process_path(root_segment)
     end
   end
-
-  private
 
   def root_segment
     if current_user.representative?
       current_user.represented_segments.first
     elsif current_user.admin? || current_user.super_admin?
-      Segment.find_by(parent_id: nil)
-    else
-      nil
+      Segment.root
+    elsif current_user.common? && current_user.segments.present?
+      current_user.segments.last
     end
   end
 end

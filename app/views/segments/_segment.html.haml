@@ -1,5 +1,14 @@
 %ul
-  %li{ class: @segment && @segment.self_and_ancestors.include?(segment) ? 'jstree-open' : '' }
-    = link_to segment.name, segment_path(segment)
-    - if segment.children.present?
+  %li{ class: jstree_segment_class(segment), "segment-id" => segment.id, id: segment.id }
+    = link_to segment_path(segment), class: segment_link_class(segment) do
+      %span.badge.badge-pill.ml-1{ class: "badge-#{segment.non_representative_users.count == 0 ? "secondary" : "success"}" }
+        = fa_icon 'users', class: "mr-1"
+        = segment.non_representative_users.count
+
+      %span.badge.badge-pill.ml-1{ class: "badge-#{segment.representative_users.count == 0 ? "secondary" : "warning"}" }
+        = fa_icon 'address-book', class: "mr-1"
+        = segment.representative_users.count
+      = segment.name
+
+    - if is_segment_open?(segment)
       = render segment.children

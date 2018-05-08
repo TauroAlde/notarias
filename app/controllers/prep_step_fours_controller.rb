@@ -1,3 +1,4 @@
+
 class PrepStepFoursController < ApplicationController
   before_action :load_prep_step_four
   before_action :load_segment

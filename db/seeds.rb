@@ -25,21 +25,23 @@ end
 
 segments = YAML.load_file(File.join(Rails.root, "db", "segments.yml"))
 
-#def ponle un nombre descriptivo al metodo(array)
-  #array.each do |objeto_de_array|
-    #if objeto_de_array.class == Array
-      #imprimir_array(objeto_de_array)
-    #else
-      #puts objeto_de_array
-    #end
-  #end
-#end
+def load_segments(segments_array, parent_segment = nil)
+  segments_array.each do |segment_hash|
+    puts "creating #{segment_hash["name"]} segment"
+    child_segment = Segment.create(name: segment_hash["name"])
+    parent_segment.children << child_segment if parent_segment
+    
+    if segment_hash["children"]
+      load_segments(segment_hash["children"], child_segment)
+    end
+  end
+end
 
-#y lo ejecutas(segments)
+load_segments(segments)
 
-Candidacy.create([{name: 'Diputado'}, {name: 'Diputado 2'}, {name: 'Diputado 3'}])
+Candidacy.create([{name: 'Presidente'}, {name: 'Presidente Municipal'}, {name: 'Síndico'}])
 PoliticalParty.create([
-  { name: 'Partido Verde' },
+  { name: 'PVEM' },
   { name: 'PRI' },
   { name: 'PAN' },
   { name: 'PRD' },
@@ -48,4 +50,12 @@ PoliticalParty.create([
   { name: 'Movimiento Ciudadano' }
 ])
 
-
+[{ names: ['PRD', 'PAN'], name: 'PRD/PAN' }].each do |coalition|
+  puts "creating coalition #{coalition[:name]}"
+  coalition_ids = coalition[:names].map do |political_party|
+    PoliticalParty.find_by(name: political_party).id
+  end
+  political_party = PoliticalParty.new(name: coalition[:name], coalition: true)
+  political_party.parties_ids = coalition_ids
+  political_party.save!
+end

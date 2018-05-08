@@ -1,6 +1,7 @@
 class UsersBatchActionsController < ApplicationController
   def create
     @users = User.where(id: params[:users_ids])
+    authorize! :manage_user_batch_action, @users
     run_batch_action
   end
 
@@ -8,12 +9,14 @@ class UsersBatchActionsController < ApplicationController
     @users_with_errors = []
     User.transaction do
       send(params[:batch_action])
-      @users.first.errors.add(:name)
       @users.each do |user|
         @users_with_errors << user if !user.errors.empty?
       end
       set_action_message
-      raise ActiveRecord::Rollback, "Call tech support!" if @users_with_errors.present?
+      if @users_with_errors.present?
+        flash[:warning] = "Llame al soporte técnico"
+        raise ActiveRecord::Rollback
+      end
     end
   end
 

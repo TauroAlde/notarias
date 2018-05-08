@@ -1,4 +1,4 @@
-#users-index
+#users-index.h-100.w-100{ "data-current-segment-id" => @segment.id }
   #users-index-actions.row.no-gutters
     = search_form_for @q, url: users_search_url, class: "col-8 col-md-10 col-lg-11 users-search-form" do |f|
       .input-group
@@ -9,30 +9,53 @@
           = fa_icon "search"
         .clearfix
 
-    %a#action-dropdown-btn.btn.btn-primary.dropdown-toggle.col{ href: "#", "data-toggle" => "dropdown", aria: { expanded: false, haspopup: true } }
+    %a#action-dropdown-btn.btn.btn-primary.dropdown-toggle.col-4.col-md-2.col-lg-1{ href: "#", "data-toggle" => "dropdown", aria: { expanded: false, haspopup: true } }
       = t(:actions)
 
     .dropdown-menu.table-dropdown-menu{ "aria-labelledby" => "dropdownMenuLink" }
       //TODO verify this link_to
-      - if @segment
-        = link_to segment_path(@segment), class: "btn-green-dropdown-item" do
-          = fa_icon('undo')
-          Regresar
+      = link_to segment_path(@segment), class: "btn-green-dropdown-item btn-green" do
+        Regresar
+        %span.pull-right= fa_icon('undo') 
+      = link_to new_transfer_user_path, class: "btn-green-dropdown-item btn-green" do
+        Transferir
+        %span.pull-right= fa_icon('exchange')
+      = link_to new_segment_users_import_path(@segment), class: "btn-green-dropdown-item btn-green" do
+        Importar
+        %span.pull-right= fa_icon("upload") 
 
       = link_to "#", class: "btn-green-dropdown-item btn-green batch-action-btn d-none", data: { action: "delete" } do
         = fa_icon(:trash)
-        = t(:delete)
+        %span.pull-right= t(:delete)
 
       = link_to new_user_link_url, class: "btn-green-dropdown-item btn-green single-action-btn", data: { action: "delete" }, remote: true do
-        = fa_icon(:plus)
-        = t(:new_user)
+        Nuevo
+        %span.pull-right= fa_icon(:plus)
+
+  #users-index-breadcrumbs.row.justify-content-start.no-gutters
+    - @segment.self_and_ancestors.reverse.each_with_index do |segment, index|
+      - if segment == @segment
+        .col-auto.breadcrumb-el{ "aria-current" => "page" }
+          = link_to segment.name, segment_users_path(segment), class: "h-100"
+        - if segment.children.present?
+          .col-auto.breadcrumb-el
+            %a.h-100
+              %select.select2.breadcrumb-select2
+                - segment.children.each do |child_segment|
+                  %option{ "data-users-count" => child_segment.non_representative_users.count, "data-messages-count" => child_segment.segment_messages.count, "data-id" => child_segment.id }
+                    = child_segment.name
+              
+      - else
+        .col-auto.breadcrumb-el
+          = link_to segment_users_path(segment), class: "h-100" do
+            segment.name
 
   #users-index-content.container-fluid
     .row
       #users-list.col-12.col-md-4.d-md-block.resource-list{ class: @user ? "d-none" : "" }
         #users-filters.row
-          = link_to t(:active), users_index_filter_path({ deleted_at_null: 1 }, :deleted_at_not_null), class: "col-6 btn #{filter_active?(:deleted_at_null, [1, true]) ? 'btn-outline-success active-filter' : ''}"
-          = link_to t(:inactive), users_index_filter_path({ deleted_at_not_null: 1 }, :deleted_at_null), class: "col-6 btn #{filter_active?(:deleted_at_not_null, [1, true]) ? 'btn-outline-success active-filter' : ''}"
+          = link_to t(:active), users_index_filter_path(@segment, { deleted_at_null: 1 }, :deleted_at_not_null), class: "col-6 btn #{filter_active?(:deleted_at_null, [1, true]) ? 'btn-outline-success active-filter' : ''}"
+          = link_to t(:inactive), users_index_filter_path(@segment, { deleted_at_not_null: 1 }, :deleted_at_null), class: "col-6 btn #{filter_active?(:deleted_at_not_null, [1, true]) ? 'btn-outline-success active-filter' : ''}"
         #users-pool.row
           = render @users
 

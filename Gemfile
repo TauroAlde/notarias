@@ -19,6 +19,10 @@ gem 'coffee-rails', '~> 4.2'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 gem 'carrierwave', '~> 1.0'
+# Roo implements read access for all common spreadsheet in Excelx, OpenOffice and CSV
+gem "roo", "~> 2.7.0"
+# Add Roo file format Excel xls
+gem 'roo-xls'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
@@ -51,6 +55,10 @@ gem 'cancancan', '~> 2.0'
 # Paranoia is a re-implementation of acts_as_paranoid for Rails 3/4/5, using much, much, much less code.
 gem "paranoia", "~> 2.2"
 gem 'humanize'
+gem "faker"
+gem 'chartjs-ror'
+gem "jquery-fileupload-rails"
+gem "select2-rails"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

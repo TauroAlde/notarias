@@ -18,4 +18,7 @@
 //= require jquery-ui
 //= require jstree.min
 //= require notify
+//= require Chart.min
+//= require jquery-fileupload/basic
+//= require select2
 //= require_tree .

@@ -9,8 +9,16 @@ class Role < ApplicationRecord
   validates :name, presence: true
   validates :priority, presence: true
 
-  def is_master?
-    has_role(MASTER_ROLE) || is_super_admin?
+  def is_super_admin?
+    has_role(SUPER_ADMIN_ROLE)
+  end
+
+  def is_admin?
+    has_role(ADMIN_ROLE)
+  end
+
+  def is_common?
+    has_role(COMMON_ROLE)
   end
 
   def to_i

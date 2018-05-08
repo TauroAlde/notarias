@@ -1,0 +1,34 @@
+#users-index
+  .row.no-gutters
+    = search_form_for @q, url: users_search_url(@from_segment, @to_segment), class: "col-12 col-sm-12 col-md-6 col-lg-6 users-search-form" do |f|
+      .input-group
+        = f.number_field(:from_id, hidden: true, value: @from_segment.id)
+        = f.number_field(:to_id, hidden: true, value: @to_segment.id)
+        = f.search_field(:name_or_father_last_name_or_mother_last_name_or_username_or_email_cont, class: "form-control", placeholder: t(:search), type: "text" )
+        = button_tag class: 'btn btn-outline-secondary' do
+          = fa_icon "search"
+        .clearfix
+
+    .col-12.col-sm-12.col-md-6.col-lg-6
+      .row.no-gutters
+        = link_to new_transfer_user_path, class: "btn btn-secondary col" do
+          = fa_icon('undo')
+          Regresar
+
+        = link_to root_segments_route, class: "btn btn-warning col" do
+          = fa_icon('times')
+          Cancelar
+
+        = link_to "#", class: "btn btn-primary col", id: "transfer-users-link" , "data-path" => transfer_users_path(from_id: @from_segment.id, to_id: @to_segment.id) do
+          = fa_icon('exchange')
+          Transferir
+
+
+  .row.no-gutters.card.user-transfer-list-card
+    
+    .col-12.card-header.user-transfer-list-card-header
+      %p 
+        Elija los usuarios para transferir a:
+        %span.font-weight-bold= @to_segment.name
+    %ul.col-12.list-group.user-transfer-list
+      = render partial: "user", collection: @users

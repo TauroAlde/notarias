@@ -34,7 +34,7 @@
       if selectedUsersNodes().length == 1
         $(".batch-action-btn").addClass("d-none")
         $(".single-action-btn").removeClass("d-none")
-        $.getScript "/users/#{selectedUsersIds()[0]}/edit"
+        $.getScript "/segments/#{$("#users-index").attr("data-current-segment-id")}/users/#{selectedUsersIds()[0]}/edit"
       else if $(".users-list-row.ui-selected").length > 1
         $(".batch-action-btn").removeClass("d-none")
         $(".single-action-btn").addClass("d-none")
@@ -70,10 +70,36 @@
 #  $("#users-index-content").unbind("click")
 #  $("#users-list").unbind("click")
 
+segmentSelectHTML = (d)->
+  el = $(d.element)
+  users_count_class = if el.attr("data-users-count") > 0 then "success" else "secondary"
+  comments_count_class = if el.attr("data-messages-count") > 0 then "warning" else "secondary"
+  
+  html = "<span class=\"badge-pill badge-#{users_count_class} select2-badges\"><i class=\"fa fa-users\"></i>#{el.attr("data-users-count")}</span>" +
+    "<span class=\"badge-pill badge-#{comments_count_class} select2-badges\"><i class=\"fa fa-comment\"></i>#{el.attr("data-messages-count")}</span> <span>#{d.text}</span>"
+  $(html)
+
 $ ->
   $(document).on "click", "#hide-resource-mobile", (e) ->
     $(".resource-info").addClass("d-none");
     $(".resource-list").removeClass("d-none");
 
   startBatchActions()
+  $(".select2").select2
+    width: "280px"
+    templateSelection: (d) -> segmentSelectHTML(d)
+    templateResult: (d) -> segmentSelectHTML(d)
+  .on "select2:select", (e)->
+    window.location = "/segments/#{$(e.params.data.element).attr("data-id")}/users"
+
+    #templateResult: (d) ->
+    #  console.log d
+    #  $(d.text)
+    #templateSelection: (d) ->
+    #  console.log d
+    #  $(d.text)
   #bindBatchActions()
+  
+  
+  
+  
