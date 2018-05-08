@@ -30,7 +30,7 @@ class Ability
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
     
     if user.present?
-      can :manage, DashboardsController
+      can :manage, :dashboard
     end
 
     if user.admin? || user.super_admin?
