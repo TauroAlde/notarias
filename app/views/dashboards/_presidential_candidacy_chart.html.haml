@@ -1,0 +1,6 @@
+.card
+  .card-header
+    %h4.mb-0 Presidencia
+  .card-body
+    .row
+      = segment_bar_chart(Candidacy.find_by(name: Candidacy::PRESIDENCIA), { legend: false })

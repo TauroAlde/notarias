@@ -16,3 +16,7 @@ $link-hover-decoration: underline !default;
 $theme-colors: (
    "primary": $system-green,
 );
+
+.nav-link.active{
+  background-color: $system-dark-green !important;
+}

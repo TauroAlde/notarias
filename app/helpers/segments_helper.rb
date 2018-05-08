@@ -39,16 +39,16 @@ module SegmentsHelper
     end
   end
 
-  def segment_bar_chart(candidacy)
-    bar_chart(candidacies_loader.political_candidacy_data(candidacy), default_options)
+  def segment_bar_chart(candidacy, options = {})
+    bar_chart(candidacies_loader.political_candidacy_data(candidacy), default_options.merge(options))
   end
 
-  def segment_pie_chart(candidacy)
-    pie_chart(candidacies_loader.political_candidacy_data(candidacy), default_options)
+  def segment_pie_chart(candidacy, options = {})
+    pie_chart(candidacies_loader.political_candidacy_data(candidacy), default_options.merge(options))
   end
 
-  def segment_line_chart(candidacy)
-    line_chart(candidacies_loader.political_candidacy_data_by_time(candidacy), default_options)
+  def segment_line_chart(candidacy, options = {})
+    line_chart(candidacies_loader.political_candidacy_data_by_time(candidacy), default_options.merge(options))
   end
 
   private
@@ -60,6 +60,7 @@ module SegmentsHelper
 
   def default_options
     {
+      maintainAspectRatio: false,
       height: "200",
       scales: {
         yAxes: [{

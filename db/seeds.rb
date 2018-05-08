@@ -39,7 +39,7 @@ end
 
 load_segments(segments)
 
-Candidacy.create([{name: 'Presidente'}, {name: 'Presidente Municipal'}, {name: 'Síndico'}])
+Candidacy.create([{ name: Candidacy::PRESIDENCIA }, { name: 'Presidente Municipal' }, { name: 'Síndico' }])
 PoliticalParty.create([
   { name: 'PVEM' },
   { name: 'PRI' },
