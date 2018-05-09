@@ -10,6 +10,8 @@ class PrepProcess < ApplicationRecord
 
   before_create :set_start_step
 
+  scope :completed, -> { where("completed_at IS NOT NULL") }
+
   STEPS_LIMIT = 5
 
   def set_start_step

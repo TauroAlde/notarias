@@ -7,12 +7,13 @@ class UsersController < ApplicationController
   before_action :load_search, only: [:index, :create, :update]
 
   def index
+    @user = User.find(params[:user_id]) if params[:user_id]
   end
 
   def show
     @user = User.unscoped.find(params[:id])
     authorize! :manage, @user
-    @groups = @user.groups
+    #@groups = @user.groups
   end
 
   def new

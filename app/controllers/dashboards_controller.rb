@@ -3,6 +3,7 @@ class DashboardsController < ApplicationController
 
   def index
     @candidacies_loader = PoliticalCandidaciesLoader.new(Segment.root)
+    @captured_processes = PrepProcess.completed.last(6)
   end
 
   private

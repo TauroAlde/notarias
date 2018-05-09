@@ -65,7 +65,7 @@ module ApplicationHelper
   end
 
   def root_segment
-    if current_user.representative?
+    @root_segment ||= if current_user.representative?
       current_user.represented_segments.first
     elsif current_user.admin? || current_user.super_admin?
       Segment.root

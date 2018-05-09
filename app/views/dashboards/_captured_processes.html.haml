@@ -1,0 +1,23 @@
+.card
+  .card-header
+    %h4.mb-0 Últimas Capturas
+  %ul.list-group.list-group-flush
+    - @captured_processes.each do  |prep_process|
+      %li.list-group-item
+        .row
+          /
+            .col-3
+              = prep_process.segment_processor.name
+          .col
+            = link_to prep_process.processed_segment.name, segment_path(prep_process.processed_segment)
+          
+          .col-auto.align-self-end.font-weight-bold.text-primary
+            = prep_process.completed_at.strftime("%H:%M %P")
+        .row
+          - Candidacy.presidential.political_candidacies.each do |pc|
+            .col-6.col-md-4
+              %span.badge.badge-pill.badge-success
+                = fa_icon("sort-up")
+                = prep_process.prep_step_fours.sum { |psf| psf.data[pc.id.to_s] }
+              = pc.candidate.name
+              
