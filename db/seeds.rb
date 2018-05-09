@@ -46,11 +46,12 @@ PoliticalParty.create([
   { name: 'PAN' },
   { name: 'PRD' },
   { name: 'Morena'},
+  { name: 'PANAL' }
   { name: 'PT' },
   { name: 'Movimiento Ciudadano' }
 ])
 
-[{ names: ['PRD', 'PAN'], name: 'PRD/PAN' }].each do |coalition|
+[{ names: ['PRD', 'PAN'], name: 'PRD/PAN' }, { names: ['PRI', 'PVEM', 'PANAL'], name: 'PRI/PVEM/PANAL' }].each do |coalition|
   puts "creating coalition #{coalition[:name]}"
   coalition_ids = coalition[:names].map do |political_party|
     PoliticalParty.find_by(name: political_party).id
