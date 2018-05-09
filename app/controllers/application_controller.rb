@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
 
   before_action :set_locale
   before_action :masquerade_user!
+  before_action :validate_common_user?
 
   #rescue_from Authorizer::AccessDenied do |exception|
   #  redirect_to root_path, flash: { alert: exception.message }
@@ -23,6 +24,34 @@ class ApplicationController < ActionController::Base
 
   def set_locale
     I18n.locale = params[:locale] || I18n.default_locale
+  end
+
+  def validate_common_user?
+    if current_user && current_user.only_common? && !current_user.incomplete_prep_processes.empty? && !allowed_common_user_controllers?
+      redirect_to new_segment_prep_process_path(root_segment)
+    end
+  end
+
+  def root_segment
+    if current_user.representative?
+      current_user.represented_segments.first
+    elsif current_user.admin? || current_user.super_admin?
+      Segment.root
+    elsif current_user.common?
+      current_user.segments.last || Segment.root
+    end
+  end
+
+  def allowed_common_user_controllers?
+    prep_process_controller? || profiles_controller? || devise_controller?
+  end
+
+  def prep_process_controller?
+    self.class == PrepProcessesController
+  end
+
+  def profiles_controller?
+    self.class == ProfilesController
   end
 
   protected

@@ -58,6 +58,6 @@ class PrepProcessesController < ApplicationController
   end
 
   def load_segment
-    @segment = Segment.find(params[:segment_id])
+    @segment = params[:segment_id] ? Segment.find(params[:segment_id]) : root_segment
   end
 end

@@ -19,6 +19,7 @@ class User < ApplicationRecord
 
   has_many :user_segments
   has_many :prep_processes
+  has_many :incomplete_prep_processes, ->(o) { where('prep_processes.completed_at IS NULL') }, class_name: 'PrepProcess'
   has_many :evidences
   has_many :segment_messages
   # The idea is that the user is assigned to the Segment through :user_segment but also
@@ -105,6 +106,10 @@ class User < ApplicationRecord
 
   def common?
     roles.any?(&:is_common?)
+  end
+
+  def only_common?
+    !representative? && common?
   end
 
   def representative?

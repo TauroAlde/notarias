@@ -4,7 +4,12 @@ Rails.application.routes.draw do
     delete "logout/:id", to: "devise/sessions#destroy", as: :logout
   end
   ActiveAdmin.routes(self)
-  root 'dashboards#index' 
+  
+  authenticated :user, ->(u) { u.only_common? } do
+    root "prep_processes#new"
+  end
+
+  root 'dashboards#index'
 
   resources :users, except: [:index]
 
@@ -41,6 +46,8 @@ Rails.application.routes.draw do
   resources :prep_step_threes, only: [:update]
   resources :prep_step_twos, only: [:update]
   resources :profiles, only: [:edit, :update]
+
+  resources :prep_processes, only: [:new]
 
   post 'users_batch_action', to: 'users_batch_actions#create'
 

@@ -69,8 +69,8 @@ module ApplicationHelper
       current_user.represented_segments.first
     elsif current_user.admin? || current_user.super_admin?
       Segment.root
-    elsif current_user.common? && current_user.segments.present?
-      current_user.segments.last
+    elsif current_user.common?
+      current_user.segments.last || Segment.root
     end
   end
 end
