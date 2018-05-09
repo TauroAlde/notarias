@@ -4,7 +4,7 @@ class DashboardsController < ApplicationController
   def index
     @candidacies_loader = PoliticalCandidaciesLoader.new(Segment.root)
     @captured_processes = PrepProcess.completed.last(6)
-    @last_segment_messages = managed_segments.where('user_id != ?', current_user.id)
+    @last_segment_messages = managed_segments.unread.where('user_id != ?', current_user.id)
                                .select('distinct on (user_id) *').order(:user_id).last(6)
   end
 

@@ -29,7 +29,7 @@ Rails.application.routes.draw do
       post :next, on: :member # :collection doesn't require resource id "on: :collection"
       get :complete, on: :member
     end
-    resources :segment_messages, only: [:create, :index] do
+    resources :segment_messages, only: [:create] do
       post :evidence, on: :collection
     end
     resources :users do
@@ -37,6 +37,8 @@ Rails.application.routes.draw do
       post :unlock, on: :member
     end
   end
+
+  resources :segment_messages, only: [:index, :show]
 
   resources :transfer_users, only: [:new, :create] do
     get :select, on: :collection

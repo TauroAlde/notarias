@@ -16,6 +16,8 @@
 
   %body
     = render "/layouts/flash_messages"
+    = render "/layouts/chat"
+      
     #body-container
       - if user_signed_in?
         = render "/layouts/header"
@@ -23,4 +25,8 @@
           = render "/layouts/left_sidebar"
       %div{ id: user_signed_in? ? "content-with-menu" : "content" }
         = yield
-        
+
+      %span#open-messages-button.d-none.d-md-block
+        = fa_icon("comment")
+        %span 0
+

@@ -1,6 +1,67 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
+class SegmentMessageResume
+  constructor: (resumeMessageEl) ->
+    @el = $(resumeMessageEl)
+    @bindClickLoadChat()
+
+  bindClickLoadChat: ->
+    @el.click (e) =>
+      console.log("fdsafdsafdsa------")
+      e.preventDefault()
+      e.stopPropagation()
+      $.getScript "/segment_messages/#{ @el.attr("data-segment-message-id") }"
+
+
+class Chat
+  constructor: () ->
+    @el = $("#chat-pool")
+    @bindClose()
+    @bindOpen()
+    @loadMessagesFullList()
+
+  hide: ->
+    @el.removeClass("show")
+    @el.addClass("hide")
+    @el.css("z-index", -1000)
+
+  show: ->
+    @el.removeClass("hide")
+    @el.addClass("show")
+    @el.css("z-index", 9999)
+    @loadMessagesFullList()
+
+  bindClose: ->
+    @el.find(".close").click (e)=>
+      @hide()
+
+  isShown: ->
+    @el.hasClass("show")
+
+  isHidden: ->
+    @el.hasClass("hide")
+
+  bindOpen: ->
+    $("#open-messages-button").click (e) =>
+      if @isHidden()
+        @show()
+    
+    $("#open-messages-button-mobile").click (e) =>
+      if @isHidden()
+        @show()
+
+  loadMessagesFullList: ->
+    $.getScript("/segment_messages", () => @buildSegmentMessageResumes() )
+
+  buildSegmentMessageResumes: ->
+    resumes = []
+    @el.find(".segment-message-resume-list-item").each (i)->
+      resumes.push(new SegmentMessageResume(@))
+    @resumes = resumes
+
+
+
 
 
 $ ->
@@ -28,4 +89,4 @@ $ ->
       $('#right-sidebar').removeClass 'show-right-sidebar'
     return
 
-  
+  chat = new Chat

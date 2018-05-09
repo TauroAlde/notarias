@@ -1,6 +1,6 @@
 class SegmentMessagesController < ApplicationController
-  before_action :load_segment
-  before_action :load_previous_messages
+  before_action :load_segment, except: [:index, :show]
+  before_action :load_previous_messages, except: [:index, :show]
   respond_to :json, :html, :js
 
   def create
@@ -18,6 +18,18 @@ class SegmentMessagesController < ApplicationController
   end
 
   def index
+    @segment_messages = if current_user.representative?
+      SegmentMessage.where(segment: current_user.segments.map(&:self_and_descendant_ids).flatten.uniq)
+    else
+      SegmentMessage
+        .where('user_id != ?', current_user.id)
+        .select('distinct on (user_id) *').order(:user_id)
+    end
+  end
+
+  def show
+    @segment_message = SegmentMessage.find(params[:id]).includes(:segment, :user)
+    @segment_messages = @segment_message.user.segment_messages.where(segmnet:  @segment_message.segment)
   end
 
   private

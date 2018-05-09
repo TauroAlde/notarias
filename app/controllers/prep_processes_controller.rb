@@ -57,7 +57,7 @@ class PrepProcessesController < ApplicationController
     @user = params[:user_id] ? User.find(params[:user_id]) : current_user
   end
 
-  def load_segment
+  def load_segment_message
     @segment = params[:segment_id] ? Segment.find(params[:segment_id]) : root_segment
   end
 end

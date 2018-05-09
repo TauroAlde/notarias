@@ -1,0 +1,22 @@
+.segment-message-resume-list-item.p-2.pb-3{ "data-segment-message-id" => segment_message.id  }
+  .row.mb-0.mt-0
+    .col-12
+      .message-resume-title.col-12
+        %h5.mb-0.pl-2.pr-2= segment_message.user.full_name
+        .card-subtitle.pl-2.pr-2= segment_message.created_at
+
+    .col-12
+      .row
+        .col-6.col-md-8
+          .message-resume-body.col-12
+            .pl-2.pr-2.text-muted
+              = segment_message.message
+              - if segment_message.evidences.count > 0
+                = fa_icon("paperclip", class: "text-warning")
+
+        .col-6.col-md-4
+          .row.h-100.align-items-center
+            .col-6#user-chat.text-center
+              = fa_icon("user", class: "bg-primary chat-selector")
+            .col-6#segment-chat.text-center
+              = fa_icon("users", class: "bg-info chat-selector")

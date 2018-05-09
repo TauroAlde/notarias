@@ -1,0 +1,18 @@
+#chat-pool.fade.h-100.position-fixed.show
+  .row.h-100.position-relative
+    
+    #chat-menu.col-12
+      %button.close.position-absolute{ "aria-label" => "Close" }
+        %span{ "aria-hidden" => "true" }= fa_icon("angle-left")
+
+    #chat-viewport.col-12.p-2.pr-4.pl-4
+      .card.h-100
+        .row
+          #chat-viewport-scroll.col-12
+            #segment-messages-list
+          
+        
+          
+
+    #chat-writter.col-12.p-2.pr-4.pl-4
+      .card.h-100
