@@ -411,7 +411,7 @@ body, html {
 }
 
 #chat-pool {
-  background-color: $system-green;
+  background-color: $pattens-blue;
   width: calc(100% - 50px);
   z-index: 9999;
   right:0;
@@ -424,6 +424,8 @@ body, html {
 
 #chat-menu {
   height: 10%;
+  min-height: 3em;
+  max-height: 3em;
 }
 
 #chat-viewport {
@@ -435,6 +437,7 @@ body, html {
 
 .segment-message-resume-list-item {
   cursor: pointer;
+  background-color: white;
   &:hover { background-color: $pattens-blue; }
 }
 
@@ -454,4 +457,11 @@ body, html {
   padding: 0.28em 0.4em;
   border-radius: 0.5em;
   box-shadow:0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+}
+.chat-image-avatar {
+  height: 5em;
+}
+.chat-item-time {
+  bottom: 0;
+  right: 0;
 }

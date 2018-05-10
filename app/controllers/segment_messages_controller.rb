@@ -28,7 +28,7 @@ class SegmentMessagesController < ApplicationController
   end
 
   def show
-    @segment_message = SegmentMessage.find(params[:id]).includes(:segment, :user)
+    @segment_message = SegmentMessage.includes(:segment, user: :segment_messages).find(params[:id])
     @segment_messages = @segment_message.user.segment_messages.where(segmnet:  @segment_message.segment)
   end
 
