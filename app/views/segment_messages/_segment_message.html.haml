@@ -1,10 +1,11 @@
-.segment-message-resume-list-item.p-2.pb-3{ "data-segment-message-id" => segment_message.id  }
+.segment-message-resume-list-item.position-relative.p-2.pb-3{ "data-segment-message-id" => segment_message.id  }
+  .chat-item-time.text-muted.d-inline.position-absolute.p-2= segment_message.created_at.strftime("%H:%M %P")
   .row.mb-0.mt-0
     .col-auto
       = image_tag "user.gif", class: "rounded-circle chat-image-avatar"
     .col
-      .chat-item-time.text-muted.d-inline.position-absolute= segment_message.created_at.strftime("%H:%M %P")
       .row
+        
         .message-resume-title.col-12
           %h5.d-inline= segment_message.user.full_name
         .message-resume-body.col-12

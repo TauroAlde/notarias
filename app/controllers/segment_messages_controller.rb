@@ -29,7 +29,8 @@ class SegmentMessagesController < ApplicationController
 
   def show
     @segment_message = SegmentMessage.includes(:segment, user: :segment_messages).find(params[:id])
-    @segment_messages = @segment_message.user.segment_messages.where(segmnet:  @segment_message.segment)
+    @segment_message.mark_as_read
+    @segment_messages = @segment_message.user.segment_messages.where(segment: @segment_message.segment).order(:created_at)
   end
 
   private

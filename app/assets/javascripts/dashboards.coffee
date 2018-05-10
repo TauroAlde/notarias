@@ -7,8 +7,8 @@ class SegmentMessageResume
     @bindClickLoadChat()
 
   bindClickLoadChat: ->
+    window.previous = "home"
     @el.click (e) =>
-      console.log("fdsafdsafdsa------")
       e.preventDefault()
       e.stopPropagation()
       $.getScript "/segment_messages/#{ @el.attr("data-segment-message-id") }"
@@ -19,6 +19,10 @@ class Chat
     @el = $("#chat-pool")
     @bindClose()
     @bindOpen()
+    @loadMessagesFullList()
+
+  reload: ->
+    window.previous = undefined
     @loadMessagesFullList()
 
   hide: ->
@@ -34,7 +38,10 @@ class Chat
 
   bindClose: ->
     @el.find(".close").click (e)=>
-      @hide()
+      if window.previous == "home"
+        @reload()
+      else
+        @hide()
 
   isShown: ->
     @el.hasClass("show")
@@ -89,4 +96,4 @@ $ ->
       $('#right-sidebar').removeClass 'show-right-sidebar'
     return
 
-  chat = new Chat
+  window.chat = new Chat
