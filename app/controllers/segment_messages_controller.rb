@@ -22,15 +22,14 @@ class SegmentMessagesController < ApplicationController
       SegmentMessage.where(segment: current_user.segments.map(&:self_and_descendant_ids).flatten.uniq)
     else
       SegmentMessage
-        .where('user_id != ?', current_user.id)
-        .select('distinct on (user_id) *').order(:user_id)
-    end
+    end.where('user_id != ?', current_user.id).select("DISTINCT ON (user_id, segment_id) *").order(:user_id)
   end
 
   def show
     @segment_message = SegmentMessage.includes(:segment, user: :segment_messages).find(params[:id])
     @segment_message.mark_as_read
-    @segment_messages = @segment_message.user.segment_messages.where(segment: @segment_message.segment).order(:created_at)
+    @segment_messages = SegmentMessage.includes(:segment, user: :segment_messages)
+                          .where(segment: @segment_message.segment).order(:created_at)
   end
 
   private

@@ -1,0 +1,12 @@
+.row{ class: user_message.user == current_user ? "justify-content-end" : "" }
+  .col-auto.pl-4.pr-4
+    .card
+      .card-body
+        .media
+          - if user_message.user != current_user
+            = image_tag "user.gif", class: "rounded-circle chat-image-avatar mr-2 align-self-start", alt: "Generic placeholder image"
+          .media-body
+            %h5.mt-0.mb-1 Media object
+            = user_message.message
+          - if user_message.user == current_user
+            = image_tag "user.gif", class: "rounded-circle chat-image-avatar ml-2 align-self-start", alt: "Generic placeholder image"

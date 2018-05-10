@@ -438,7 +438,7 @@ body, html {
 .segment-message-resume-list-item {
   cursor: pointer;
   background-color: white;
-  &:hover { background-color: $pattens-blue; }
+  &:hover { background-color: rgba(221,229,234, 0.5); }
 }
 
 .message-resume-title:hover, .message-resume-body:hover {
@@ -458,7 +458,7 @@ body, html {
   border-radius: 0.5em;
 }
 .chat-image-avatar {
-  height: 5em;
+  height: 4em;
 }
 .chat-item-time {
   bottom: 0;
