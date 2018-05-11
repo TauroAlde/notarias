@@ -2,17 +2,79 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 class SegmentMessageResume
-  constructor: (resumeMessageEl) ->
+  constructor: (resumeMessageEl, chat) ->
     @el = $(resumeMessageEl)
     @bindClickLoadChat()
+    @chat = chat
 
   bindClickLoadChat: ->
     window.previous = "home"
+    window.current_message_id = @el.attr("data-segment-message-id")
     @el.click (e) =>
       e.preventDefault()
       e.stopPropagation()
-      $.getScript "/segment_messages/#{ @el.attr("data-segment-message-id") }"
+      @chat.currentResume = @
+      @load()
 
+  load: ->
+    $.getScript "/segment_messages/#{ @segmentMessageId() }", ()=>
+      @chat.chatForm.load()
+      @chat.el.find("#chat-viewport-scroll")[0].scrollTop = $("#segment-messages-list").height()
+
+  segmentMessageId: ->
+    @el.attr("data-segment-message-id")
+
+class ChatForm
+  constructor: (chat)->
+    @el = $("#chat-form")
+    @chat = chat
+    @bindOnSubmit()
+    @load()
+
+  bindMessagesFileUploader: ->
+    chat = @chat
+    if @el.hasClass("jquery-fileupload-initialized")
+      @el.fileupload('destroy')
+      @el.removeClass("jquery-fileupload-initialized")
+    if @chat.currentResume && @chat.currentResume.segmentMessageId()
+      @el.addClass("jquery-fileupload-initialized")
+      @el.fileupload
+        dataType: 'json',
+        fileInput: $('#fileupload-evidence'),
+        limitMultiFileUploads: 1,
+        #autoUpload: true,
+        url: "/segment_messages/#{chat.currentResume.segmentMessageId()}/responses.json",
+        done: (e, data)->
+          console.log "fdsafdsafdsafdsa"
+          chat.currentResume.load()
+          #formData: { segment_message: { message: $("#step-one-textarea") } },
+        fail: (e, data) ->
+          console.log "fdsafdsafdsafdsa"
+        submit: (e, data) ->
+          console.log "fdsafdsafdsafdsa"
+        send: (e, data)->
+          console.log "fdsafdsafdsafdsa"
+
+  load: ->
+    if @chat.currentResume && @chat.currentResume.segmentMessageId()
+      @el.attr("action", "/segment_messages/#{@chat.currentResume.segmentMessageId()}/responses.js")
+    else
+      @el.attr("action", "#")
+    @bindMessagesFileUploader()
+
+  bindOnSubmit: ->
+    @el.submit (e) =>
+      if @el.attr("action") == "#" || !@el.find("#message-text").val()
+        e.preventDefault()
+        return false
+
+  clearText: ->
+    @el.find("#message-text").val("")
+
+  disable: ->
+    $("#form-fieldset").attr("disabled", "true")
+  enable: ->
+    $("#form-fieldset").attr("enabled", "true")
 
 class Chat
   constructor: () ->
@@ -20,9 +82,14 @@ class Chat
     @bindClose()
     @bindOpen()
     @loadMessagesFullList()
+    @chatForm = new ChatForm(@)
+    @currentResume = undefined
 
   reload: ->
     window.previous = undefined
+    window.current_message_id = undefined
+    @currentResume = undefined
+    @chatForm.load()
     @loadMessagesFullList()
 
   hide: ->
@@ -59,14 +126,17 @@ class Chat
         @show()
 
   loadMessagesFullList: ->
+    window.current_message_id = undefined
     $.getScript("/segment_messages", () => @buildSegmentMessageResumes() )
 
   buildSegmentMessageResumes: ->
     resumes = []
+    chat = @
     @el.find(".segment-message-resume-list-item").each (i)->
-      resumes.push(new SegmentMessageResume(@))
+      resumes.push(new SegmentMessageResume(@, chat))
     @resumes = resumes
 
+  
 
 
 

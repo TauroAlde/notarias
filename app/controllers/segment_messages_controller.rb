@@ -29,7 +29,7 @@ class SegmentMessagesController < ApplicationController
     @segment_message = SegmentMessage.includes(:segment, user: :segment_messages).find(params[:id])
     @segment_message.mark_as_read
     @segment_messages = SegmentMessage.includes(:segment, user: :segment_messages)
-                          .where(segment: @segment_message.segment).order(:created_at)
+                          .where(segment: @segment_message.segment).order(:created_at).last(20)
   end
 
   private

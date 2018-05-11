@@ -9,9 +9,17 @@
       .row.h-100
         #chat-viewport-scroll.col-12
           #segment-messages-list
-          
-        
-          
+
 
     #chat-writter.col-12.p-2.pr-4.pl-4
-      .card.h-100
+      %fieldset#form-fieldset
+        = form_for [@segment, (@segment_message && @segment_message.new_record? ? @segment_message : SegmentMessage.new)], html: { class: "row h-100 no-gutter", id: "chat-form" }, remote: true, authenticity_token: true do |f|
+          .col-3.col-md-1
+            = f.label :photo_evidence, id: "evidence-label", class: "btn btn-secondary w-100", for: "fileupload-evidence" do
+              = fa_icon("camera")
+            = f.file_field :photo_evidence, accept: "image/*;cpature=camera", class: "d-none", id: "fileupload-evidence"
+          .col-6.col-md-10
+            = f.text_field :message, class: "form-control w-100 h-100", placeholder: "Escribe un comentario...", id: "message-text"
+          .col-3.col-md-1
+            = button_tag :class => "btn-primary w-100 h-100" do
+              = fa_icon("paper-plane")

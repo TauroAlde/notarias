@@ -38,7 +38,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :segment_messages, only: [:index, :show]
+  resources :segment_messages, only: [:index, :show] do
+    resources :responses, only: [:create]
+  end
 
   resources :transfer_users, only: [:new, :create] do
     get :select, on: :collection
