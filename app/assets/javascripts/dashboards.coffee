@@ -8,9 +8,9 @@ class SegmentMessageResume
     @chat = chat
 
   bindClickLoadChat: ->
-    window.previous = "home"
     window.current_message_id = @el.attr("data-segment-message-id")
     @el.click (e) =>
+      window.previous = "home"
       e.preventDefault()
       e.stopPropagation()
       @chat.currentResume = @
@@ -84,6 +84,7 @@ class Chat
     @loadMessagesFullList()
     @chatForm = new ChatForm(@)
     @currentResume = undefined
+    @startPoller()
 
   reload: ->
     window.previous = undefined
@@ -127,6 +128,7 @@ class Chat
 
   loadMessagesFullList: ->
     window.current_message_id = undefined
+    @currentResume = undefined
     $.getScript("/segment_messages", () => @buildSegmentMessageResumes() )
 
   buildSegmentMessageResumes: ->
@@ -136,8 +138,16 @@ class Chat
       resumes.push(new SegmentMessageResume(@, chat))
     @resumes = resumes
 
-  
+  startPoller: ->
+    return
+    #setTimeout(@pollerCallback, 5000, @)
 
+  pollerCallback: (chat)->
+    if chat.currentResume
+      chat.currentResume.load()
+    else if !chat.currentResume
+      chat.reload()
+    chat.startPoller()
 
 
 

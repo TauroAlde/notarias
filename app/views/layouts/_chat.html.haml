@@ -2,13 +2,26 @@
   .row.h-100.position-relative
     
     #chat-menu.col-12
-      %button.close.position-absolute{ "aria-label" => "Close" }
-        %span{ "aria-hidden" => "true" }= fa_icon("angle-left")
+
+      %ul#chat-tabs.nav.nav-tabs{ role: "tablist" }
+        %li.nav-item
+          = link_to "#segment-messages-list", class: "nav-link active", id: "segment-messages-list-tab", "data-toggle" => "tab", role: "tab", "aria-controls" => "nav-segment-messages-list", "aria-selected" => "true" do
+            = fa_icon('map')
+
+        %li.nav-item
+          = link_to "#user-messages-list", class: "nav-link", id: "user-messages-list-tab", "data-toggle" => "tab", role: "tab", "aria-controls" => "nav-user-messages-list", "aria-selected" => "false" do
+            = fa_icon('users')
+
+        %button.close.position-absolute{ "aria-label" => "Close" }
+          %span{ "aria-hidden" => "true" }= fa_icon("angle-left")
 
     #chat-viewport.col-12
       .row.h-100
-        #chat-viewport-scroll.col-12
-          #segment-messages-list
+        #chat-viewport-scroll.col-12.tab-content
+        
+          #segment-messages-list.tab-pane.fade.show.active{ role: "tabpanel", "aria-labelledby" => "segment-messages-list-tab" }
+
+          #user-messages-list.tab-pane.fade{ role: "tabpanel", "aria-labelledby" => "user-messages-list-tab" }
 
 
     #chat-writter.col-12.p-2.pr-4.pl-4

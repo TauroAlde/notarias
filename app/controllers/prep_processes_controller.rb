@@ -1,7 +1,6 @@
 class PrepProcessesController < ApplicationController
   before_action :load_user
   before_action :load_segment
-  before_action :load_segment_message
   before_action :load_prep_process_machine
   before_action :load_message_history
   before_action :load_political_candidacies_loader, if: -> { @prep_process_machine.current_step.is_a?(Prep::StepFour) }
@@ -57,7 +56,7 @@ class PrepProcessesController < ApplicationController
     @user = params[:user_id] ? User.find(params[:user_id]) : current_user
   end
 
-  def load_segment_message
+  def load_segment
     @segment = params[:segment_id] ? Segment.find(params[:segment_id]) : root_segment
   end
 end

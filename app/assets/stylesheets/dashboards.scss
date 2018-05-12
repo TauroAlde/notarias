@@ -417,7 +417,7 @@ body, html {
   right:0;
   @include media-breakpoint-down(sm) { width: 100%; }
   .close {
-    font-size: 3em;
+    font-size: 2.5em;
     right: 0.8em;
   }
 }
@@ -437,7 +437,7 @@ body, html {
 
 .segment-message-resume-list-item {
   cursor: pointer;
-  background-color: white;
+
   &:hover { background-color: rgba(221,229,234, 0.5); }
 }
 
@@ -463,4 +463,18 @@ body, html {
 .chat-item-time {
   bottom: 0;
   right: 0;
+}
+
+#unread-count {
+  right: 0;
+}
+
+#chat-tabs {
+  border-bottom: 2px solid $system-dark-green-transparent;
+  background-color: white;
+  a.active {
+    background-color: white !important;
+    border-color: $system-dark-green-transparent;
+    color: $system-dark-green;
+  }
 }

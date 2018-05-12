@@ -18,18 +18,16 @@ class SegmentMessagesController < ApplicationController
   end
 
   def index
-    @segment_messages = if current_user.representative?
-      SegmentMessage.where(segment: current_user.segments.map(&:self_and_descendant_ids).flatten.uniq)
-    else
-      SegmentMessage
-    end.where('user_id != ?', current_user.id).select("DISTINCT ON (user_id, segment_id) *").order(:user_id)
+    @segment_messages = SegmentMessage.select_distinct_by_raw_query(current_user)
   end
 
   def show
-    @segment_message = SegmentMessage.includes(:segment, user: :segment_messages).find(params[:id])
-    @segment_message.mark_as_read
-    @segment_messages = SegmentMessage.includes(:segment, user: :segment_messages)
-                          .where(segment: @segment_message.segment).order(:created_at).last(20)
+    segment_message = SegmentMessage.find(params[:id])
+    @segment_messages = SegmentMessage
+      .includes(segment: { segment_messages: [:user, :segment] }, user: { segment_messages: [:user, :segment] })
+      .where(user: [segment_message.user, current_user], segment: segment_message.segment).order(:created_at)
+    @segment_messages.update_all(read_at: DateTime.now)
+    @segment_messages = @segment_messages.last(20)
   end
 
   private
