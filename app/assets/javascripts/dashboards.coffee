@@ -139,8 +139,7 @@ class Chat
     @resumes = resumes
 
   startPoller: ->
-    return
-    #setTimeout(@pollerCallback, 5000, @)
+    setTimeout(@pollerCallback, 5000, @)
 
   pollerCallback: (chat)->
     if chat.currentResume
