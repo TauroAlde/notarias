@@ -10,9 +10,9 @@ class DashboardsController < ApplicationController
 
   def managed_segments
     if current_user.representative?
-      SegmentMessage.where(segment: current_user.segments.map(&:self_and_descendant_ids).flatten.uniq)
+      Message.where(segment: current_user.segments.map(&:self_and_descendant_ids).flatten.uniq)
     else
-      SegmentMessage
+      Message
     end
   end
 

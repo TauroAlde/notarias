@@ -42,6 +42,10 @@ Rails.application.routes.draw do
     resources :responses, only: [:create]
   end
 
+  resources :user_messages, only: [:index, :show] do
+    resources :responses, only: [:create]
+  end
+
   resources :transfer_users, only: [:new, :create] do
     get :select, on: :collection
     get :jstree_segment, on: :collection

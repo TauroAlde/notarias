@@ -4,7 +4,7 @@ class SegmentMessagesController < ApplicationController
   respond_to :json, :html, :js
 
   def create
-    @segment_message = SegmentMessage.new(segment_message_params)
+    @segment_message = Message.new(segment_message_params)
     @segment_message.user = current_user
     @segment_message.segment = @segment
 
@@ -18,14 +18,14 @@ class SegmentMessagesController < ApplicationController
   end
 
   def index
-    @segment_messages = SegmentMessage.select_distinct_by_raw_query(current_user)
+    @segment_messages = Message.select_distinct_by_raw_query(current_user)
   end
 
   def show
-    segment_message = SegmentMessage.find(params[:id])
-    @segment_messages = SegmentMessage
-      .includes(segment: { segment_messages: [:user, :segment] }, user: { segment_messages: [:user, :segment] })
-      .where(user: [segment_message.user, current_user], segment: segment_message.segment).order(:created_at)
+    segment_message = Message.find(params[:id])
+    @segment_messages = Message
+      .includes(segment: { messages: [:user, :segment] }, user: { messages: [:user, :segment] })
+      .where(segment: segment_message.segment).order(:created_at)
     @segment_messages.update_all(read_at: DateTime.now)
     @segment_messages = @segment_messages.last(20)
   end
@@ -48,10 +48,10 @@ class SegmentMessagesController < ApplicationController
   end
 
   def segment_message_params
-    params.require(:segment_message).permit(:message)
+    params.require(:message).permit(:message)
   end
 
   def message_evidence_params
-    params.require(:segment_message).permit(:photo_evidence)
+    params.require(:message).permit(:photo_evidence)
   end
 end

@@ -42,7 +42,7 @@
             %a.h-100
               %select.select2.breadcrumb-select2
                 - segment.children.each do |child_segment|
-                  %option{ "data-users-count" => child_segment.non_representative_users.count, "data-messages-count" => child_segment.segment_messages.count, "data-id" => child_segment.id }
+                  %option{ "data-users-count" => child_segment.non_representative_users.count, "data-messages-count" => child_segment.messages.count, "data-id" => child_segment.id }
                     = child_segment.name
               
       - else

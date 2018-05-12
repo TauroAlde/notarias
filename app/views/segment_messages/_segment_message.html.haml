@@ -1,4 +1,4 @@
-.segment-message-resume-list-item.position-relative.p-2.pb-3{ "data-segment-message-id" => segment_message.id  }
+.segment-message-resume-list-item.position-relative.p-2.pb-3{ "data-message-id" => segment_message.id  }
   .chat-item-time.text-muted.d-inline.position-absolute.p-2= segment_message.created_at.strftime("%H:%M %P")
   - if segment_message.unread_messages_from_chat_count > 0
     %span#unread-count.badge.badge-warning.position-absolute.mr-2= segment_message.unread_messages_from_chat_count

@@ -21,7 +21,9 @@ class User < ApplicationRecord
   has_many :prep_processes
   has_many :incomplete_prep_processes, ->(o) { where('prep_processes.completed_at IS NULL') }, class_name: 'PrepProcess'
   has_many :evidences
-  has_many :segment_messages
+  has_many :messages
+  has_many :evidences, through: :messages
+  has_many :received_messages, class_name: 'Message', foreign_key: :receiver_id
   # The idea is that the user is assigned to the Segment through :user_segment but also
   # the prep_processes are linked to :users and :segments as the tasks that they do for the segment
   has_many :processed_segments, through: :prep_processes, foreign_key: :user_id, class_name: 'Segment'

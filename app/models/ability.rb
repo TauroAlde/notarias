@@ -31,7 +31,7 @@ class Ability
     
     if user.present?
       can :manage, :dashboard
-      can :manage, SegmentMessage
+      can :manage, Message
     end
 
     if user.admin? || user.super_admin?

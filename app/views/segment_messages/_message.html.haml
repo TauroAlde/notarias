@@ -1,12 +1,12 @@
-.user-message.row{ class: user_message.user == current_user ? "justify-content-end" : "" }
+.user-message.row{ class: message.user == current_user ? "justify-content-end" : "" }
   .col-auto.pl-4.pr-4
     .card
       .card-body
         .media
-          - if user_message.user != current_user
+          - if message.user != current_user
             = image_tag "user.gif", class: "rounded-circle chat-image-avatar mr-2 align-self-start", alt: "Generic placeholder image"
           .media-body
-            %h5.mt-0.mb-1= user_message.user.full_name
-            = user_message.message
-          - if user_message.user == current_user
+            %h5.mt-0.mb-1= message.user == current_user ? "Tú" : message.user.full_name
+            = message.message
+          - if message.user == current_user
             = image_tag "user.gif", class: "rounded-circle chat-image-avatar ml-2 align-self-start", alt: "Generic placeholder image"
