@@ -413,7 +413,7 @@ body, html {
 #chat {
   background-color: $pattens-blue;
   width: calc(100% - 50px);
-  z-index: 9999;
+  z-index: 10;
   right:0;
   @include media-breakpoint-down(sm) { width: 100%; }
   .close {
@@ -503,5 +503,10 @@ body, html {
 }
 
 .chat-image {
-  max-width: 300px !important;
+  @include media-breakpoint-up(sm) {
+    max-width: 300px !important;
+  }
+  @include media-breakpoint-down(sm) {
+    max-width: 65vw !important;
+  }
 }

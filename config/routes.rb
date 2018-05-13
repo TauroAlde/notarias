@@ -51,6 +51,8 @@ Rails.application.routes.draw do
     get :jstree_segment, on: :collection
   end
 
+  resources :chat_searches, only: [:index]
+
   resources :prep_step_threes, only: [:update]
   resources :prep_step_twos, only: [:update]
   resources :profiles, only: [:edit, :update]

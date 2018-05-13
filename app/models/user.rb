@@ -16,6 +16,7 @@ class User < ApplicationRecord
   has_many :user_groups, inverse_of: :user
   has_many :segments, through: :user_segments
   has_many :represented_segments, ->(o) { where('user_segments.representative = ?', true) }, through: :user_segments, class_name: "Segment"
+  has_many :non_represented_segments, ->(o) { where('user_segments.representative = ? OR user_segments.representative IS NULL', false) }, through: :user_segments, class_name: "Segment"
 
   has_many :user_segments
   has_many :prep_processes

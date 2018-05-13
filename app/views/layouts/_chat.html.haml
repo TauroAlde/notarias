@@ -18,7 +18,10 @@
     #chat-viewport.col-12
       .row.h-100
         #chat-viewport-scroll.col-12.tab-content
-        
+          .search-bar.row
+            .col-12
+              %select#chat-search
+
           #segment-messages-list.tab-pane.fade.show.active{ role: "tabpanel", "aria-labelledby" => "segment-messages-list-tab" }
 
           #user-messages-list.tab-pane.fade{ role: "tabpanel", "aria-labelledby" => "user-messages-list-tab" }

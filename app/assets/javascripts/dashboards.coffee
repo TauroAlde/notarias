@@ -22,6 +22,12 @@ class MessageResume
     @startLoadingIcon()
     @chat.loading = true
     $.getScript @message_path(), ()=>
+      lightbox.init();
+      lightbox.option({
+        'resizeDuration': 20,
+        'maxWidth': 500,
+        'maxHeight': 500,
+      })
       @chat.loading = false
       @chat.historyFunnel.push(@) if @chat.historiable()
       @chat.chatForm.render()
@@ -152,6 +158,7 @@ class Chat
     @el = $("#chat")
     @render()
     @loading = true
+    @bindSearch()
     #@startPoller()
 
   currentIsHome: ->
@@ -183,6 +190,38 @@ class Chat
   loadUserMessages: ->
     @userMessagesPool = new UserMessagesPool(@)
 
+  bindSearch: ->
+    @el.find("#chat-search").select2
+      width: "100%"
+      placeholder: 'Buscar por usuario o casilla'
+      minimumInputLength: 3
+      ajax:
+        url: '/chat_searches'
+        dataType: 'json'
+        processResults: (data) ->
+          items = []
+          console.log(data)
+          $.each data, (index, el)->
+            if el.segment_id
+              items.push({ id: el.id, text: el.segment.name, segment_id: el.segment_id, receiver_id: el.receiver_id })
+            else if el.receiver_id
+              items.push({ id: el.id, text: el.user.name, segment_id: el.segment_id, receiver_id: el.receiver_id })
+          { results: items }
+      #templateResult: (d) ->
+      #  console.log(d)
+        #el = $(d.element)
+        #users_count_class = if el.attr("data-users-count") > 0 then "success" else "secondary"
+        #comments_count_class = if el.attr("data-messages-count") > 0 then "warning" else "secondary"
+        #
+        #html = "<span class=\"badge-pill badge-#{users_count_class} select2-badges\"><i class=\"fa fa-users\"></i>#{el.attr("data-users-count")}</span>" +
+        #  "<span class=\"badge-pill badge-#{comments_count_class} select2-badges\"><i class=\"fa fa-comment\"></i>#{el.attr("data-messages-count")}</span> <span>#{d.text}</span>"
+        #$(html)
+      #templateSelection: (d) -> segmentSelectHTML(d)
+      #
+   # .on "select2:select", (e)->
+   #   return
+   #   #window.location = "/segments/#{$(e.params.data.element).attr("data-id")}/users"
+
   hide: ->
     @el.removeClass("show")
     @el.addClass("hide")
@@ -191,7 +230,7 @@ class Chat
   show: ->
     @el.removeClass("hide")
     @el.addClass("show")
-    @el.css("z-index", 9999)
+    @el.css("z-index", 10)
     @loadMessagesFullList()
 
   bindClose: ->
@@ -231,6 +270,7 @@ class Chat
   #    chat.load()
   #  chat.startPoller()
 
+#segmentSelectHTML = (d)->
 
 
 $ ->
@@ -259,4 +299,3 @@ $ ->
     return
 
   window.chat = new Chat
-  
