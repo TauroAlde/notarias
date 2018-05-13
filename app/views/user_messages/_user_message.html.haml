@@ -1,0 +1,29 @@
+.user-message-resume-list-item.position-relative.p-2.pb-3{ "data-message-id" => user_message.id  }
+  .chat-item-time.text-muted.d-inline.position-absolute.p-2= user_message.created_at.strftime("%H:%M %P")
+  - if user_message.unread_messages_from_chat_count > 0
+    %span#unread-count.badge.badge-warning.position-absolute.mr-2= user_message.unread_messages_from_chat_count
+
+  .row.mb-0.mt-0
+    .col-auto
+      = image_tag "user.gif", class: "rounded-circle chat-image-avatar"
+    .col
+      .row
+        
+        .message-resume-title.col-12
+          %h5.d-inline
+            = user_message.user.full_name
+            - if user_message.evidences.count > 0
+              = fa_icon("paperclip", class: "text-warning")
+        .message-resume-body.col-12
+          .pl-2.pr-2.text-muted
+            = user_message.message
+
+        / 
+          .col-auto
+            .row
+              .col-6.col-md-4
+                .row.h-100.align-items-center
+                  .col-6#user-chat.text-center
+                    = fa_icon("user", class: "bg-primary chat-selector")
+                  .col-6#segment-chat.text-center
+                    = fa_icon("users", class: "bg-info chat-selector")

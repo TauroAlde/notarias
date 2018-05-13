@@ -1,0 +1,2 @@
+module SegmentMessages::ResponsesHelper
+end

@@ -23,7 +23,8 @@ class Message < ApplicationRecord
     unread_messages_from_chat.count
   end
 
-  def self.select_distinct_by_raw_query(current_user)
+  # messages sent to the segments managed by the user
+  def self.select_distinct_by_segment_raw_query(current_user)
     segment_ids = if current_user.representative?
       current_user.segments.map(&:self_and_descendant_ids).flatten.uniq
     elsif current_user.only_common?
@@ -32,11 +33,31 @@ class Message < ApplicationRecord
 
     find_by_sql(
       <<-SQL
-        WITH ordered_messages as ( SELECT * FROM messages #{segment_delimiter_query(segment_ids)} ORDER BY updated_at)
+        WITH ordered_messages as (
+          SELECT * FROM messages #{segment_delimiter_query(segment_ids)}
+          ORDER BY updated_at
+        )
         SELECT DISTINCT ON (ordered_messages.user_id, ordered_messages.segment_id) * 
         FROM ordered_messages
-        WHERE user_id != #{current_user.id}
+        WHERE user_id != #{current_user.id} AND segment_id IS NOT NULL
         ORDER BY user_id, segment_id
+      SQL
+    )
+  end
+
+  # messages sent to the user
+  def self.select_distinct_by_user_raw_query(current_user)
+    find_by_sql(
+      <<-SQL
+        WITH ordered_messages as (
+          SELECT * FROM messages
+          WHERE messages.receiver_id = #{current_user.id}
+          ORDER BY updated_at
+        )
+        SELECT DISTINCT ON (ordered_messages.user_id, ordered_messages.receiver_id) * 
+        FROM ordered_messages
+        WHERE user_id != #{current_user.id} AND segment_id IS NULL
+        ORDER BY user_id, receiver_id
       SQL
     )
   end

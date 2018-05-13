@@ -39,11 +39,11 @@ Rails.application.routes.draw do
   end
 
   resources :segment_messages, only: [:index, :show] do
-    resources :responses, only: [:create]
+    resources :responses, only: [:create], controller: "segment_messages/responses"
   end
 
   resources :user_messages, only: [:index, :show] do
-    resources :responses, only: [:create]
+    resources :responses, only: [:create], controller: "user_messages/responses"
   end
 
   resources :transfer_users, only: [:new, :create] do

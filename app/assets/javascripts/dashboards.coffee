@@ -10,57 +10,62 @@ class MessageResume
     @bindClickLoadChat()
 
   bindClickLoadChat: ->
-    window.current_message_id = @segmentMessageId()
     @el.click (e) =>
       e.preventDefault()
       e.stopPropagation()
-      @load()
+      @render()
 
   message_path: ->
     console.log("implement")
 
-  load: ->
+  render: ->
+    @startLoadingIcon()
+    @chat.loading = true
     $.getScript @message_path(), ()=>
-      @chat.chatForm.load()
-      @chat.historyFunnel.push(@)
+      @chat.loading = false
+      @chat.historyFunnel.push(@) if @chat.historiable()
+      @chat.chatForm.render()
+      console.log(@pool.el.height())
       @chat.el.find("#chat-viewport-scroll")[0].scrollTop = @pool.el.height()
 
-  segmentMessageId: ->
+  startLoadingIcon: ->
+    @pool.startLoadingIcon() if @chat.currentIsHome()
+
+  id: ->
     @el.attr("data-message-id")
 
 class SegmentMessageResume extends MessageResume
-
   message_path: ->
-    "/segment_messages/#{ @segmentMessageId() }"
+    "/segment_messages/#{ @id() }"
 
 class UserMessageResume extends MessageResume
-
   message_path: ->
-    "/user_messages/#{ @segmentMessageId() }"
+    "/user_messages/#{ @id() }"
 
 class ChatForm
   constructor: (chat)->
     @el = $("#chat-form")
     @chat = chat
     @bindOnSubmit()
-    @load()
+    @render()
 
   bindMessagesFileUploader: ->
     chat = @chat
     if @el.hasClass("jquery-fileupload-initialized")
       @el.fileupload('destroy')
       @el.removeClass("jquery-fileupload-initialized")
-    if @chat.currentResume && @chat.currentResume.segmentMessageId()
+    if @chat.currentIsSegmentMessage() || @chat.currentIsUserMessage()
+      current_path = @currentChatPath()
       @el.addClass("jquery-fileupload-initialized")
       @el.fileupload
         dataType: 'json',
         fileInput: $('#fileupload-evidence'),
         limitMultiFileUploads: 1,
         #autoUpload: true,
-        url: "/segment_messages/#{chat.currentResume.segmentMessageId()}/responses.json",
+        url: current_path.split(".")[0] + ".json"
         done: (e, data)->
-          console.log "fdsafdsafdsafdsa"
-          chat.currentResume.load()
+          console.log "done"
+          chat.historyFunnelLast().render()
           #formData: { segment_message: { message: $("#step-one-textarea") } },
         fail: (e, data) ->
           console.log "form fail"
@@ -69,12 +74,17 @@ class ChatForm
         send: (e, data)->
           console.log "form send"
 
-  load: ->
-    if @chat.currentResume && @chat.currentResume.segmentMessageId()
-      @el.attr("action", "/segment_messages/#{@chat.currentResume.segmentMessageId()}/responses.js")
-    else
-      @el.attr("action", "#")
+  render: ->
+    @el.attr("action", @currentChatPath())
     @bindMessagesFileUploader()
+
+  currentChatPath: ->
+    if @chat.currentIsSegmentMessage()
+      "/segment_messages/#{@chat.historyFunnelLast().id()}/responses.js"
+    else if @chat.currentIsUserMessage()
+      "/user_messages/#{@chat.historyFunnelLast().id()}/responses.js"
+    else
+      "#"
 
   bindOnSubmit: ->
     @el.submit (e) =>
@@ -94,19 +104,27 @@ class MessagesPool
   #@resumeSelector = undefined  # variables globales para la clase para poder tener un valor
   #@path = undefined            # default o saber lo que hay que llenar al llamar al constructor
   #@el = undefined
-
   constructor: (chat)->
     @chat = chat
+    @messageClass = undefined
+    @render()
 
-  load: ->
-    $.getScript(@path, () => @buildResumes())
+  render: ->
+    @startLoadingIcon() if @chat.currentIsHome()
+    @chat.loading = true
+    $.getScript @path, () =>
+      @chat.loading = false
+      @buildResumes()
 
-  buildResumes: ->
+  startLoadingIcon: ->
+    @el.html('<div class="m-t5 row justify-content-center align-items-center h-100"><div class="col-auto"><div class="loader"></div></div></div>')
+
+  buildResumes: (messageClass)->
     resumes = []
     chat = @chat
     pool = @
     @el.find(@resumeSelector).each (i)->
-      resumes.push(new SegmentMessageResume(@, chat, pool))
+      resumes.push(new messageClass(@, chat, pool))
     @resumes = resumes
 
 class SegmentMessagesPool extends MessagesPool
@@ -116,6 +134,9 @@ class SegmentMessagesPool extends MessagesPool
     @resumeSelector = ".segment-message-resume-list-item"
     super(chat)
 
+  buildResumes: ->
+    super(SegmentMessageResume)
+
 class UserMessagesPool extends MessagesPool
   constructor: (chat)->
     @el = $("#user-messages-list")
@@ -123,39 +144,44 @@ class UserMessagesPool extends MessagesPool
     @resumeSelector = ".user-message-resume-list-item"
     super(chat)
 
+  buildResumes: ->
+    super(UserMessageResume)
+
 class Chat
   constructor: () ->
     @el = $("#chat")
-    @load()
-    @bindClose()                # bind event to close the chat
-    @bindOpen()                 # bind event to open the chat in all buttons
-    @historyFunnel = [@]
+    @render()
+    @loading = true
     #@startPoller()
 
-  back: ->
-    previous = @historyFunnel.pop() if @historyFunnel.length > 1 && !@currentIsHome()
-    @historyFunnel[@historyFunnel.length - 1].load()
-
   currentIsHome: ->
-    @historyFunnel[@historyFunnel.length - 1] instanceof Chat
+    @historyFunnelLast() instanceof Chat
 
-  load: ->
-    window.previous = undefined
-    window.current_message_id = undefined
-    @currentResume = undefined
+  currentIsSegmentMessage: ->
+    @historyFunnelLast() instanceof SegmentMessageResume
 
-    @chatForm = new ChatForm(@)
-    @chatForm.load()
+  currentIsUserMessage: ->
+    @historyFunnelLast() instanceof UserMessageResume
+
+  historyFunnelLast: ->
+    @historyFunnel[@historyFunnel.length - 1]
+
+  historiable: ->
+    @currentIsHome()
+
+  render: ->
+    @historyFunnel = [@]
+    @bindClose()                # bind event to close the chat
+    @bindOpen()                 # bind event to open the chat in all buttons
     @loadSegmentMessages()
-    #@loadUserMessages()
+    @loadUserMessages()
+    @chatForm = new ChatForm(@)
 
   loadSegmentMessages: ->
     @segmentMessagesPool = new SegmentMessagesPool(@)
-    @segmentMessagesPool.load()
 
   loadUserMessages: ->
     @userMessagesPool = new UserMessagesPool(@)
-    @userMessagesPool.load()
 
   hide: ->
     @el.removeClass("show")
@@ -169,11 +195,16 @@ class Chat
     @loadMessagesFullList()
 
   bindClose: ->
-    @el.find(".close").click (e)=>
+    @el.find(".close").off("click").on "click", (e)=>
       if @currentIsHome()
         @hide()
       else
         @back()
+
+  back: ->
+    return if @loading == true
+    previous = @historyFunnel.pop() if !@currentIsHome()
+    @historyFunnel[@historyFunnel.length - 1].render()
 
   isShown: ->
     @el.hasClass("show")
