@@ -4,7 +4,8 @@ class ChatSearchesController < ApplicationController
   def index
     @segments = fetch_segments
     @users = fetch_users
-    respond_with [@segments, @users]
+
+    respond_with [segments: @segments, users: @users.as_json(methods: :full_name)]
   end
 
   def fetch_segments
@@ -12,8 +13,9 @@ class ChatSearchesController < ApplicationController
       representatives_segments_ids
     elsif current_user.only_common?
       current_user.segments.pluck(:id)
+    else
+      Segment.root.self_and_descendant_ids
     end
-
     Segment.where(id: segment_ids).ransack(name_cont: params[:q]).result
   end
 
@@ -31,7 +33,7 @@ class ChatSearchesController < ApplicationController
         where("user_segments.segment_id IN (#{segment_ids.compact.join(', ')})").
         where("users.id != #{current_user.id}").ransack(name_or_mother_last_name_or_father_last_name_cont: params[:q]).result
     else
-      User.ransack(name_or_mother_last_name_or_father_last_name_cont: params[:q]).result
+      User.where("users.id != #{current_user.id}").ransack(name_or_mother_last_name_or_father_last_name_cont: params[:q]).result
     end
   end
 

@@ -34,13 +34,13 @@ class Message < ApplicationRecord
     find_by_sql(
       <<-SQL
         WITH ordered_messages as (
-          SELECT * FROM messages #{segment_delimiter_query(segment_ids)}
+          SELECT * FROM messages
+          WHERE messages.segment_id IS NOT NULL AND messages.receiver_id IS NULL #{segment_delimiter_query(segment_ids)}
           ORDER BY updated_at
         )
-        SELECT DISTINCT ON (ordered_messages.user_id, ordered_messages.segment_id) * 
+        SELECT DISTINCT ON (ordered_messages.segment_id) * 
         FROM ordered_messages
-        WHERE user_id != #{current_user.id} AND segment_id IS NOT NULL
-        ORDER BY user_id, segment_id
+        ORDER BY segment_id
       SQL
     )
   end
@@ -51,19 +51,19 @@ class Message < ApplicationRecord
       <<-SQL
         WITH ordered_messages as (
           SELECT * FROM messages
-          WHERE messages.receiver_id = #{current_user.id}
+          WHERE (messages.receiver_id = #{current_user.id} AND messages.user_id != #{current_user.id})
+          AND segment_id IS NULL
           ORDER BY updated_at
         )
         SELECT DISTINCT ON (ordered_messages.user_id, ordered_messages.receiver_id) * 
         FROM ordered_messages
-        WHERE user_id != #{current_user.id} AND segment_id IS NULL
-        ORDER BY user_id, receiver_id
+        ORDER BY receiver_id
       SQL
     )
   end
 
   def self.segment_delimiter_query(segment_ids)
-    return  "" if segment_ids.blank?
-    "WHERE messages.segment_id IN (#{segment_ids.join(", ")})"
+    return "" if segment_ids.blank?
+    "AND messages.segment_id IN (#{segment_ids.join(", ")})"
   end
 end

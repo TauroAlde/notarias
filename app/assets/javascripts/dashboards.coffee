@@ -3,10 +3,12 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 class MessageResume
   @message_path = undefined
-  constructor: (resumeMessageEl, chat, pool) ->
+  constructor: (resumeMessageEl, chat, pool, params) ->
     @el = $(resumeMessageEl)
     @chat = chat
     @pool = pool
+    @params = params # optional might be undefined
+    @id = @fetchId()
     @bindClickLoadChat()
 
   bindClickLoadChat: ->
@@ -22,31 +24,49 @@ class MessageResume
     @startLoadingIcon()
     @chat.loading = true
     $.getScript @message_path(), ()=>
-      lightbox.init();
-      lightbox.option({
-        'resizeDuration': 20,
-        'maxWidth': 500,
-        'maxHeight': 500,
-      })
+      #lightbox.init();
+      #lightbox.option({
+      #  'resizeDuration': 20,
+      #  'maxWidth': 500,
+      #  'maxHeight': 500,
+      #})
       @chat.loading = false
       @chat.historyFunnel.push(@) if @chat.historiable()
       @chat.chatForm.render()
-      console.log(@pool.el.height())
       @chat.el.find("#chat-viewport-scroll")[0].scrollTop = @pool.el.height()
 
   startLoadingIcon: ->
     @pool.startLoadingIcon() if @chat.currentIsHome()
 
-  id: ->
-    @el.attr("data-message-id")
+  fetchId: ->
+    if @el[0]
+      return @el.attr("data-message-id")
+    else
+      return "new"
+
+  reload: ->
+    @id = @fetchId()
+    @chat.chatForm.render()
 
 class SegmentMessageResume extends MessageResume
   message_path: ->
-    "/segment_messages/#{ @id() }"
+    "/segment_messages/#{ @id }"
+
+  fetchId: ->
+    base_string = super()
+    if @params
+      base_string += "?segment_id=#{@params.id}"
+    base_string
 
 class UserMessageResume extends MessageResume
   message_path: ->
-    "/user_messages/#{ @id() }"
+    "/user_messages/#{ @id }"
+
+  fetchId: ->
+    base_string = super()
+    if @params
+      base_string += "?user_id=#{@params.id}"
+    base_string
 
 class ChatForm
   constructor: (chat)->
@@ -86,9 +106,9 @@ class ChatForm
 
   currentChatPath: ->
     if @chat.currentIsSegmentMessage()
-      "/segment_messages/#{@chat.historyFunnelLast().id()}/responses.js"
+      "/segment_messages/#{@chat.historyFunnelLast().id}/responses.js"
     else if @chat.currentIsUserMessage()
-      "/user_messages/#{@chat.historyFunnelLast().id()}/responses.js"
+      "/user_messages/#{@chat.historyFunnelLast().id}/responses.js"
     else
       "#"
 
@@ -133,6 +153,17 @@ class MessagesPool
       resumes.push(new messageClass(@, chat, pool))
     @resumes = resumes
 
+  startNewChat: (messageClass, params)->
+    new_message_list = new messageClass("", @chat, @, params)
+    @resumes.push(new_message_list)
+    new_message_list.render()
+
+  newResumesList: ->
+    newResumes = []
+    $.each @resumes, (index, messageResume) ->
+      if messageResume.id.split("?")[0] == "new" then newResumes.push(messageResume)
+    newResumes
+
 class SegmentMessagesPool extends MessagesPool
   constructor: (chat)->
     @el = $("#segment-messages-list")
@@ -142,6 +173,9 @@ class SegmentMessagesPool extends MessagesPool
 
   buildResumes: ->
     super(SegmentMessageResume)
+
+  startNewChat: (params) ->
+    super(SegmentMessageResume, params)
 
 class UserMessagesPool extends MessagesPool
   constructor: (chat)->
@@ -153,13 +187,16 @@ class UserMessagesPool extends MessagesPool
   buildResumes: ->
     super(UserMessageResume)
 
+  startNewChat: (params) ->
+    super(UserMessageResume, params)
+
 class Chat
   constructor: () ->
     @el = $("#chat")
     @render()
     @loading = true
     @bindSearch()
-    #@startPoller()
+    @startPoller()
 
   currentIsHome: ->
     @historyFunnelLast() instanceof Chat
@@ -184,11 +221,22 @@ class Chat
     @loadUserMessages()
     @chatForm = new ChatForm(@)
 
+  reload: ->
+    @loadSegmentMessages()
+    @loadUserMessages()
+    @chatForm.render()
+
   loadSegmentMessages: ->
     @segmentMessagesPool = new SegmentMessagesPool(@)
 
   loadUserMessages: ->
     @userMessagesPool = new UserMessagesPool(@)
+
+  triggerCustomChatSelect: (params)->
+    if params.data.type == "user"
+      @userMessagesPool.startNewChat(params.data)
+    else
+      @segmentMessagesPool.startNewChat(params.data)
 
   bindSearch: ->
     @el.find("#chat-search").select2
@@ -196,31 +244,40 @@ class Chat
       placeholder: 'Buscar por usuario o casilla'
       minimumInputLength: 3
       ajax:
-        url: '/chat_searches'
         dataType: 'json'
+        url: '/chat_searches'
         processResults: (data) ->
           items = []
-          console.log(data)
-          $.each data, (index, el)->
-            if el.segment_id
-              items.push({ id: el.id, text: el.segment.name, segment_id: el.segment_id, receiver_id: el.receiver_id })
-            else if el.receiver_id
-              items.push({ id: el.id, text: el.user.name, segment_id: el.segment_id, receiver_id: el.receiver_id })
+          $.each data[0].segments, (index, el)->
+            items.push({ id: el.id, text: el.name, type: "segment" })
+          $.each data[0].users, (index, el)->
+            items.push({ id: el.id, text: el.full_name, type: "user" })
           { results: items }
-      #templateResult: (d) ->
-      #  console.log(d)
-        #el = $(d.element)
-        #users_count_class = if el.attr("data-users-count") > 0 then "success" else "secondary"
-        #comments_count_class = if el.attr("data-messages-count") > 0 then "warning" else "secondary"
-        #
-        #html = "<span class=\"badge-pill badge-#{users_count_class} select2-badges\"><i class=\"fa fa-users\"></i>#{el.attr("data-users-count")}</span>" +
-        #  "<span class=\"badge-pill badge-#{comments_count_class} select2-badges\"><i class=\"fa fa-comment\"></i>#{el.attr("data-messages-count")}</span> <span>#{d.text}</span>"
+      templateResult: (d) ->
+        html = ""
+        if d.id
+          icon_type = ""
+          if d.type == "user"
+            icon_type = "users"
+          else if d.type == "segment"
+            icon_type = "compass"
+          html = "<span class=\"badge-pill badge-info select2-badges\"><i class=\"fa fa-#{icon_type}\"></i></span> <span>#{d.text}</span>"
+        else
+          html = "<span>#{d.text}</span>"
+        $(html)
         #$(html)
-      #templateSelection: (d) -> segmentSelectHTML(d)
-      #
-   # .on "select2:select", (e)->
-   #   return
-   #   #window.location = "/segments/#{$(e.params.data.element).attr("data-id")}/users"
+      templateSelection: (d) ->
+        html = ""
+        icon_type = ""
+        if d.type == "user"
+          icon_type = "users"
+        else if d.type == "segment"
+          icon_type = "compass"
+        html = "<span class=\"badge-pill badge-info select2-badges\"><i class=\"fa fa-#{icon_type}\"></i></span> <span>#{d.text}</span>"
+        $(html)
+    .on "select2:select", (e) =>
+      @triggerCustomChatSelect(e.params)
+        #window.location = "/segments/#{$(e.params.data.element).attr("data-id")}/users"
 
   hide: ->
     @el.removeClass("show")
@@ -231,7 +288,7 @@ class Chat
     @el.removeClass("hide")
     @el.addClass("show")
     @el.css("z-index", 10)
-    @loadMessagesFullList()
+    @reload()
 
   bindClose: ->
     @el.find(".close").off("click").on "click", (e)=>
@@ -260,15 +317,16 @@ class Chat
       if @isHidden()
         @show()
 
-  #startPoller: ->
-  #  setTimeout(@pollerCallback, 5000, @)
-  #
-  #pollerCallback: (chat)->
-  #  if chat.currentResume
-  #    chat.currentResume.load()
-  #  else if !chat.currentResume
-  #    chat.load()
-  #  chat.startPoller()
+  startPoller: ->
+    setTimeout(@pollerCallback, 5000, @)
+  
+  pollerCallback: (chat)->
+
+    if chat.currentIsHome()
+      chat.reload()
+    else
+      chat.historyFunnelLast().render()
+    chat.startPoller()
 
 #segmentSelectHTML = (d)->
 

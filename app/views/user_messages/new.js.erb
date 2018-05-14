@@ -1,0 +1,7 @@
+$("#user-messages-list-tab").tab('show');
+$("#user-messages-list").html("<%= j render partial: '/user_messages/message', collection: @user_messages %>");
+
+$.each(window.chat.userMessagesPool.newResumesList(), function(index, resume){
+  resume.el = $("<%= j render partial: '/user_messages/user_message', locals: { user_message: @user_messages.last } %>");
+  resume.reload();
+});

@@ -7,6 +7,8 @@ class User < ApplicationRecord
   
   acts_as_paranoid
 
+  attr_reader :full_name
+
   has_many :procedures, class_name: "Procedure", foreign_key: :creator_user
   has_many :user_preferences
   has_many :preferences, through: :user_preferences

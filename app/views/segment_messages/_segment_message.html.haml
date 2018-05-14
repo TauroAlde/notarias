@@ -11,7 +11,7 @@
         
         .message-resume-title.col-12
           %h5.d-inline
-            = segment_message.user.full_name
+            = segment_message.segment.name
             - if segment_message.evidences.count > 0
               = fa_icon("paperclip", class: "text-warning")
         .message-resume-body.col-12

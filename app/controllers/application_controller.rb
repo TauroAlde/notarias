@@ -55,7 +55,10 @@ class ApplicationController < ActionController::Base
   end
 
   def messages_controllers?
-    self.class == SegmentMessagesController || self.class == ResponsesController
+    self.class == SegmentMessagesController ||
+      self.class == SegmentMessages::ResponsesController ||
+      self.class == UserMessages::ResponsesController ||
+      self.class == ChatSearchesController
   end
 
   protected
