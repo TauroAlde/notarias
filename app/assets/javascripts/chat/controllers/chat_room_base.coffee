@@ -11,11 +11,16 @@ class @ChatRoomBase
 
   bindClickLoadChat: ->
     @el.click (e) =>
+      @chat.current = @
       e.preventDefault()
       e.stopPropagation()
+      @chat.chatForm.render()
       @render()
 
   chatRoomPath: ->
+    console.log("implement")
+
+  responsePath: ->
     console.log("implement")
 
   renderRow: ->

@@ -1,9 +1,14 @@
 class @ChatForm
   constructor: (chat)->
-    @el = $("#chat-form")
+    @el = chat.el.find("#chat-form")
     @chat = chat
-    @bindOnSubmit()
+    @bindOnSubmit() if !@alreadySubmitBind
+    @alreadySubmitBind = true
     @render()
+
+  render: ()->
+    @el.attr("action", @currentChatPath())
+    #@bindMessagesFileUploader()
 
   bindMessagesFileUploader: ->
     chat = @chat
@@ -30,26 +35,32 @@ class @ChatForm
         send: (e, data)->
           console.log "form send"
 
-  render: (poller)->
-    @el.attr("action", @currentChatPath())
-    @bindMessagesFileUploader()
-
   currentChatPath: ->
-    if @chat.currentIsSegmentMessage()
-      "/segment_messages/#{@chat.historyFunnelLast().id}/responses.js"
-    else if @chat.currentIsUserMessage()
-      "/user_messages/#{@chat.historyFunnelLast().id}/responses.js"
+    if @chat.currentIsChatRoom()
+      @chat.current.responsePath()
     else
       "#"
 
   bindOnSubmit: ->
     @el.submit (e) =>
-      if @el.attr("action") == "#" || !@el.find("#message-text").val()
-        e.preventDefault()
+      e.preventDefault()
+      if @el.attr("action") == "#" || !@text
         return false
+      $.post
+        url: @el.attr("action")
+        data: @el.serialize()
+        datatype: "JSON"
+        success: (message, textStatus, jqXHR) =>
+          @clearText()
+          message = new @chat.current.messageClass(message, @chat, @chat.current.pool, @chat.current)
+          @chat.current.messages.push(message)
+          @chat.current.renderMessages()
 
   clearText: ->
     @el.find("#message-text").val("")
+
+  text: ->
+    @el.find("#message-text").val()
 
   disable: ->
     $("#form-fieldset").attr("disabled", "true")

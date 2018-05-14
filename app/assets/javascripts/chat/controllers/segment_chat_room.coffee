@@ -8,6 +8,9 @@ class @SegmentChatRoom extends @ChatRoomBase
   chatRoomPath: ->
     "/segment_messages/#{ @model.id }.json"
 
+  responsePath: ->
+    "/segment_messages/#{ @model.id }/responses.json"
+
   fetchId: ->
     base_string = super()
     if @params

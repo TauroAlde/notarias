@@ -13,7 +13,6 @@ class @MessagesPoolBase
     @render()
 
   render: (poller)->
-    @chat.current = @
     @chatRooms = []
     @startLoadingIcon() 
     $.get

@@ -2,26 +2,21 @@ class UserMessages::ResponsesController < ApplicationController
   respond_to :json, :html, :js
 
   def create
-    previous_message = Message.find(params[:user_message_id])
-    @user_message = Message.new(user_message_params)
-    @user_message.user = current_user
-    @user_message.receiver = previous_message.user
+    @user = User.find(params[:user_message_id])
+    @message = current_user.messages.build(user_message_params)
+    @message.receiver = @user
+    @message.read_at = DateTime.now
 
     build_evidence if params[:message] && params[:message][:photo_evidence].present?
-    @user_message.save
-    respond_with @user_message do |format|
-      format.json { render json: @user_message }
-      format.html
-      format.js { render :create }
-    end
+    @message.save
   end
 
   def build_evidence
-    @user_message.evidences.build(
+    @message.evidences.build(
       file: message_evidence_params[:photo_evidence],
       user: current_user
     )
-    @user_message.message = "Imágenes enviadas" if @user_message.evidences.present? && @user_message.message.blank?
+    @message.message = "Imágenes enviadas" if @message.evidences.present? && @message.message.blank?
   end
 
   def user_message_params

@@ -15,13 +15,16 @@ class @Chat
     @loadCurrentUser()
     @loadSegmentMessages()
     @loadUserMessages()
-    #@chatForm = new window.ChatForm(@)
+    @chatForm = new window.ChatForm(@)
 
   loadSegmentMessages: (poller)->
     @segmentMessagesPool = new SegmentMessagesPool(@)
 
   loadUserMessages: (poller)->
     @userMessagesPool = new UserMessagesPool(@)
+
+  currentIsChatRoom: ->
+    @current instanceof window.UserChatRoom || @current instanceof window.SegmentChatRoom
 
   currentIsHome: ->
     @current instanceof window.Chat
@@ -114,10 +117,9 @@ class @Chat
         @back()
 
   back: ->
-    if @currentIsPool()
-      @render() # sets current as self inside render
-    else if @currentIsHome()
-      @hide()
+    if !@currentIsHome()
+      @render()
+      @current = @
 
   bindOpen: ->
     $("#open-messages-button").click (e) =>
