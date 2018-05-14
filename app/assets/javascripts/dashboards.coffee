@@ -20,8 +20,8 @@ class MessageResume
   message_path: ->
     console.log("implement")
 
-  render: ->
-    @startLoadingIcon()
+  render: (poller)->
+    if !poller then @startLoadingIcon()
     @chat.loading = true
     $.getScript @message_path(), ()=>
       #lightbox.init();
@@ -44,7 +44,7 @@ class MessageResume
     else
       return "new"
 
-  reload: ->
+  reload: (poller)->
     @id = @fetchId()
     @chat.chatForm.render()
 
@@ -100,7 +100,7 @@ class ChatForm
         send: (e, data)->
           console.log "form send"
 
-  render: ->
+  render: (poller)->
     @el.attr("action", @currentChatPath())
     @bindMessagesFileUploader()
 
@@ -130,13 +130,13 @@ class MessagesPool
   #@resumeSelector = undefined  # variables globales para la clase para poder tener un valor
   #@path = undefined            # default o saber lo que hay que llenar al llamar al constructor
   #@el = undefined
-  constructor: (chat)->
+  constructor: (chat, poller)->
     @chat = chat
     @messageClass = undefined
-    @render()
+    @render(poller)
 
-  render: ->
-    @startLoadingIcon() if @chat.currentIsHome()
+  render: (poller)->
+    @startLoadingIcon() if @chat.currentIsHome() && !poller
     @chat.loading = true
     $.getScript @path, () =>
       @chat.loading = false
@@ -165,11 +165,11 @@ class MessagesPool
     newResumes
 
 class SegmentMessagesPool extends MessagesPool
-  constructor: (chat)->
+  constructor: (chat, poller)->
     @el = $("#segment-messages-list")
     @path =  "/segment_messages"
     @resumeSelector = ".segment-message-resume-list-item"
-    super(chat)
+    super(chat, poller)
 
   buildResumes: ->
     super(SegmentMessageResume)
@@ -178,11 +178,11 @@ class SegmentMessagesPool extends MessagesPool
     super(SegmentMessageResume, params)
 
 class UserMessagesPool extends MessagesPool
-  constructor: (chat)->
+  constructor: (chat, poller)->
     @el = $("#user-messages-list")
     @path = "/user_messages"
     @resumeSelector = ".user-message-resume-list-item"
-    super(chat)
+    super(chat, poller)
 
   buildResumes: ->
     super(UserMessageResume)
@@ -213,7 +213,7 @@ class Chat
   historiable: ->
     @currentIsHome()
 
-  render: ->
+  render: (poller)->
     @historyFunnel = [@]
     @bindClose()                # bind event to close the chat
     @bindOpen()                 # bind event to open the chat in all buttons
@@ -221,16 +221,16 @@ class Chat
     @loadUserMessages()
     @chatForm = new ChatForm(@)
 
-  reload: ->
-    @loadSegmentMessages()
-    @loadUserMessages()
+  reload: (poller)->
+    @loadSegmentMessages(poller)
+    @loadUserMessages(poller)
     @chatForm.render()
 
-  loadSegmentMessages: ->
-    @segmentMessagesPool = new SegmentMessagesPool(@)
+  loadSegmentMessages: (poller)->
+    @segmentMessagesPool = new SegmentMessagesPool(@, poller)
 
-  loadUserMessages: ->
-    @userMessagesPool = new UserMessagesPool(@)
+  loadUserMessages: (poller)->
+    @userMessagesPool = new UserMessagesPool(@, poller)
 
   triggerCustomChatSelect: (params)->
     if params.data.type == "user"
@@ -321,11 +321,10 @@ class Chat
     setTimeout(@pollerCallback, 5000, @)
   
   pollerCallback: (chat)->
-
     if chat.currentIsHome()
-      chat.reload()
+      chat.reload(true)
     else
-      chat.historyFunnelLast().render()
+      chat.historyFunnelLast().render(true)
     chat.startPoller()
 
 #segmentSelectHTML = (d)->
