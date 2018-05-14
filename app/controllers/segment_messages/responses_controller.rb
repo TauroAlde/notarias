@@ -16,7 +16,7 @@ class SegmentMessages::ResponsesController < ApplicationController
       file: message_evidence_params[:photo_evidence],
       user: current_user
     )
-    @message.message = "Imágenes enviadas" if @message.evidences.present? && @segment_message.message.blank?
+    @message.message = "Imágenes enviadas" if @message.evidences.present? && @message.message.blank?
   end
 
   def segment_message_params

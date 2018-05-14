@@ -504,9 +504,11 @@ body, html {
 
 .chat-image {
   @include media-breakpoint-up(sm) {
-    max-width: 300px !important;
+    max-width: 600px !important;
+    min-height: 200px !important;
   }
   @include media-breakpoint-down(sm) {
     max-width: 65vw !important;
+    min-height: 50vw !important;
   }
 }

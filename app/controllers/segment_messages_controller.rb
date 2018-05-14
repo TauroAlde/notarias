@@ -8,12 +8,11 @@ class SegmentMessagesController < ApplicationController
 
   def show
     @segment = Segment.find(params[:id])
-    @segment_messages = @segment.messages.
+    @messages = @segment.messages.
       includes(:user, :receiver, :segment, :evidences).
       order(id: :desc).limit(20)
-    @segment_messages.update_all(read_at: DateTime.now)
-    @segment_messages = @segment_messages.reverse
-    respond_with @segment_messages.as_json(include: [:user, :receiver, :segment, :evidences], methods: :created_at_day_format)
+    @messages.update_all(read_at: DateTime.now)
+    @messages = @messages.reverse
   end
 
   def new

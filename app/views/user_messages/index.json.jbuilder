@@ -3,10 +3,10 @@ json.array! @users do |user|
   json.unread_messages_count user.messages_between_self_and(current_user).unread.count
 
   json.last_message do
-    json.(user.messages_between_self_and(current_user).last, :id, :message, :updated_at, :user_id, :receiver_id, :segment_id)
-    json.created_at user.messages_between_self_and(current_user).last.created_at_day_format
-    json.read_at user.messages_between_self_and(current_user).last.read_at_day_format
-    json.evidences user.messages_between_self_and(current_user).last.evidences do |evidence|
+    json.(user.messages_between_self_and(current_user).first, :id, :message, :updated_at, :user_id, :receiver_id, :segment_id)
+    json.created_at user.messages_between_self_and(current_user).first.created_at_day_format
+    json.read_at user.messages_between_self_and(current_user).first.read_at_day_format
+    json.evidences user.messages_between_self_and(current_user).first.evidences do |evidence|
       json.(evidence, :id, :updated_at, :message_id, :user_id)
       json.url evidence.file.url
       json.name evidence.file.file.original_filename

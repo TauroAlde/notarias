@@ -14,5 +14,6 @@ class @Message
     @chatRoom = chatRoom
 
   render: ->
+    console.log(@data)
     @el = @template({ data: @data, currentUser: @chat.currentUser })
     @el
