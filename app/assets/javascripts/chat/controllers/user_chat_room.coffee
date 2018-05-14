@@ -6,7 +6,7 @@ class @UserChatRoom extends @ChatRoomBase
     super(data, chat, pool)
 
   chatRoomPath: ->
-    "/user_messages/#{ @model.id }"
+    "/user_messages/#{ @model.id }.json"
 
   fetchId: ->
     base_string = super()

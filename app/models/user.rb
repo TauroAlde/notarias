@@ -47,10 +47,9 @@ class User < ApplicationRecord
   attr_accessor :login, :prevalidate_username_uniqueness, :pre_encrypted_password
 
   def messages_between_self_and(user)
-    @messages_between_self_and ||= Message.where(
-     "(receiver_id = ? AND user_id = ?) OR (receiver_id = ? AND user_id = ?)",
-     user.id, self.id, self.id, user.id
-    ).order(id: :desc)
+    @messages_between_self_and ||= Message.includes(Message::INCLUDES_BASE).
+      where("(receiver_id = ? AND user_id = ?) OR (receiver_id = ? AND user_id = ?)", user.id, self.id, self.id, user.id).
+      order(id: :desc)
   end
 
   def represents_segment?(segment)

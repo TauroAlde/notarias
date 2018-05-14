@@ -11,6 +11,8 @@ class Message < ApplicationRecord
 
   validates :message, presence: true, allow_blank: false
 
+  INCLUDES_BASE = [:evidences, receiver: { messages: [:user, :receiver] }, user: { messages: [:user, :receiver] }]
+
   def created_at_day_format
     created_at.strftime("%H:%M %P")
   end

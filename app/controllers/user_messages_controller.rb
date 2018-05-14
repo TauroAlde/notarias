@@ -2,7 +2,7 @@ class UserMessagesController < ApplicationController
   respond_to :json
 
   def index
-    @users = User.joins(:messages, user_segments: [:segment]).
+    @users = User.includes(messages: Message::INCLUDES_BASE, user_segments: [:segment]).
       where(user_segments: { segment_id: Segment.managed_by_ids(current_user) }).
       where('users.id != ?', current_user.id).
       where(
@@ -12,14 +12,10 @@ class UserMessagesController < ApplicationController
   end
 
   def show
-    user_message = Message.find(params[:id])
-    @user_messages = Message.
-      includes(:evidences, receiver: { messages: [:user, :receiver] }, user: { messages: [:user, :receiver] }).
-      where(user: [user_message.user, current_user], receiver: [user_message.user, current_user]).
-      order(id: :desc).limit(20)
-    @user_messages.update_all(read_at: DateTime.now)
-    @user_messages = @user_messages.reverse
-    respond_with @user_messages
+    @user = User.find(params[:id])
+    @messages = @user.messages_between_self_and(current_user).limit(20)
+    @messages.update_all(read_at: DateTime.now)
+    @messages = @messages.reverse
   end
 
   def new

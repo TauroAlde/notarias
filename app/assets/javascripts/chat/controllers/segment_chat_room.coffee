@@ -6,7 +6,7 @@ class @SegmentChatRoom extends @ChatRoomBase
     super(data, chat, pool)
 
   chatRoomPath: ->
-    "/segment_messages/#{ @model.id }"
+    "/segment_messages/#{ @model.id }.json"
 
   fetchId: ->
     base_string = super()
