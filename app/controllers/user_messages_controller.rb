@@ -1,6 +1,9 @@
 class UserMessagesController < ApplicationController
+  respond_to :json
+
   def index
     @user_messages = Message.select_distinct_by_user_raw_query(current_user)
+    respond_with @user_messages
   end
 
   def show
@@ -11,6 +14,7 @@ class UserMessagesController < ApplicationController
       order(id: :desc).limit(20)
     @user_messages.update_all(read_at: DateTime.now)
     @user_messages = @user_messages.reverse
+    respond_with @user_messages
   end
 
   def new

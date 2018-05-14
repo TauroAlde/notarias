@@ -21,4 +21,30 @@ class Segment < ApplicationRecord
   validates :name, uniqueness: true
 
   has_closure_tree
+
+  def self.managed_by_ids(user)
+    if user.representative?
+      (user.represented_segments.map(&:self_and_descendant_ids).flatten + user.non_represented_segments.pluck(:id)).flatten.uniq
+    elsif user.only_common?
+      user.segments.pluck(:id)
+    else
+      Segment.pluck(:id)
+    end
+  end
+
+  def last_message
+    messages.order(id: :asc).last
+  end
+
+  def last_message_evidences_count
+    last_message.evidences.count
+  end
+
+  def unread_messages_count
+    messages.unread.count
+  end
+
+  def created_at_day_format
+    last_message.created_at.strftime("%H:%M %P")
+  end
 end

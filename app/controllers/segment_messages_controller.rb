@@ -1,20 +1,19 @@
 class SegmentMessagesController < ApplicationController
+  respond_to :json
+
   def index
-    @segment_messages = Message.select_distinct_by_segment_raw_query(current_user)
+    @segments = Segment.joins(:messages).where(id: Segment.managed_by_ids(current_user)).uniq
+    respond_with @segments.as_json(methods: [:last_message, :unread_messages_count, :last_message_evidences_count, :created_at_day_format])
   end
 
   def show
-    segment_message = Message.find(params[:id])
-
-    @segment_messages = Message.
-      includes(
-        :evidences,
-        segment: { messages: [:user, :segment] },
-        user: { messages: [:user, :segment] }).
-      where(segment: segment_message.segment).
+    @segment = Segment.find(params[:id])
+    @segment_messages = @segment.messages.
+      includes(:user, :receiver, :segment, :evidences).
       order(id: :desc).limit(20)
     @segment_messages.update_all(read_at: DateTime.now)
     @segment_messages = @segment_messages.reverse
+    respond_with @segment_messages.as_json(include: [:user, :receiver, :segment, :evidences], methods: :created_at_day_format)
   end
 
   def new

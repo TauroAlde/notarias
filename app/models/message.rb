@@ -11,6 +11,10 @@ class Message < ApplicationRecord
 
   validates :message, presence: true, allow_blank: false
 
+  def created_at_day_format
+    created_at.strftime("%H:%M %P")
+  end
+
   def mark_as_read
     update(read_at: DateTime.now)
   end
