@@ -1,0 +1,32 @@
+<div class="user-message-resume-list-item position-relative p-2 pb-3" data-user-id="<%= id %>">
+  <div class="chat-item-time text-muted d-inline position-absolute p-2">
+    <%= last_message.created_at_day_format %>
+  </div>
+  <% if (unread_messages_count > 0) { %>
+    <span class="badge badge-warning position-absolute mr-2" id="unread-count">
+      <%= unread_messages_count %>
+    </span>
+  <% } %>
+  <div class="row mb-0 mt-0">
+    <div class="col-auto">
+      <img src="/assets/user.gif" class="rounded-circle chat-image-avatar">
+    </div>
+    <div class="col">
+      <div class="row">
+        <div class="message-resume-title col-12">
+          <h5 class="d-inline">
+            <%= full_name %>
+            <% if (last_message.evidences.length > 0) { %>
+              <i class="fa fa-paperclip text-warning">
+            <% } %>
+          </h5>
+        </div>
+        <div class="message-resume-body col-12">
+          <div class="pl-2 pr-2 text-muted">
+            <%= last_message.message %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

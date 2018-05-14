@@ -12,8 +12,9 @@ class @Chat
     if !skipBinds
       @bindClose()                # bind event to close the chat
       @bindOpen()                 # bind event to open the chat in all buttons
+    @loadCurrentUser()
     @loadSegmentMessages()
-    #@loadUserMessages()
+    @loadUserMessages()
     #@chatForm = new window.ChatForm(@)
 
   loadSegmentMessages: (poller)->
@@ -26,13 +27,21 @@ class @Chat
     @current instanceof window.Chat
 
   currentIsPool: ->
-    currentIsSegmentMessagesPool() || currentIsUserMessagesPool()
+    @currentIsSegmentMessagesPool() || @currentIsUserMessagesPool()
 
   currentIsSegmentMessagesPool: ->
     @current instanceof window.SegmentMessagesPool
 
   currentIsUserMessagesPool: ->
     @current instanceof window.UserMessagesPool
+
+  loadCurrentUser: ->
+    $.get
+      url: "/users/load_current_user.json"
+      datatype: "JSON"
+      success: (data, textStatus, jqXHR) =>
+        @currentUser = new window.User(data)
+    
 
   #reload: (poller)->
   #  @loadSegmentMessages(poller)

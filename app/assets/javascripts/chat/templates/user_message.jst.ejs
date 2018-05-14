@@ -1,1 +1,31 @@
-DUMMY
+<div class="user-message row <% if (data.user.id == currentUser.id) { %> <%= 'justify-content-end' %> <% }%>">
+  <div class="col-auto col-sm-12 col-md-6 col-lg-4 pl-4 pr-4">
+    <div class="card">
+      <div class="card-body">
+        <div class="media">
+          <% if (data.user.id == currentUser.id) { %>
+            <img src="/assets/user.gif" class="rounded-circle chat-image-avatar mr-2 align-self-start" alt="Generic placeholder image">
+          <% } %>
+          <div class="media-body">
+            <h5 class="mt-0 mb-1">
+              <% if(data.user.id == currentUser.id) { %>
+                Tú 
+              <% } else { %>
+                <%= data.user.full_name %>
+              <% } %>
+            </h5>
+            <%= data.message %>
+            <% if (data.evidences.length > 1) { %>
+              <div class="row justify-content-end">
+                
+              </div>
+            <% } %>
+          </div>
+          <% if (data.user.id != currentUser.id) { %>
+            <img src="/assets/user.gif" class="rounded-circle chat-image-avatar mr-2 align-self-start" alt="Generic placeholder image">
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

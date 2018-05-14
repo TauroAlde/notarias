@@ -11,7 +11,9 @@ Rails.application.routes.draw do
 
   root 'dashboards#index'
 
-  resources :users, except: [:index]
+  resources :users, except: [:index] do
+    get :load_current_user, on: :collection
+  end
 
   resources :dashboards
   resources :task_catalogs

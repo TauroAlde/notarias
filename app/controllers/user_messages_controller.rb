@@ -2,8 +2,13 @@ class UserMessagesController < ApplicationController
   respond_to :json
 
   def index
-    @user_messages = Message.select_distinct_by_user_raw_query(current_user)
-    respond_with @user_messages
+    @users = User.joins(:messages, user_segments: [:segment]).
+      where(user_segments: { segment_id: Segment.managed_by_ids(current_user) }).
+      where('users.id != ?', current_user.id).
+      where(
+        '((messages.receiver_id != ? AND messages.user_id = ?) OR (messages.receiver_id = ? AND messages.user_id != ?))',
+        current_user.id, current_user.id, current_user.id, current_user.id
+      ).where('messages.segment_id IS NULL').uniq
   end
 
   def show

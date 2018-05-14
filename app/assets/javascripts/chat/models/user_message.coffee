@@ -1,4 +1,4 @@
 class @UserMessage extends window.Message
-  constructor: (data)->
+  constructor: (data, chat, pool, chatRoom)->
     @template = window.JST["chat/templates/user_message"]
-    super(data)
+    super(data, chat, pool, chatRoom)

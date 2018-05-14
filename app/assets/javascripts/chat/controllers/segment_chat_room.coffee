@@ -1,6 +1,4 @@
 class @SegmentChatRoom extends @ChatRoomBase
-  
-
   constructor: (data, chat, pool) ->
     @template = window.JST["chat/templates/segment_messages_pool_item"]
     @messageClass = window.SegmentMessage

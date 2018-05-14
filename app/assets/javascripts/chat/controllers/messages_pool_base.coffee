@@ -9,23 +9,13 @@ class @MessagesPoolBase
   constructor: (chat)->
     @chat = chat
     @el = $(@selector)
-    @path = "/#{@type}_messages"
+    @path = "/#{@type}_messages.json"
     @render()
 
   render: (poller)->
-    @startLoadingIcon() if @chat.currentIsHome()
     @chat.current = @
-    $.getScript @path, () =>
-      @renderChatRooms()
-
-  startLoadingIcon: ->
-    @el.html('<div class="m-t5 row justify-content-center align-items-center h-100"><div class="col-auto"><div class="loader"></div></div></div>')
-
-  stopLoadingIcon: ->
-    @el.html("")
-
-  renderChatRooms: ->
     @chatRooms = []
+    @startLoadingIcon() 
     $.get
       url: @path
       datatype: "JSON"
@@ -35,6 +25,12 @@ class @MessagesPoolBase
           chatRoom = new @chatRoomControllerClass(el, @chat, @)
           @chatRooms.push(chatRoom)
           @el.append chatRoom.renderRow()
+
+  startLoadingIcon: ->
+    @el.html('<div class="m-t5 row justify-content-center align-items-center h-100"><div class="col-auto"><div class="loader"></div></div></div>')
+
+  stopLoadingIcon: ->
+    @el.html("")
 
   renderMessages: (messages) ->
     html = []

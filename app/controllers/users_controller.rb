@@ -1,8 +1,9 @@
 class UsersController < ApplicationController
+  respond_to :html, :json
 
-  before_action :set_default_load_scope
+  before_action :set_default_load_scope, except: [:load_current_user]
   before_action :allow_without_password, only: [:update]
-  before_action :load_segment
+  before_action :load_segment, except: [:load_current_user]
   before_action :load_users, only: [:index, :create, :update]
   before_action :load_search, only: [:index, :create, :update]
 
@@ -93,6 +94,10 @@ class UsersController < ApplicationController
       flash[:success] = t(:unlock_access)
     end
     redirect_to segment_users_path(@segment)
+  end
+
+  def load_current_user
+    respond_with current_user.as_json(methods: :full_name)
   end
 
   private

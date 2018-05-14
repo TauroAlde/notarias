@@ -33,8 +33,11 @@ class @ChatRoomBase
         $.each messages, (index, message) =>
           message = new @messageClass(message, @chat, @pool, @)
           @messages.push(message)
-        @pool.renderMessages(@messages)
+        @renderMessages()
 
+  renderMessages: ->
+    @pool.renderMessages(@messages)
+    @chat.el.find("#chat-viewport-scroll")[0].scrollTop = @pool.el.height()
     #@chat.chatForm.render()
     #$.getScript @message_path(), ()=>
     #  #lightbox.init();
@@ -46,7 +49,7 @@ class @ChatRoomBase
     #  @chat.loading = false
     #  @chat.historyFunnel.push(@) if @chat.historiable()
     #  @chat.chatForm.render()
-    #  @chat.el.find("#chat-viewport-scroll")[0].scrollTop = @pool.el.height()
+    #  
 
   startLoadingIcon: ->
     @pool.startLoadingIcon()

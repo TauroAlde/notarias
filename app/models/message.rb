@@ -15,6 +15,10 @@ class Message < ApplicationRecord
     created_at.strftime("%H:%M %P")
   end
 
+  def read_at_day_format
+    read_at ? read_at.strftime("%H:%M %P") : ""
+  end
+
   def mark_as_read
     update(read_at: DateTime.now)
   end
