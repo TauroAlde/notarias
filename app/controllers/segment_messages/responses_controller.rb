@@ -5,7 +5,6 @@ class SegmentMessages::ResponsesController < ApplicationController
     @segment = Segment.find(params[:segment_message_id])
     @message = @segment.messages.build(segment_message_params)
     @message.user = current_user
-    @message.read_at = DateTime.now
 
     build_evidence if params[:message] && params[:message][:photo_evidence].present?
     @message.save

@@ -385,9 +385,7 @@ body, html {
   position: fixed;
   bottom: 1em;
   right: 1em;
-  background-color: $system-green;
   border-radius: 2em;
-  width: 3em;
   font-size: 1.5em;
   text-align: right;
   color: white;
@@ -396,13 +394,7 @@ body, html {
   z-index: 99;
   i {
     color: white;
-    position: absolute;
-    top: 0.5em;
     margin-top: -0.25em;
-    left: 0.5em;
-    span {
-      color: black;
-    }
   }
 }
 
@@ -437,7 +429,6 @@ body, html {
 
 .segment-message-resume-list-item, .user-message-resume-list-item {
   cursor: pointer;
-
   &:hover { background-color: rgba(221,229,234, 0.5); }
 }
 
@@ -512,3 +503,4 @@ body, html {
     min-height: 50vw !important;
   }
 }
+

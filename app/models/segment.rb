@@ -37,7 +37,7 @@ class Segment < ApplicationRecord
   end
 
   def last_message_evidences_count
-    last_message.evidences.count
+    last_message ? last_message.evidences.count : 0
   end
 
   def unread_messages_count
@@ -45,6 +45,6 @@ class Segment < ApplicationRecord
   end
 
   def created_at_day_format
-    last_message.created_at.strftime("%H:%M %P")
+    last_message ? last_message.created_at.strftime("%H:%M %P") : ""
   end
 end

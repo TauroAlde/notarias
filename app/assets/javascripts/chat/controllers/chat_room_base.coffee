@@ -12,9 +12,10 @@ class @ChatRoomBase
   bindClickLoadChat: ->
     @el.click (e) =>
       @chat.current = @
+      @chat.before = @
+      @scrolled = false
       e.preventDefault()
       e.stopPropagation()
-      @chat.chatForm.render()
       @render()
 
   chatRoomPath: ->
@@ -29,6 +30,7 @@ class @ChatRoomBase
     @el
 
   render: (poller)->
+    @chat.chatForm.render()
     @pool.startLoadingIcon() if !poller
     $.get
       url: @chatRoomPath()
@@ -39,15 +41,19 @@ class @ChatRoomBase
         $.each messages, (index, message) =>
           message = new @messageClass(message, @chat, @pool, @)
           @messages.push(message)
-        console.log(@messages)
-        @renderMessages()
+        if @chat.pollerRender()
+          @renderMessages()
+        else
+          @chat.startPoller()
 
   reload: ->
     @render(true)
 
   renderMessages: ->
     @pool.renderMessages(@messages)
-    @chat.el.find("#chat-viewport-scroll")[0].scrollTop = @pool.el.height()
+    if @chat.el.find("#chat-viewport-scroll")[0].scrollTop < (@pool.el.height() - 300) && !@scrolled
+      @scrolled = true
+      @chat.el.find("#chat-viewport-scroll")[0].scrollTop = @pool.el.height()
     #@chat.chatForm.render()
     #$.getScript @message_path(), ()=>
     #  #lightbox.init();

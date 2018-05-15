@@ -25,7 +25,10 @@ class @MessagesPoolBase
           chatRoom = new @chatRoomControllerClass(el, @chat, @)
           @chatRooms.push(chatRoom)
           html.push chatRoom.renderRow()
-        @el.html(html)
+        if @chat.pollerRender()
+          @el.html(html)
+        else
+          @chat.startPoller()
 
   startLoadingIcon: ->
     @el.html('<div class="m-t5 row justify-content-center align-items-center h-100"><div class="col-auto"><div class="loader"></div></div></div>')
@@ -38,6 +41,20 @@ class @MessagesPoolBase
     $.each messages, (index, message) ->
       html.push(message.render())
     @el.html(html)
+
+  openNewChatFor: (id)->
+    $.get
+      url: "/#{@type}_messages/new.json"
+      data: { "#{@type}_id": id }
+      datatype: "JSON"
+      success: (data, textStatus, jqXHR) =>
+        chatRoom = new @chatRoomControllerClass(data, @chat, @)
+        @chatRooms.push(chatRoom)
+        @chat.current = chatRoom
+        chatRoom.render()
+
+
+  
 
   #startNewChat: (messageClass, params)->
   #  new_message_list = new messageClass("", @chat, @, params)

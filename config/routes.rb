@@ -54,6 +54,7 @@ Rails.application.routes.draw do
   end
 
   resources :chat_searches, only: [:index]
+  resources :messages_kpis, only: [:index]
 
   resources :prep_step_threes, only: [:update]
   resources :prep_step_twos, only: [:update]

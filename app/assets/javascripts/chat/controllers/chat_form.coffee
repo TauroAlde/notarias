@@ -70,6 +70,7 @@ class @ChatForm
   addNewMessage: (messageData)->
     message = new @chat.current.messageClass(messageData, @chat, @chat.current.pool, @chat.current)
     @chat.current.messages.push(message)
+    @chat.current.scrolled = false
     @chat.current.renderMessages()
 
   clearText: ->

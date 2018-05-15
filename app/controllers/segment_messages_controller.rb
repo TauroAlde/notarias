@@ -17,10 +17,5 @@ class SegmentMessagesController < ApplicationController
 
   def new
     @segment = Segment.find(params[:segment_id])
-    @segment.messages.create(user: current_user, message: "Hola") if @segment.messages.blank?
-
-    @segment_messages = @segment.messages.includes(
-      :evidences, receiver: { messages: [:user, :receiver] }, user: { messages: [:user, :receiver] }
-    ).order(id: :desc).limit(20)
   end
 end

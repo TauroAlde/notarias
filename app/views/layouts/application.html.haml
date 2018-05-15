@@ -28,7 +28,9 @@
       %div{ id: user_signed_in? ? "content-with-menu" : "content" }
         = yield
 
-      %span#open-messages-button.d-none.d-md-block
+      %span#open-messages-button.d-none.d-md-block.pl-2.bg-primary.hide
         = fa_icon("comment")
-        %span 0
+        %span.messages_count 0
+         
+        
 

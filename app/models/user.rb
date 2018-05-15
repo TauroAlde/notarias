@@ -52,6 +52,28 @@ class User < ApplicationRecord
       order(id: :desc)
   end
 
+  def self.user_chats(user)
+    find_by_sql(
+      <<-SQL
+        WITH senders as (
+          SELECT DISTINCT "users".* FROM "users"
+          INNER JOIN messages oN messages.user_id = users.id
+          WHERE "users"."deleted_at" IS NULL
+          AND "users"."id" != #{user.id}
+          AND (messages.user_id = #{user.id} OR messages.receiver_id = #{user.id})
+        ),
+        receivers as (
+          SELECT DISTINCT "users".* FROM "users"
+          INNER JOIN messages oN messages.receiver_id = users.id
+          WHERE "users"."deleted_at" IS NULL
+          AND "users"."id" != #{user.id}
+          AND (messages.user_id = #{user.id} OR messages.receiver_id = #{user.id})
+        )
+        SELECT senders.* FROM senders UNION SELECT receivers.* FROM receivers
+      SQL
+    )
+  end
+
   def represents_segment?(segment)
     user_segments.where(segment: segment, representative: true).present?
   end

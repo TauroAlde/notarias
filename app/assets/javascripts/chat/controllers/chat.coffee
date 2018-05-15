@@ -4,7 +4,7 @@ class @Chat
   constructor: () ->
     @el = $(@selector)
     @render()
-    #@bindSearch()
+    @bindSearch()
     #@startPoller()
 
   render: (skipBinds)->
@@ -25,7 +25,13 @@ class @Chat
     @userMessagesPool = new UserMessagesPool(@, poller)
 
   currentIsChatRoom: ->
-    @current instanceof window.UserChatRoom || @current instanceof window.SegmentChatRoom
+    @currentIsUsersChatRoom() || @currentIsSegmentsChatRoom()
+
+  currentIsUsersChatRoom: ->
+    @current instanceof window.UserChatRoom
+
+  currentIsSegmentsChatRoom: ->
+    @current instanceof window.SegmentChatRoom
 
   currentIsHome: ->
     @current instanceof window.Chat
@@ -52,15 +58,18 @@ class @Chat
     @chatForm.render()
 
   startPoller: ->
+    @before = @current
+    clearInterval(chat.poller) if chat.poller
     @poller = setInterval(@pollerFunction, 9000, @)
 
-  pollerFunction: (chat)->
-    chat.current.reload()
+  pollerFunction: (chat) ->
+    chat.updateNewMessagesKPI() # Update the count of unread messages in the chat buttons
+    if chat.before == chat.current
+      chat.current.reload()
+    chat.startPoller()
 
-  #reload: (poller)->
-  #  @loadSegmentMessages(poller)
-  #  @loadUserMessages(poller)
-  #  @chatForm.render()
+  pollerRender: ->
+    @current == @before
 
   triggerCustomChatSelect: (params)->
     if params.data.type == "user"
@@ -70,7 +79,7 @@ class @Chat
 
   bindSearch: ->
     @el.find("#chat-search").select2
-      width: "100%"
+      width: "80%"
       placeholder: 'Buscar por usuario o casilla'
       minimumInputLength: 3
       ajax:
@@ -106,16 +115,22 @@ class @Chat
         html = "<span class=\"badge-pill badge-info select2-badges\"><i class=\"fa fa-#{icon_type}\"></i></span> <span>#{d.text}</span>"
         $(html)
     .on "select2:select", (e) =>
-      @triggerCustomChatSelect(e.params)
+      @startNewChatFor(e.params)
         #window.location = "/segments/#{$(e.params.data.element).attr("data-id")}/users"
 
+  startNewChatFor: (params) ->
+    if params.data.type == "user"
+      @userMessagesPool.openNewChatFor(params.data.id)
+    else
+      @segmentMessagesPool.openNewChatFor(params.data.id)
+
   hide: ->
-    @el.removeClass("show")
+    @el.removeClass("show") if @el.hasClass("show")
     @el.addClass("hide")
     @el.css("z-index", -1000)
 
   show: ->
-    @el.removeClass("hide")
+    @el.removeClass("hide") if @el.hasClass("hide")
     @el.addClass("show")
     @el.css("z-index", 10)
     @reload()
@@ -128,12 +143,23 @@ class @Chat
         @back()
 
   back: ->
+    if @currentIsUsersChatRoom()
+      @selectUsersTab()
+    else if @currentIsSegmentsChatRoom()
+      @selectSegmentsTab()
+
     if !@currentIsHome()
       @render()
       @current = @
 
+  selectSegmentsTab: ->
+    @el.find("#segment-messages-list-tab").tab("show")
+
+  selectUsersTab: ->
+    @el.find("#user-messages-list-tab").tab("show")
+
   isHidden: ->
-    @el.hasClass("hide")
+    !@el.hasClass("show")
 
   bindOpen: ->
     $("#open-messages-button").click (e) =>
@@ -143,6 +169,17 @@ class @Chat
     $("#open-messages-button-mobile").click (e) =>
       if @isHidden()
         @show()
+
+  replaceMessagesKPI: (count)->
+    $(".messages_count").html(count)
+    buttons = $("#open-messages-button, #open-messages-button-mobile")
+    if count > 0
+      buttons.addClass("bg-warning")
+      buttons.removeClass("bg-primary")
+    
+
+  updateNewMessagesKPI: ->
+    $.getScript("/messages_kpis")
 
   #startPoller: ->
   #  setTimeout(@pollerCallback, 5000, @)

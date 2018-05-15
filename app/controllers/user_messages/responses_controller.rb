@@ -5,7 +5,6 @@ class UserMessages::ResponsesController < ApplicationController
     @user = User.find(params[:user_message_id])
     @message = current_user.messages.build(user_message_params)
     @message.receiver = @user
-    @message.read_at = DateTime.now
 
     build_evidence if params[:message] && params[:message][:photo_evidence].present?
     @message.save
