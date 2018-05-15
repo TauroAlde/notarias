@@ -29,3 +29,6 @@ $ ->
     return
 
   window.chat = new Chat
+  
+  $( document ).ajaxError ->
+    $.notify("Ocurrió un error en el servidor, por favor contacte a su administrador", { globalPosition: "top center" });

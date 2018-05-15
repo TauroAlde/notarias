@@ -28,17 +28,22 @@ class @ChatRoomBase
     @bindClickLoadChat()
     @el
 
-  render: ->
-    @pool.startLoadingIcon()
+  render: (poller)->
+    @pool.startLoadingIcon() if !poller
     $.get
       url: @chatRoomPath()
       datatype: "JSON"
       success: (messages, textStatus, jqXHR) =>
-        @pool.stopLoadingIcon()
+        @pool.stopLoadingIcon() if !poller
+        @messages = []
         $.each messages, (index, message) =>
           message = new @messageClass(message, @chat, @pool, @)
           @messages.push(message)
+        console.log(@messages)
         @renderMessages()
+
+  reload: ->
+    @render(true)
 
   renderMessages: ->
     @pool.renderMessages(@messages)
@@ -58,6 +63,3 @@ class @ChatRoomBase
 
   startLoadingIcon: ->
     @pool.startLoadingIcon()
-
-  reload: (poller)->
-    @chat.chatForm.render()

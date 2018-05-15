@@ -6,24 +6,26 @@ class @MessagesPoolBase
   type: undefined
   chatRoomControllerClass: undefined
 
-  constructor: (chat)->
+  constructor: (chat, poller)->
     @chat = chat
     @el = $(@selector)
     @path = "/#{@type}_messages.json"
-    @render()
+    @render(poller)
 
   render: (poller)->
     @chatRooms = []
-    @startLoadingIcon() 
+    @startLoadingIcon() if !poller
     $.get
       url: @path
       datatype: "JSON"
       success: (data, textStatus, jqXHR) =>
-        @stopLoadingIcon()
+        @stopLoadingIcon() if !poller
+        html = []
         $.each data, (index, el) =>
           chatRoom = new @chatRoomControllerClass(el, @chat, @)
           @chatRooms.push(chatRoom)
-          @el.append chatRoom.renderRow()
+          html.push chatRoom.renderRow()
+        @el.html(html)
 
   startLoadingIcon: ->
     @el.html('<div class="m-t5 row justify-content-center align-items-center h-100"><div class="col-auto"><div class="loader"></div></div></div>')
@@ -35,7 +37,7 @@ class @MessagesPoolBase
     html = []
     $.each messages, (index, message) ->
       html.push(message.render())
-    @el.html(html.join(""))
+    @el.html(html)
 
   #startNewChat: (messageClass, params)->
   #  new_message_list = new messageClass("", @chat, @, params)

@@ -30,7 +30,7 @@
 
     #chat-writter.col-12.p-2.pr-4.pl-4
       %fieldset#form-fieldset
-        = form_for :message, html: { class: "row h-100 no-gutter", id: "chat-form" }, remote: true, authenticity_token: true do |f|
+        = form_for :message, html: { class: "row h-100 no-gutter", id: "chat-form" }, authenticity_token: true do |f|
           .col-3.col-md-1
             = f.label :photo_evidence, id: "evidence-label", class: "btn btn-secondary w-100", for: "fileupload-evidence" do
               = fa_icon("camera")

@@ -15,13 +15,14 @@ class @Chat
     @loadCurrentUser()
     @loadSegmentMessages()
     @loadUserMessages()
-    @chatForm = new window.ChatForm(@)
+    @chatForm = new window.ChatForm(@) if !@chatForm
+    @startPoller()
 
   loadSegmentMessages: (poller)->
-    @segmentMessagesPool = new SegmentMessagesPool(@)
+    @segmentMessagesPool = new SegmentMessagesPool(@, poller)
 
   loadUserMessages: (poller)->
-    @userMessagesPool = new UserMessagesPool(@)
+    @userMessagesPool = new UserMessagesPool(@, poller)
 
   currentIsChatRoom: ->
     @current instanceof window.UserChatRoom || @current instanceof window.SegmentChatRoom
@@ -44,7 +45,17 @@ class @Chat
       datatype: "JSON"
       success: (data, textStatus, jqXHR) =>
         @currentUser = new window.User(data)
-    
+
+  reload: ->
+    @loadSegmentMessages(true)
+    @loadUserMessages(true)
+    @chatForm.render()
+
+  startPoller: ->
+    @poller = setInterval(@pollerFunction, 9000, @)
+
+  pollerFunction: (chat)->
+    chat.current.reload()
 
   #reload: (poller)->
   #  @loadSegmentMessages(poller)
@@ -120,6 +131,9 @@ class @Chat
     if !@currentIsHome()
       @render()
       @current = @
+
+  isHidden: ->
+    @el.hasClass("hide")
 
   bindOpen: ->
     $("#open-messages-button").click (e) =>

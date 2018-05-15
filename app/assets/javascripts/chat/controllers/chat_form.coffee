@@ -7,9 +7,9 @@ class @ChatForm
   render: ()->
     @el.attr("action", @currentChatPath())
     if !@alreadySubmitBind
+      @alreadySubmitBind = true
       @bindMessagesFileUploader() 
       @bindOnSubmit()
-      @alreadySubmitBind = true
 
   bindMessagesFileUploader: ->
     form = @ 
@@ -28,9 +28,17 @@ class @ChatForm
         data.url = form.el.attr("action")
         data.process().done -> data.submit()
       done: (e, data)->
-        form.addNewMessage(data.result)
+        if data.result.errors
+          if data.result.errors[0] == "Evidences no es válido"
+            $.notify("Revise el formáto de la imagen, solo se permiten jpg y png", { globalPosition: "top center" });
+          else
+            $.notify(data.result.errors.join(", "), { globalPosition: "top center" });
+        else
+          form.addNewMessage(data.result)
       fail: (e, data) ->
         console.log "form fail"
+        #$.notify("Información guardada", { globalPosition: "top center", className: 'success' });
+        $.notify(data.errorThrown + ": " + Object.values(data.messages).join(", "), { globalPosition: "top center" });
       submit: (e, data) ->
         if !form.canSubmit() then return false
         console.log "form submit"
@@ -50,14 +58,14 @@ class @ChatForm
     @el.submit (e) =>
       e.preventDefault()
       if @canSubmit()
-        return false
-      $.post
-        url: @el.attr("action")
-        data: @el.serialize()
-        datatype: "JSON"
-        success: (messageData, textStatus, jqXHR) =>
-          @clearText()
-          @addNewMessage(messageData)
+        $.post
+          url: @el.attr("action")
+          data: @el.serialize()
+          datatype: "JSON"
+          success: (messageData, textStatus, jqXHR) =>
+            @clearText()
+            @addNewMessage(messageData)
+      return
 
   addNewMessage: (messageData)->
     message = new @chat.current.messageClass(messageData, @chat, @chat.current.pool, @chat.current)
