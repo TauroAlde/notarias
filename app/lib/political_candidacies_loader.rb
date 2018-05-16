@@ -48,7 +48,7 @@ class PoliticalCandidaciesLoader
   end
 
   def data_colors
-    COLORS[0..@data_hash.length]
+    COLORS[0..(@data_hash ? @data_hash.length : 1)]
   end
 
   private
