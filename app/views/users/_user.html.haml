@@ -15,6 +15,6 @@
           - if !user.messages.where(segment: @segment).empty?
             %span.badge.badge-pill.badge-warning
               = fa_icon("comment")
-              = user.messages.where(segment: @segment).count
+              = user.messages_between_self_and(current_user).unread.count
         .col-md-12
           .font-italic= user.email

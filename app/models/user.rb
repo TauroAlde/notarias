@@ -47,13 +47,17 @@ class User < ApplicationRecord
   attr_accessor :login, :prevalidate_username_uniqueness, :pre_encrypted_password
 
   def messages_between_self_and(user)
-    @messages_between_self_and ||= Message.includes(Message::INCLUDES_BASE).
+    @messages_between_self_and || (@messages_between_self_and = Message.includes(Message::INCLUDES_BASE).
       where("(receiver_id = ? AND user_id = ?) OR (receiver_id = ? AND user_id = ?)", user.id, self.id, self.id, user.id).
-      order(id: :desc)
+      order(id: :desc))
   end
 
   def self.user_chats(user)
-    find_by_sql(
+    includes(
+      received_messages: Message::INCLUDES_BASE,
+      messages: Message::INCLUDES_BASE,
+      user_segments: [:segment]
+    ).find_by_sql(
       <<-SQL
         WITH senders as (
           SELECT DISTINCT "users".* FROM "users"

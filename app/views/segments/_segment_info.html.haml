@@ -1,6 +1,10 @@
 .row
   .col-12.pt-3.pb-2.mt-2
-    %h3.mb-0= @segment.name
+    %h3.mb-0
+      = @segment.name
+      %span.chat-link.badge.badge-primary.pl-3.pr-3{ "data-chat-id" => @segment.id, "data-chat-type" => "segment" }
+        = fa_icon("comment")
+    
   /
     .col-3.mt-2
       .float-right

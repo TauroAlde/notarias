@@ -123,7 +123,12 @@ class UsersController < ApplicationController
   end
 
   def load_segment
-    @segment = Segment.find(params[:segment_id])
+    @segment = Segment.preload(
+      :non_representative_users,
+      :users,
+      { children: [:users, :non_representative_users] },
+      { self_and_ancestors: [:users, :non_representative_users, { children: [{ self_and_ancestors: [:users, :non_representative_users] }] }] }
+    ).find(params[:segment_id])
   end
 
   def user_params

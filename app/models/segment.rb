@@ -3,9 +3,9 @@ class Segment < ApplicationRecord
   has_many :segments, foreign_key: :parent_id, class_name: "Segment", inverse_of: :parent_segment
   # representatives are the entity in charge of the segment in most cases the "casilla"
   # o the leaf segment of the tree
-  has_many :representative_users, ->(o) { where('user_segments.representative = ?', true) }, 
+  has_many :representative_users, -> { joins(:user_segments).where('user_segments.representative = ?', true) }, 
                           through: :user_segments, class_name: "User", foreign_key: :user_id
-  has_many :non_representative_users, ->(o) { where('user_segments.representative = ? OR user_segments.representative IS NULL', false) }, 
+  has_many :non_representative_users, -> { joins(:user_segments).where('user_segments.representative = ? OR user_segments.representative IS NULL', false) }, 
                           through: :user_segments, class_name: "User", foreign_key: :user_id
   has_many :user_segments
   has_many :users, through: :user_segments
@@ -21,6 +21,9 @@ class Segment < ApplicationRecord
   validates :name, uniqueness: true
 
   has_closure_tree
+  
+  has_many :self_and_descendants, through: :descendant_hierarchies, source: :descendant
+  has_many :self_and_ancestors, through: :ancestor_hierarchies, source: :ancestor
 
   def self.managed_by_ids(user)
     if user.representative?
@@ -30,6 +33,13 @@ class Segment < ApplicationRecord
     else
       Segment.pluck(:id)
     end
+  end
+
+  def self.with_messages_for(user)
+    includes(
+      messages: Message::INCLUDES_BASE,
+      user_segments: [:user]).joins(:messages).
+    where(id: Segment.managed_by_ids(user))
   end
 
   def last_message

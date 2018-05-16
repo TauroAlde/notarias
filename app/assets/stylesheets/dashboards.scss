@@ -391,7 +391,6 @@ body, html {
   color: white;
   padding-right: 0.25em;
   cursor: pointer;
-  z-index: 99;
   i {
     color: white;
     margin-top: -0.25em;
@@ -502,5 +501,8 @@ body, html {
     max-width: 65vw !important;
     min-height: 50vw !important;
   }
+}
+.chat-link {
+  cursor: pointer;
 }
 

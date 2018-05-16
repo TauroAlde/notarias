@@ -2,11 +2,7 @@ class SegmentMessagesController < ApplicationController
   respond_to :json
 
   def index
-    @segments = Segment.includes(
-      messages: Message::INCLUDES_BASE,
-      user_segments: [:user]).joins(:messages).
-    where(id: Segment.managed_by_ids(current_user)).uniq
-
+    @segments = Segment.with_messages_for(current_user).uniq
     respond_with @segments.as_json(methods: [:last_message, :unread_messages_count, :last_message_evidences_count, :created_at_day_format])
   end
 

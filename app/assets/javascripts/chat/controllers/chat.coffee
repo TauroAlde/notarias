@@ -5,7 +5,7 @@ class @Chat
     @el = $(@selector)
     @render()
     @bindSearch()
-    #@startPoller()
+    @startPoller()
 
   render: (skipBinds)->
     @current = @

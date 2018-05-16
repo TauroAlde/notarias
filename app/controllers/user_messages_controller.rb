@@ -2,10 +2,7 @@ class UserMessagesController < ApplicationController
   respond_to :json
 
   def index
-    @users = User.includes(
-      received_messages: Message::INCLUDES_BASE,
-      messages: Message::INCLUDES_BASE,
-      user_segments: [:segment]).user_chats(current_user)
+    @users = User.user_chats(current_user)
   end
 
   def show
