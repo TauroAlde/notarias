@@ -13,4 +13,4 @@ module LogQuerySource
     end
   end
 end
-ActiveRecord::LogSubscriber.send :prepend, LogQuerySource
+ActiveRecord::LogSubscriber.send :prepend, LogQuerySource if !Rails.env.production?

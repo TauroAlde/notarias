@@ -28,7 +28,7 @@ class PoliticalCandidaciesLoader
       SQL
     ).to_a[0]
     {
-      labels: @data_hash.keys,
+      labels: @data_hash ? @data_hash.keys : [],
       datasets: [{
         label: candidacy.try(:first).try(:name) || "Candidaturas",
         data: @data_hash.values,
