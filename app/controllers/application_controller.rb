@@ -47,7 +47,10 @@ class ApplicationController < ActionController::Base
   end
 
   def prep_process_controller?
-    self.class == PrepProcessesController
+    self.class == PrepProcessesController ||
+      self.class == PrepStepTwosController ||
+      self.class == PrepStepThreesController ||
+      self.class == PrepStepFoursController
   end
 
   def profiles_controller?
