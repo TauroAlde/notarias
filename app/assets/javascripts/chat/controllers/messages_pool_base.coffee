@@ -19,16 +19,14 @@ class @MessagesPoolBase
       url: @path
       datatype: "JSON"
       success: (data, textStatus, jqXHR) =>
-        @stopLoadingIcon() if !poller
         html = []
         $.each data, (index, el) =>
           chatRoom = new @chatRoomControllerClass(el, @chat, @)
           @chatRooms.push(chatRoom)
           html.push chatRoom.renderRow()
-        if @chat.pollerRender()
+        if @chat.current == @chat
+          @stopLoadingIcon()
           @el.html(html)
-        else
-          @chat.startPoller()
 
   startLoadingIcon: ->
     @el.html('<div class="m-t5 row justify-content-center align-items-center h-100"><div class="col-auto"><div class="loader"></div></div></div>')
@@ -43,6 +41,7 @@ class @MessagesPoolBase
     @el.html(html)
 
   openNewChatFor: (id)->
+    @chat.clearPoller() # stop the poller to open a new chat
     $.get
       url: "/#{@type}_messages/new.json"
       data: { "#{@type}_id": id }

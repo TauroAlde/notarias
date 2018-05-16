@@ -36,14 +36,13 @@ class @ChatRoomBase
       url: @chatRoomPath()
       datatype: "JSON"
       success: (messages, textStatus, jqXHR) =>
-        @pool.stopLoadingIcon() if !poller
         @messages = []
         $.each messages, (index, message) =>
           message = new @messageClass(message, @chat, @pool, @)
           @messages.push(message)
-        if @chat.pollerRender()
+        if @chat.current == @
+          @pool.stopLoadingIcon()
           @renderMessages()
-        else
           @chat.startPoller()
 
   reload: ->

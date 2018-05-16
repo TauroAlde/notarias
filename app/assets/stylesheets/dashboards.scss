@@ -405,7 +405,7 @@ body, html {
 #chat {
   background-color: $pattens-blue;
   width: calc(100% - 50px);
-  z-index: 10;
+  z-index: -1000;
   right:0;
   @include media-breakpoint-down(sm) { width: 100%; }
   .close {

@@ -28,7 +28,12 @@ $ ->
       $('#right-sidebar').removeClass 'show-right-sidebar'
     return
 
-  window.chat = new Chat
+  if $("#chat").length
+    window.chat = new Chat
   
-  $( document ).ajaxError ->
-    $.notify("Ocurrió un error en el servidor, por favor contacte a su administrador", { globalPosition: "top center" });
+  $(document).on "click", ".chat-link", (e)->
+    e.preventDefault()
+    window.chat.startNewChatFromPageLink(e.currentTarget)
+  
+  #$( document ).ajaxError ->
+  #  $.notify("Ocurrió un error en el servidor, por favor contacte a su administrador", { globalPosition: "top center" });

@@ -4,7 +4,7 @@
   %ul.list-group.list-group-flush
     - @last_segment_messages.each do |message|
       %li.list-group-item
-        = link_to segment_users_path(root_segment) do
+        = link_to "#", class: "chat-link", "data-chat-id" => (message.receiver ? message.receiver.id : message.segment.id), "data-chat-type" => (message.segment ? "segment" : "user") do
           .row
             .col
               = message.user.full_name

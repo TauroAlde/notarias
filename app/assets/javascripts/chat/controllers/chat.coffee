@@ -59,8 +59,11 @@ class @Chat
 
   startPoller: ->
     @before = @current
-    clearInterval(chat.poller) if chat.poller
+    @clearPoller()
     @poller = setInterval(@pollerFunction, 9000, @)
+
+  clearPoller: ->
+    clearInterval(@poller) if @poller
 
   pollerFunction: (chat) ->
     chat.updateNewMessagesKPI() # Update the count of unread messages in the chat buttons
@@ -71,11 +74,20 @@ class @Chat
   pollerRender: ->
     @current == @before
 
-  triggerCustomChatSelect: (params)->
+  startNewChatFromPageLink: (element) ->
+    @show()
+    @startNewChatFor
+      data:
+        id: $(element).attr("data-chat-id")
+        type:  $(element).attr("data-chat-type")
+
+  startNewChatFor: (params) ->
     if params.data.type == "user"
-      @userMessagesPool.startNewChat(params.data)
+      @selectUsersTab()
+      @userMessagesPool.openNewChatFor(params.data.id)
     else
-      @segmentMessagesPool.startNewChat(params.data)
+      @selectSegmentsTab()
+      @segmentMessagesPool.openNewChatFor(params.data.id)
 
   bindSearch: ->
     @el.find("#chat-search").select2
@@ -117,12 +129,6 @@ class @Chat
     .on "select2:select", (e) =>
       @startNewChatFor(e.params)
         #window.location = "/segments/#{$(e.params.data.element).attr("data-id")}/users"
-
-  startNewChatFor: (params) ->
-    if params.data.type == "user"
-      @userMessagesPool.openNewChatFor(params.data.id)
-    else
-      @segmentMessagesPool.openNewChatFor(params.data.id)
 
   hide: ->
     @el.removeClass("show") if @el.hasClass("show")
@@ -176,6 +182,9 @@ class @Chat
     if count > 0
       buttons.addClass("bg-warning")
       buttons.removeClass("bg-primary")
+    else
+      buttons.removeClass("bg-warning")
+      buttons.addClass("bg-primary")
     
 
   updateNewMessagesKPI: ->

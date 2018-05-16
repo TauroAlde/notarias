@@ -18,7 +18,8 @@
 
   %body
     = render "/layouts/flash_messages"
-    = render "/layouts/chat"
+    - if user_signed_in?
+      = render "/layouts/chat"
       
     #body-container
       - if user_signed_in?
