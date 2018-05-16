@@ -1,0 +1,48 @@
+<div class="segment-message-resume-list-item position-relative p-2 pb-3" data-segment-id="<%= id %>">
+  <div class="chat-item-time text-muted d-inline position-absolute p-2">
+    <%= created_at.strftime("%H:%M %P") %>
+  </div>
+  <% if !unread_messages_count > 0 %>
+    <span class="badge badge-warning position-absolute mr-2" id="unread-count">
+      <%= unread_messages_count %>
+    </span>
+  <% end %>
+  <div class="row mb-0 mt-0">
+    <div class="col-auto">
+      <img src="user.gif" class="rounded-circle chat-image-avatar">
+    </div>
+    <div class="col">
+      <div class="row">
+        <div class="message-resume-title col-12">
+          <h5 class="d-inline">
+            <%= name %>
+            <% if (last_message_evidences_count > 0) { %>
+              <i class="fa fa-paperclip text-warning">
+            <% } %>
+          </h5>
+        </div>
+        <div class="message-resume-body col-12">
+          <div class="pl-2 pr-2 text-muted">
+            <%= last_message.message %>
+          </div>
+        </div>
+        <!-- 
+          <div class="col-auto">
+            <div class="row">
+              <div class="col-6 col-md-4">
+                <div class="row h-100 align-items-center">
+                  <div class="col-6 text-center" id="user-chat">
+                    <%= fa_icon("user", class: "bg-primary chat-selector") %>
+                  </div>
+                  <div class="col-6 text-center" id="segment-chat">
+                    <%= fa_icon("users", class: "bg-info chat-selector") %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        -->
+      </div>
+    </div>
+  </div>
+</div>

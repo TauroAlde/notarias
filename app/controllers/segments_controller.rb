@@ -23,19 +23,19 @@ class SegmentsController < ApplicationController
   end
 
   def jstree_segment
-    @current_segment = Segment.find(params[:"current-segment-id"])
+    @current_segment = preloaded_segment.find(params[:"current-segment-id"])
     render layout: false
   end
 
   def jstree_search
-    @segments = Segment.ransack(name_cont: params[:str]).result(distinct: true).map(&:self_and_ancestor_ids).flatten.uniq
+    @segments = preloaded_segment.ransack(name_cont: params[:str]).result(distinct: true).map(&:self_and_ancestor_ids).flatten.uniq
     render json: @segments
   end
 
   private
 
   def load_segment
-    @segment = params[:id] == "#" ? Segment.root : Segment.find(params[:id])
+    @segment = params[:id] == "#" ? preloaded_segment.root : preloaded_segment.find(params[:id])
   end
 
   def load_candidacies
@@ -46,7 +46,16 @@ class SegmentsController < ApplicationController
     params.require(:segment).permit(:name, :parent_id)
   end
 
-  def representative_restrictions
-    
+  def preloaded_segment
+    Segment.preload(
+      :users,
+      :non_representative_users,
+      { children: [:users, :non_representative_users] },
+      { self_and_descendants: [:users, :non_representative_users, { children: [{ self_and_descendants: [:users, :non_representative_users] }] }] }
+    )
+  end
+
+  def connection_to_users
+    { user_segments: :user }
   end
 end

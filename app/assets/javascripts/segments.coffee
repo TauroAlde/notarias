@@ -25,10 +25,10 @@
 #
 #  anchor.prepend(html)
 #
-#runSearch = ->
-#  to = false
-#  v = $("#segments-search-form").find("#q_name_cont").val()
-#  $('#jstree-container').jstree(true).search(v)
+runSearch = ->
+  to = false
+  v = $("#segments-search-form").find("#q_name_cont").val()
+  $('#jstree-container').jstree(true).search(v)
   
 
 $ ->

@@ -1,0 +1,7 @@
+$("#segment-messages-list-tab").tab('show')
+$("#segment-messages-list").html("<%= j render partial: '/segment_messages/message', collection: @segment_messages %>");
+
+$.each(window.chat.segmentMessagesPool.newResumesList(), function(index, resume){
+  resume.el = $("<%= j render partial: '/segment_messages/segment_message', locals: { segment_message: @segment_messages.last } %>");
+  resume.reload();
+});

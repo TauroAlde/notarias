@@ -1,0 +1,2 @@
+module UserMessages::ResponsesHelper
+end
