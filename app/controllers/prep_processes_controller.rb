@@ -1,7 +1,6 @@
 class PrepProcessesController < ApplicationController
   before_action :load_user
   before_action :load_segment
-  before_action :load_segment_message
   before_action :load_prep_process_machine
   before_action :load_message_history
   before_action :load_political_candidacies_loader, if: -> { @prep_process_machine.current_step.is_a?(Prep::StepFour) }
@@ -37,7 +36,7 @@ class PrepProcessesController < ApplicationController
   private
 
   def load_message_history
-    @previous_messages = current_user.segment_messages.where(segment: @segment)
+    @previous_messages = current_user.messages.where(segment: @segment)
   end
 
   def load_prep_process_machine

@@ -378,3 +378,131 @@ body, html {
     box-shadow:0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
   }
 }
+
+// messages css
+
+#open-messages-button {
+  position: fixed;
+  bottom: 1em;
+  right: 1em;
+  border-radius: 2em;
+  font-size: 1.5em;
+  text-align: right;
+  color: white;
+  padding-right: 0.25em;
+  cursor: pointer;
+  i {
+    color: white;
+    margin-top: -0.25em;
+  }
+}
+
+#open-messages-button-mobile {
+  
+}
+
+#chat {
+  background-color: $pattens-blue;
+  width: calc(100% - 50px);
+  z-index: -1000;
+  right:0;
+  @include media-breakpoint-down(sm) { width: 100%; }
+  .close {
+    font-size: 2.5em;
+    right: 0.8em;
+  }
+}
+
+#chat-menu {
+  height: 10%;
+  min-height: 3em;
+  max-height: 3em;
+}
+
+#chat-viewport {
+  height: 80%;
+}
+#chat-writter {
+  height: 10%;
+}
+
+.segment-message-resume-list-item, .user-message-resume-list-item {
+  cursor: pointer;
+  &:hover { background-color: rgba(221,229,234, 0.5); }
+}
+
+.message-resume-title:hover, .message-resume-body:hover {
+  
+}
+#chat-viewport-scroll {
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+#segment-messages-list {
+  min-height: 100%;
+  //box-shadow:0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+}
+
+.chat-selector {
+  font-size:1.5em;
+  padding: 0.28em 0.4em;
+  border-radius: 0.5em;
+}
+.chat-image-avatar {
+  height: 4em;
+}
+.chat-item-time {
+  bottom: 0;
+  right: 0;
+}
+
+#unread-count {
+  right: 0;
+}
+
+#chat-tabs {
+  border-bottom: 2px solid $system-dark-green-transparent;
+  background-color: white;
+  a.active {
+    background-color: white !important;
+    border-color: $system-dark-green-transparent;
+    color: $system-dark-green;
+  }
+}
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid blue;
+  border-right: 16px solid green;
+  border-bottom: 16px solid red;
+  border-left: 16px solid pink;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.chat-image {
+  @include media-breakpoint-up(sm) {
+    max-width: 600px !important;
+    min-height: 200px !important;
+  }
+  @include media-breakpoint-down(sm) {
+    max-width: 65vw !important;
+    min-height: 50vw !important;
+  }
+}
+.chat-link {
+  cursor: pointer;
+}
+

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180423022650) do
+ActiveRecord::Schema.define(version: 20180512175950) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,10 +45,10 @@ ActiveRecord::Schema.define(version: 20180423022650) do
   create_table "evidences", force: :cascade do |t|
     t.string   "file"
     t.integer  "user_id"
-    t.integer  "segment_message_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-    t.index ["segment_message_id"], name: "index_evidences_on_segment_message_id", using: :btree
+    t.integer  "message_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["message_id"], name: "index_evidences_on_message_id", using: :btree
     t.index ["user_id"], name: "index_evidences_on_user_id", using: :btree
   end
 
@@ -56,6 +56,20 @@ ActiveRecord::Schema.define(version: 20180423022650) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "messages", id: :integer, default: -> { "nextval('message_id_seq'::regclass)" }, force: :cascade do |t|
+    t.integer  "segment_id"
+    t.integer  "parent_message_id"
+    t.integer  "user_id"
+    t.text     "message"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.datetime "read_at"
+    t.integer  "receiver_id"
+    t.index ["parent_message_id"], name: "index_message_on_segment_message_id", using: :btree
+    t.index ["segment_id"], name: "index_message_on_segment_id", using: :btree
+    t.index ["user_id"], name: "index_message_on_user_id", using: :btree
   end
 
   create_table "permissions", force: :cascade do |t|
@@ -117,7 +131,7 @@ ActiveRecord::Schema.define(version: 20180423022650) do
 
   create_table "prep_step_fours", force: :cascade do |t|
     t.integer  "prep_process_id"
-    t.text     "data",            default: "{}"
+    t.jsonb    "data",            default: "{}"
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
   end
@@ -176,18 +190,6 @@ ActiveRecord::Schema.define(version: 20180423022650) do
     t.integer "generations",   null: false
     t.index ["ancestor_id", "descendant_id", "generations"], name: "segment_anc_desc_idx", unique: true, using: :btree
     t.index ["descendant_id"], name: "segment_desc_idx", using: :btree
-  end
-
-  create_table "segment_messages", force: :cascade do |t|
-    t.integer  "segment_id"
-    t.integer  "segment_message_id"
-    t.integer  "user_id"
-    t.text     "message"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-    t.index ["segment_id"], name: "index_segment_messages_on_segment_id", using: :btree
-    t.index ["segment_message_id"], name: "index_segment_messages_on_segment_message_id", using: :btree
-    t.index ["user_id"], name: "index_segment_messages_on_user_id", using: :btree
   end
 
   create_table "segment_user_imports", force: :cascade do |t|

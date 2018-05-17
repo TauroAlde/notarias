@@ -1,47 +1,21 @@
 class SegmentMessagesController < ApplicationController
-  before_action :load_segment
-  before_action :load_previous_messages
-  respond_to :json, :html, :js
-
-  def create
-    @segment_message = SegmentMessage.new(segment_message_params)
-    @segment_message.user = current_user
-    @segment_message.segment = @segment
-
-    build_evidence if params[:segment_message][:photo_evidence].present?
-    @segment_message.save
-    respond_with @segment_message do |format|
-      format.json { render json: @segment_message }
-      format.html
-      format.js { render :create }
-    end
-  end
+  respond_to :json
 
   def index
+    @segments = Segment.with_messages_for(current_user).uniq
+    respond_with @segments.as_json(methods: [:last_message, :unread_messages_count, :last_message_evidences_count, :created_at_day_format])
   end
 
-  private
-
-  def load_previous_messages
-    @previous_messages = current_user.segment_messages.where(segment: @segment)
+  def show
+    @segment = Segment.find(params[:id])
+    @messages = @segment.messages.
+      includes(:user, :receiver, :segment, :evidences).
+      order(id: :desc).limit(20)
+    @messages.update_all(read_at: DateTime.now)
+    @messages = @messages.reverse
   end
 
-  def build_evidence
-    @segment_message.evidences.build(
-      file: message_evidence_params[:photo_evidence],
-      user: current_user
-    )
-  end
-
-  def load_segment
+  def new
     @segment = Segment.find(params[:segment_id])
-  end
-
-  def segment_message_params
-    params.require(:segment_message).permit(:message)
-  end
-
-  def message_evidence_params
-    params.require(:segment_message).permit(:photo_evidence)
   end
 end

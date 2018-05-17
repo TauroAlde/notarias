@@ -1,0 +1,17 @@
+.card.w-100
+  .card-header
+    %h4.mb-0
+      Últimos Mensajes de Usuarios
+      = fa_icon("users", class: "pull-right")
+      .clearfix
+  %ul.list-group.list-group-flush
+    - @users_with_messages.each do |user|
+      %li.list-group-item
+        = link_to "#", class: "chat-link", "data-chat-id" => user.id, "data-chat-type" => "user" do
+          .row
+            .col
+              = user.full_name
+            .col-2
+              %span.badge.badge-warning
+                = fa_icon("comment")
+                = user.messages_between_self_and(current_user).count

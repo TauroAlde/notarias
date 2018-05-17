@@ -85,7 +85,7 @@ $ ->
     $(".resource-list").removeClass("d-none");
 
   startBatchActions()
-  $(".select2").select2
+  $(".users-select2").select2
     width: "280px"
     templateSelection: (d) -> segmentSelectHTML(d)
     templateResult: (d) -> segmentSelectHTML(d)

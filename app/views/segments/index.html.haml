@@ -13,23 +13,19 @@
     .dropdown-menu.table-dropdown-menu{ "aria-labelledby" => "dropdownMenuLink" }
       = link_to new_transfer_user_path, class: "btn-green-dropdown-item btn-green" do
         Transferir
-        %span.pull-right
-          = fa_icon('exchange')
-          = fa_icon('users')
+        %span.pull-right= fa_icon('exchange')
       = link_to segment_users_path(@segment), class: "btn-green-dropdown-item btn-green" do
         = t(:users)
-        %span.pull-right= fa_icon(:users)
+        %span.pull-right= fa_icon("list-ul")
       = link_to new_segment_representative_assignation_path(@segment), class: "btn-green-dropdown-item btn-green" do
         Admin
         %span.pull-right= fa_icon("user-circle")
       = link_to new_segment_users_import_path(@segment), class: "btn-green-dropdown-item btn-green" do
         Importar
-        %span.pull-right
-          = fa_icon('user')
-          = fa_icon("upload")
+        %span.pull-right= fa_icon("upload")
       #hide-resource-mobile.btn-green.btn-green-dropdown-item.d-block.d-md-none
-        = t(:back)
-        %span.pull-right= fa_icon("undo")
+        %span.pull-right= fa_icon("sitemap")
+        Mapa
 
   #segments-index-content.container-fluid
     .row

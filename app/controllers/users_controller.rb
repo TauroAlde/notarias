@@ -1,8 +1,9 @@
 class UsersController < ApplicationController
+  respond_to :html, :json
 
-  before_action :set_default_load_scope
+  before_action :set_default_load_scope, except: [:load_current_user]
   before_action :allow_without_password, only: [:update]
-  before_action :load_segment
+  before_action :load_segment, except: [:load_current_user]
   before_action :load_users, only: [:index, :create, :update]
   before_action :load_search, only: [:index, :create, :update]
 
@@ -95,6 +96,10 @@ class UsersController < ApplicationController
     redirect_to segment_users_path(@segment)
   end
 
+  def load_current_user
+    respond_with current_user.as_json(methods: :full_name)
+  end
+
   private
 
   def load_users
@@ -118,7 +123,12 @@ class UsersController < ApplicationController
   end
 
   def load_segment
-    @segment = Segment.find(params[:segment_id])
+    @segment = Segment.preload(
+      :non_representative_users,
+      :users,
+      { children: [:users, :non_representative_users] },
+      { self_and_ancestors: [:users, :non_representative_users, { children: [{ self_and_ancestors: [:users, :non_representative_users] }] }] }
+    ).find(params[:segment_id])
   end
 
   def user_params

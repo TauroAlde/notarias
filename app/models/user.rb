@@ -7,6 +7,8 @@ class User < ApplicationRecord
   
   acts_as_paranoid
 
+  attr_reader :full_name
+
   has_many :procedures, class_name: "Procedure", foreign_key: :creator_user
   has_many :user_preferences
   has_many :preferences, through: :user_preferences
@@ -16,12 +18,15 @@ class User < ApplicationRecord
   has_many :user_groups, inverse_of: :user
   has_many :segments, through: :user_segments
   has_many :represented_segments, ->(o) { where('user_segments.representative = ?', true) }, through: :user_segments, class_name: "Segment"
+  has_many :non_represented_segments, ->(o) { where('user_segments.representative = ? OR user_segments.representative IS NULL', false) }, through: :user_segments, class_name: "Segment"
 
   has_many :user_segments
   has_many :prep_processes
   has_many :incomplete_prep_processes, ->(o) { where('prep_processes.completed_at IS NULL') }, class_name: 'PrepProcess'
   has_many :evidences
-  has_many :segment_messages
+  has_many :messages
+  has_many :evidences, through: :messages
+  has_many :received_messages, class_name: 'Message', foreign_key: :receiver_id
   # The idea is that the user is assigned to the Segment through :user_segment but also
   # the prep_processes are linked to :users and :segments as the tasks that they do for the segment
   has_many :processed_segments, through: :prep_processes, foreign_key: :user_id, class_name: 'Segment'
@@ -40,6 +45,38 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :permissions
   accepts_nested_attributes_for :user_groups, reject_if: :all_blank, allow_destroy: true
   attr_accessor :login, :prevalidate_username_uniqueness, :pre_encrypted_password
+
+  def messages_between_self_and(user)
+    @messages_between_self_and || (@messages_between_self_and = Message.includes(Message::INCLUDES_BASE).
+      where("(receiver_id = ? AND user_id = ?) OR (receiver_id = ? AND user_id = ?)", user.id, self.id, self.id, user.id).
+      order(id: :desc))
+  end
+
+  def self.user_chats(user)
+    includes(
+      received_messages: Message::INCLUDES_BASE,
+      messages: Message::INCLUDES_BASE,
+      user_segments: [:segment]
+    ).find_by_sql(
+      <<-SQL
+        WITH senders as (
+          SELECT DISTINCT "users".* FROM "users"
+          INNER JOIN messages oN messages.user_id = users.id
+          WHERE "users"."deleted_at" IS NULL
+          AND "users"."id" != #{user.id}
+          AND (messages.user_id = #{user.id} OR messages.receiver_id = #{user.id})
+        ),
+        receivers as (
+          SELECT DISTINCT "users".* FROM "users"
+          INNER JOIN messages oN messages.receiver_id = users.id
+          WHERE "users"."deleted_at" IS NULL
+          AND "users"."id" != #{user.id}
+          AND (messages.user_id = #{user.id} OR messages.receiver_id = #{user.id})
+        )
+        SELECT senders.* FROM senders UNION SELECT receivers.* FROM receivers
+      SQL
+    )
+  end
 
   def represents_segment?(segment)
     user_segments.where(segment: segment, representative: true).present?

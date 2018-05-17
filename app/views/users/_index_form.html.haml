@@ -3,7 +3,11 @@
   #user-form-actions.row
     - if !@user.new_record?
       .col-12
-        %h3.text-truncate= @user.name
+        %h3.text-truncate
+          = @user.name
+          %span.chat-link.badge.badge-primary.pl-3.pr-3{ "data-chat-id" => @user.id, "data-chat-type" => "user" }
+            = fa_icon("comment")
+            %span= @user.messages_between_self_and(current_user).unread.count
       .col-12.separator
 
     .col-12

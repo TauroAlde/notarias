@@ -21,4 +21,5 @@
 //= require Chart.min
 //= require jquery-fileupload/basic
 //= require select2
+//= require lightbox
 //= require_tree .

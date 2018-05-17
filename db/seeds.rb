@@ -46,7 +46,7 @@ PoliticalParty.create([
   { name: 'PAN' },
   { name: 'PRD' },
   { name: 'Morena'},
-  { name: 'PANAL' }
+  { name: 'PANAL' },
   { name: 'PT' },
   { name: 'Movimiento Ciudadano' }
 ])

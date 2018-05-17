@@ -1,2 +1,2 @@
-$("#messages-tab").replaceWith("<%= j render '/prep_processes/messages' %>");
-window.bindMessagesFileUploader()
+$("#segment-messages-list").html("<%= j render partial: '/segment_messages/segment_message', collection: @segment_messages %>");
+//window.bindMessagesFileUploader()

@@ -1,0 +1,29 @@
+{
+  "name": "preppv",
+  "version": "1.0.0",
+  "description": "Prep",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TauroAlde/PrepPV.git"
+  },
+  "keywords": [
+    "abcd"
+  ],
+  "author": "Amed",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TauroAlde/PrepPV/issues"
+  },
+  "homepage": "https://github.com/TauroAlde/PrepPV#readme",
+  "dependencies": {
+    "npm": "^6.0.1"
+  }
+}

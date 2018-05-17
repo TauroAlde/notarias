@@ -43,15 +43,28 @@ class ApplicationController < ActionController::Base
   end
 
   def allowed_common_user_controllers?
-    prep_process_controller? || profiles_controller? || devise_controller?
+    prep_process_controller? || profiles_controller? || devise_controller? || messages_controllers?
   end
 
   def prep_process_controller?
-    self.class == PrepProcessesController
+    self.class == PrepProcessesController ||
+      self.class == PrepStepTwosController ||
+      self.class == PrepStepThreesController ||
+      self.class == PrepStepFoursController
   end
 
   def profiles_controller?
     self.class == ProfilesController
+  end
+
+  def messages_controllers?
+    self.class == SegmentMessagesController ||
+      self.class == MessagesKpisController ||
+      self.class == UserMessagesController ||
+      self.class == SegmentMessages::ResponsesController ||
+      self.class == UserMessages::ResponsesController ||
+      self.class == ChatSearchesController ||
+      self.class == UsersController
   end
 
   protected

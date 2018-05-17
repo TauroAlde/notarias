@@ -3,7 +3,9 @@
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %meta{ name: "viewport", content: "width=device-width,initial-scale=1.0"}
-    %title PVPrep
+    %title 
+      PVPrep
+      = controller_name
     = csrf_meta_tags
     = stylesheet_link_tag    'application', media: 'all'
     = javascript_include_tag 'application'
@@ -16,6 +18,9 @@
 
   %body
     = render "/layouts/flash_messages"
+    - if user_signed_in?
+      = render "/layouts/chat"
+      
     #body-container
       - if user_signed_in?
         = render "/layouts/header"
@@ -23,4 +28,10 @@
           = render "/layouts/left_sidebar"
       %div{ id: user_signed_in? ? "content-with-menu" : "content" }
         = yield
+
+      %span#open-messages-button.d-none.d-md-block.pl-2.bg-primary.hide
+        = fa_icon("comment")
+        %span.messages_count 0
+         
         
+

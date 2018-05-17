@@ -21,4 +21,6 @@
 .byebug_history
 
 /config/database.yml
-/public/uploads/*
+/public/uploads/
+/public/uploads/*/node_modules
+/node_modules

@@ -11,7 +11,9 @@ Rails.application.routes.draw do
 
   root 'dashboards#index'
 
-  resources :users, except: [:index]
+  resources :users, except: [:index] do
+    get :load_current_user, on: :collection
+  end
 
   resources :dashboards
   resources :task_catalogs
@@ -29,7 +31,7 @@ Rails.application.routes.draw do
       post :next, on: :member # :collection doesn't require resource id "on: :collection"
       get :complete, on: :member
     end
-    resources :segment_messages, only: [:create, :index] do
+    resources :segment_messages, only: [:create] do
       post :evidence, on: :collection
     end
     resources :users do
@@ -38,10 +40,21 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :segment_messages, only: [:index, :show, :new] do
+    resources :responses, only: [:create], controller: "segment_messages/responses"
+  end
+
+  resources :user_messages, only: [:index, :show, :new] do
+    resources :responses, only: [:create], controller: "user_messages/responses"
+  end
+
   resources :transfer_users, only: [:new, :create] do
     get :select, on: :collection
     get :jstree_segment, on: :collection
   end
+
+  resources :chat_searches, only: [:index]
+  resources :messages_kpis, only: [:index]
 
   resources :prep_step_threes, only: [:update]
   resources :prep_step_twos, only: [:update]
