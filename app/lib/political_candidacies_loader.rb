@@ -48,7 +48,7 @@ class PoliticalCandidaciesLoader
     {
       labels: @data_hash ? @data_hash.keys : [],
       datasets: [{
-        label: candidacy.try(:first).try(:name) || "Candidaturas",
+        label: "Votos",
         data: @data_hash ? @data_hash.values : [],
         backgroundColor: data_colors,
         borderColor: data_colors

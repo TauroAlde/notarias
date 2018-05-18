@@ -1,4 +1,4 @@
-#users-index
+#users-index.h-100
   #users-index-actions.row.no-gutters
     = search_form_for @q, url: new_segment_representative_assignation_path(@segment), class: "col-8 col-md-10 col-lg-11 users-search-form" do |f|
       .input-group
@@ -11,25 +11,29 @@
       = fa_icon('undo')
       Regresar
 
-  .card.user-transfer-list-card
-    .card-header.user-transfer-list-card-header
-      %p 
-        Asigne usuarios a
-        %span.font-weight-bold= @segment.name
-        Dándo clic en los botones a la derecha de cada usuario
-    - if @users.empty?
-      .container.representative_assignations_text
-        .card.text-center
-          .card-body
-            %h5.card-title No hay usuarios
-            %p.card-text La lista de usuarios esta vacía, para llenarla elíge una de las siguientes dos opciones.
-            = link_to segment_users_path(@segment), class: "btn btn-primary margin_create_user_button" do
-              = fa_icon("users")
-              Crear Usuarios
-            = link_to new_segment_users_import_path, class:  "btn btn-primary" do
-              = fa_icon("upload")
-              Importar Usuarios
-    - else
-      %ul.list-group.user-transfer-list
-        = render partial: "user", collection: @users
+  .row.mt-5.h-100
+    .col
+    .col-12.col-md-10
+      .card.user-transfer-list-card.gradient-card
+        .card-header.user-transfer-list-card-header
+          %h5.m-0
+            Asigne usuarios a
+            %span.font-weight-bold= @segment.name
+            Dándo clic en los botones a la derecha de cada usuario
+        - if @users.empty?
+          .container.representative_assignations_text
+            .card.text-center
+              .card-body
+                %h5.card-title No hay usuarios
+                %p.card-text La lista de usuarios esta vacía, para llenarla elíge una de las siguientes dos opciones.
+                = link_to segment_users_path(@segment), class: "btn btn-primary margin_create_user_button" do
+                  = fa_icon("users")
+                  Crear Usuarios
+                = link_to new_segment_users_import_path, class:  "btn btn-primary" do
+                  = fa_icon("upload")
+                  Importar Usuarios
+        - else
+          %ul.list-group.user-transfer-list
+            = render partial: "user", collection: @users
+    .col
    

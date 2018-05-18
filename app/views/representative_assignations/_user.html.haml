@@ -1,14 +1,28 @@
 %li.list-group-item.representative-assign-list-item{ "user-id" => user.id }
-  = user.full_name
-  - if user.represents_segment?(@segment)
-    %span.badge.badge-primary.badge-pill Administrador
+  .row
+    .col-8
+      .media
+        = image_tag "user.gif", class: "rounded-circle chat-image-avatar mr-3", alt: "Generic placeholder image"
+        .media-body
+          %h5.m-0
+            = user.full_name
+            - if user.represents_segment?(@segment)
+              %span.badge.badge-primary.badge-pill Administrador
+          
 
-  - if user.represents_segment?(@segment)
-    = link_to segment_representative_assignation_path(@segment, user), class: "btn btn-secondary pull-right", method: :delete do
-      = fa_icon('times-circle')
-      Remover
+    .col-4
+      = link_to "#", class: "chat-link btn btn-primary pull-right ml-3", "data-chat-id" => user.id, "data-chat-type" => "user" do
+        = fa_icon("comment")
+        %span= user.messages_between_self_and(current_user).unread.count
 
-  - else
-    = link_to segment_representative_assignation_path(@segment, user), class: "btn btn-primary pull-right", method: :patch do
-      = fa_icon('check-circle')
-      Asignar
+      - if user.represents_segment?(@segment)
+        = link_to segment_representative_assignation_path(@segment, user), class: "btn btn-secondary pull-right", method: :delete do
+          = fa_icon('times-circle')
+          Remover
+
+      - else
+        = link_to segment_representative_assignation_path(@segment, user), class: "btn btn-primary pull-right", method: :patch do
+          = fa_icon('check-circle')
+          Asignar
+
+      
