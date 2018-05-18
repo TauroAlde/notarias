@@ -1,5 +1,5 @@
 %ul
-  %li{ class: jstree_segment_class(segment), "segment-id" => segment.id, id: segment.id }
+  %li{ class: jstree_segment_class(segment), "segment-id" => segment.id, id: segment.id, data: { jstree: "{ \"type\":\"#{segment.leaf? ? "leaf" : "default" }\" }" } }
     = link_to segment_path(segment), class: segment_link_class(segment) do
       %span.badge.badge-pill.ml-1{ class: "badge-#{segment.non_representative_users.count == 0 ? "secondary" : "success"}" }
         = fa_icon 'users', class: "mr-1"

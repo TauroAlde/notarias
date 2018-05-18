@@ -46,7 +46,9 @@ $ ->
       "plugins": [ "changed", "wholerow", "search", "types" ],
       "types":
          "default":
-           "icon": "fa fa-compass"
+           "icon": "fa fa-sitemap"
+         "leaf":
+           "icon": "fa fa-home"
       "search":
         "show_only_matches": true
         "ajax":
