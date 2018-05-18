@@ -2066,107 +2066,65 @@
         - name: "2-826-726-721-C4-0006"
           district: 3
           local_district: 2
-            district: 3
-          local_district: 2
         - name: "2-826-726-721-C5-0006"
           district: 3
-          local_district: 2
-            district: 3
           local_district: 2
         - name: "2-826-726-721-C6-0006"
           district: 3
           local_district: 2
-            district: 3
-          local_district: 2
         - name: "2-826-726-721-C7-0006"
           district: 3
-          local_district: 2
-            district: 3
           local_district: 2
         - name: "2-826-726-720-C8-0006"
           district: 3
           local_district: 2
-            district: 3
-          local_district: 2
         - name: "2-827-552-547-B1-0002"
           district: 3
-          local_district: 2
-            district: 3
           local_district: 2
         - name: "2-828-541-537-B1-0002"
           district: 3
           local_district: 2
-            district: 3
-          local_district: 2
         - name: "2-828-541-537-C1-0002"
           district: 3
-          local_district: 2
-            district: 3
           local_district: 2
         - name: "2-829-548-545-B1-0004"
           district: 3
           local_district: 2
-            district: 3
-          local_district: 2
         - name: "2-830-454-446-B1-0002"
           district: 3
-          local_district: 2
-            district: 3
           local_district: 2
         - name: "2-830-454-446-C1-0002"
           district: 3
           local_district: 2
-            district: 3
-          local_district: 2
         - name: "2-831-464-460-B1-0006"
           district: 3
-          local_district: 2
-            district: 3
           local_district: 2
         - name: "2-832-391-385-B1-0002"
           district: 3
           local_district: 2
-            district: 3
-          local_district: 2
         - name: "2-832-390-384-C1-0002"
           district: 3
-          local_district: 2
-            district: 3
           local_district: 2
         - name: "2-833-700-689-B1-0006"
           district: 3
           local_district: 2
-            district: 3
-          local_district: 2
         - name: "2-834-593-587-B1-0002"
           district: 3
-          local_district: 2
-            district: 3
           local_district: 2
         - name: "2-835-527-519-B1-0003"
           district: 3
           local_district: 2
-            district: 3
-          local_district: 2
         - name: "2-836-608-603-B1-0002"
           district: 3
-          local_district: 2
-            district: 3
           local_district: 2
         - name: "2-837-410-407-B1-0004"
           district: 3
           local_district: 2
-            district: 3
-          local_district: 2
         - name: "2-837-410-407-C1-0004"
           district: 3
           local_district: 2
-            district: 3
-          local_district: 2
         - name: "2-838-371-369-B1-0004"
           district: 3
-          local_district: 2
-            district: 3
           local_district: 2
         - name: "2-839-597-594-B1-0002"
           district: 3

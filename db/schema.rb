@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180512175950) do
+ActiveRecord::Schema.define(version: 20180518011438) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,12 @@ ActiveRecord::Schema.define(version: 20180512175950) do
     t.datetime "updated_at",         null: false
   end
 
+  create_table "districts", force: :cascade do |t|
+    t.integer  "district_number"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
   create_table "evidences", force: :cascade do |t|
     t.string   "file"
     t.integer  "user_id"
@@ -58,7 +64,7 @@ ActiveRecord::Schema.define(version: 20180512175950) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "messages", id: :integer, default: -> { "nextval('message_id_seq'::regclass)" }, force: :cascade do |t|
+  create_table "messages", force: :cascade do |t|
     t.integer  "segment_id"
     t.integer  "parent_message_id"
     t.integer  "user_id"
@@ -67,9 +73,9 @@ ActiveRecord::Schema.define(version: 20180512175950) do
     t.datetime "updated_at",        null: false
     t.datetime "read_at"
     t.integer  "receiver_id"
-    t.index ["parent_message_id"], name: "index_message_on_segment_message_id", using: :btree
-    t.index ["segment_id"], name: "index_message_on_segment_id", using: :btree
-    t.index ["user_id"], name: "index_message_on_user_id", using: :btree
+    t.index ["parent_message_id"], name: "index_messages_on_parent_message_id", using: :btree
+    t.index ["segment_id"], name: "index_messages_on_segment_id", using: :btree
+    t.index ["user_id"], name: "index_messages_on_user_id", using: :btree
   end
 
   create_table "permissions", force: :cascade do |t|
@@ -204,8 +210,9 @@ ActiveRecord::Schema.define(version: 20180512175950) do
   create_table "segments", force: :cascade do |t|
     t.integer  "parent_id"
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "district_id"
   end
 
   create_table "task_hierarchies", force: :cascade do |t|

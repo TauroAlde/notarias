@@ -34,7 +34,7 @@ class Ability
       can :manage, Message
     end
 
-    if user.admin? || user.super_admin?
+    if user.admin?
       can :manage, User
       can :manage, Segment
       can :manage_user_batch_action, User
@@ -70,6 +70,10 @@ class Ability
       can :manage_profile, User do |user_profile|
         user_profile == user
       end
+    end
+
+    if user.super_admin?
+      can :manage, :all
     end
 
     def within_representative_tree?(authorizable_user)

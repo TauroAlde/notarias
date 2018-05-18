@@ -25,10 +25,16 @@ end
 
 segments = YAML.load_file(File.join(Rails.root, "db", "segments.yml"))
 
+@districts = District.create([
+  { district_number: 1 },
+  { district_number: 2 },
+  { district_number: 3 }
+])
+
 def load_segments(segments_array, parent_segment = nil)
   segments_array.each do |segment_hash|
     puts "creating #{segment_hash["name"]} segment"
-    child_segment = Segment.create(name: segment_hash["name"])
+    child_segment = Segment.create(name: segment_hash["name"], district: District.find_by(district_number: segment_hash["district"]) )
     parent_segment.children << child_segment if parent_segment
     
     if segment_hash["children"]

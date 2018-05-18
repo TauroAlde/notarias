@@ -27,6 +27,24 @@ class PoliticalCandidaciesLoader
         WHERE segments.id IN (#{segment.self_and_descendant_ids.join(", ")})
       SQL
     ).to_a[0]
+    print_out_candidacy_data(candidacy)
+  end
+
+  def political_candidacy_district_data(candidacy = nil)
+    @data_hash = ActiveRecord::Base.connection.execute(
+      <<-SQL
+        SELECT #{candidacies_fields_queries(filter_by_candidacy(candidacy))} 
+        FROM prep_step_fours
+        INNER JOIN prep_processes ON prep_processes.id = prep_step_fours.prep_process_id
+        INNER JOIN segments ON segments.id = prep_processes.segment_id
+        INNER JOIN districts ON districts.id = segments.district_id 
+        WHERE districts.id = #{segment.district_id}
+      SQL
+    ).to_a[0]
+    print_out_candidacy_data(candidacy)
+  end
+
+  def print_out_candidacy_data(candidacy)
     {
       labels: @data_hash ? @data_hash.keys : [],
       datasets: [{

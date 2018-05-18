@@ -39,6 +39,15 @@ module SegmentsHelper
     end
   end
 
+  def global_presidential_bar_chart
+    loader = PoliticalCandidaciesLoader.new(Segment.root)
+    candidacy = Candidacy.find_by(name: Candidacy::PRESIDENCIA)
+    bar_chart(
+      loader.political_candidacy_data(candidacy),
+      default_options.merge({ legend: false })
+    )
+  end
+
   def segment_bar_chart(candidacy, options = {})
     bar_chart(candidacies_loader.political_candidacy_data(candidacy), default_options.merge(options))
   end
@@ -51,6 +60,10 @@ module SegmentsHelper
     line_chart(candidacies_loader.political_candidacy_data_by_time(candidacy), default_options.merge(options))
   end
 
+  def segment_district_bar_chart(candidacy, options = {})
+    bar_chart(candidacies_loader.political_candidacy_district_data(candidacy), default_options.merge(options))
+  end
+
   private
 
   def candidacies_loader
@@ -60,6 +73,7 @@ module SegmentsHelper
 
   def default_options
     {
+      legend: false,
       maintainAspectRatio: false,
       height: "200",
       scales: {

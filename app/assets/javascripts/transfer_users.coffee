@@ -26,7 +26,10 @@ $ ->
     .on 'changed.jstree', (e, data) -> window.from_segment = data.node.li_attr["segment-id"]
     #.on "redraw.jstree", (e, data) -> $("#from-tree .jstree-node").each (i, el) -> redrawNode(el)
     .jstree
-      "plugins": [ "changed", "wholerow", "search" ],
+      "plugins": [ "changed", "wholerow", "search", "types" ],
+      "types":
+         "default":
+           "icon": "fa fa-compass"
       "search":
         "show_only_matches": true
         "ajax":
@@ -41,7 +44,10 @@ $ ->
     .on 'changed.jstree', (e, data) -> window.to_segment = data.node.li_attr["segment-id"]
     #.on "redraw.jstree", (e, data) -> $("#to-tree .jstree-node").each (i, el) -> redrawNode(el)
     .jstree
-      "plugins": [ "changed", "wholerow", "search" ],
+      "plugins": [ "changed", "wholerow", "search", "types" ],
+      "types":
+         "default":
+           "icon": "fa fa-compass"
       "search":
         "show_only_matches": true
         "ajax":

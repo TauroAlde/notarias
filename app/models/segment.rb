@@ -17,6 +17,7 @@ class Segment < ApplicationRecord
   has_many :candidates, through: :political_candidacies
   has_many :messages
   has_many :evidences, through: :messages
+  belongs_to :district
 
   validates :name, uniqueness: true
 

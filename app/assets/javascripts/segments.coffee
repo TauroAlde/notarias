@@ -43,7 +43,10 @@ $ ->
     #  #$(".jstree-node").each (i, el) -> redrawNode(el)
     #  return
     .jstree
-      "plugins": [ "changed", "wholerow", "search" ],
+      "plugins": [ "changed", "wholerow", "search", "types" ],
+      "types":
+         "default":
+           "icon": "fa fa-compass"
       "search":
         "show_only_matches": true
         "ajax":
@@ -63,4 +66,5 @@ $ ->
       runSearch()
     , 250
 
-
+  #$.each Chart.instances, (index, chart) ->
+  #  chart.generateLegend()
