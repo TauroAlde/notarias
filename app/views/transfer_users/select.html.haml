@@ -30,5 +30,18 @@
       %p 
         Elija los usuarios para transferir a:
         %span.font-weight-bold= @to_segment.name
-    %ul.col-12.list-group.user-transfer-list
-      = render partial: "user", collection: @users
+    - if @users.empty?
+      .container.representative_assignations_text
+        .card.text-center
+          .card-body
+            %h5.card-title No hay usuarios
+            %p.card-text La lista de usuarios esta vacía, para llenarla elíge una de las siguientes dos opciones.
+            = link_to segment_users_path(@from_segment), class: "btn btn-primary margin_create_user_button" do
+              = fa_icon("users")
+              Crear Usuarios
+            = link_to new_segment_users_import_path(@from_segment), class:  "btn btn-primary" do
+              = fa_icon("upload")
+              Importar Usuarios
+    - else
+      %ul.list-group.user-transfer-list
+        = render partial: "user", collection: @users
