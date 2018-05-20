@@ -89,8 +89,8 @@ def add_political_candidacy(candidates_array, political_party_name)
       candidacy: Candidacy.find_by(name: candidate[:candidacy]),
       segment: candidate[:segment],
       candidate_attributes: {
-        name: candidate[:name]
-        main_political_party: PoliticalParty.find_by(name: candidate[:main_political_party])
+        name: candidate[:name],
+        main_political_party: PoliticalParty.find_by(name: candidate[:main_political_party]),
         political_party: PoliticalParty.find_by(name: political_party_name)
       }
     )
@@ -136,7 +136,7 @@ pan_prd_mc_candidates = [
   { name: "Ludivina Menchaca Castellanos", main_political_party: 'MC', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.puerto_morelos }
 ]
 
-add_political_candidacy(pri_pvem_panal_candidates, 'PRD/PAN/MC')
+add_political_candidacy(pan_prd_mc_candidates, 'PRD/PAN/MC')
 
 morena_pes_pt_candidates = [
   { name: "Marybel Villegan Canché", main_political_party: 'Morena', candidacy: Candidacy::SENADOR, segment: Segment.root },
@@ -157,25 +157,25 @@ morena_pes_pt_candidates = [
   { name: "Juan Pablo Aguilera Negrón", main_political_party: 'Morena', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.puerto_morelos },
 ]
 
-add_political_candidacy(pri_pvem_panal_candidates, 'Morena/PES/PT')
+add_political_candidacy(morena_pes_pt_candidates, 'Morena/PES/PT')
 
 pri_pvem = [
   { name: "Juan Carrillo Soberanis", main_political_party: 'PRI', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.jose_maria_morelos }
 ]
 
-add_political_candidacy(pri_pvem_panal_candidates, 'PVEM/PRI')
+add_political_candidacy(pri_pvem, 'PVEM/PRI')
 
 pri_only = [
   { name: "Rossana Romero Ávila", main_political_party: 'PRI', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.isla_mujeres }
 ]
 
-add_political_candidacy(pri_pvem_panal_candidates, 'PRI')
+add_political_candidacy(pri_only, 'PRI')
 
 morena_only = [
   { name: "Alma Margarita Lomas Álvarez", main_political_party: 'Morena', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.lazaro_cardenas }
 ]
 
-add_political_candidacy(pri_pvem_panal_candidates, 'Morena')
+add_political_candidacy(morena_only, 'Morena')
 
 pes_only = [
   { name: "Juan Carlos Osorio Magaña", main_political_party: 'PES', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.isla_mujeres },
@@ -190,20 +190,20 @@ pes_only = [
   { name: "Luis Fernando Roldán Carrillo", main_political_party: 'PES', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.solidaridad }
 ]
 
-add_political_candidacy(pri_pvem_panal_candidates, 'PES')
+add_political_candidacy(pes_only, 'PES')
 
 nueva_alianza_only = [
   { name: "Rosana Martínez Cen", main_political_party: 'PANAL', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.isla_mujeres },
   { name: "Erick Borges Yam", main_political_party: 'PANAL', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.jose_maria_morelos }
 ]
 
-add_political_candidacy(pri_pvem_panal_candidates, 'PANAL')
+add_political_candidacy(nueva_alianza_only, 'PANAL')
 
 pt_only = [
   { name: "Nivardo Mena Valenzuela", main_political_party: 'PT', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.lazaro_cardenas }
 ]
 
-add_political_candidacy(pri_pvem_panal_candidates, 'PT')
+add_political_candidacy(pt_only, 'PT')
 
 independientes = [
   { name: 'Julio Alfonso Villegas Velázquez', main_political_party: 'Independiente', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.othon_p_blanco },

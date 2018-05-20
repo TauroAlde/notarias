@@ -109,6 +109,7 @@ ActiveRecord::Schema.define(version: 20180520005032) do
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
     t.text     "parties_ids", default: [],              array: true
+    t.string   "full_name"
   end
 
   create_table "preferences", force: :cascade do |t|

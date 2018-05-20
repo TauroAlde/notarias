@@ -2,7 +2,7 @@ class PoliticalCandidaciesLoader
   attr_accessor :segment, :political_candidacies, :candidacies, :data_hash
   COLORS=["#1e5839", "#292828", "#d87e7e", "#628b9f", "#19455a", "#a5c392"]
 
-  def initialize(segment, district)
+  def initialize(segment)
     @segment = segment
     load_candidacies
     load_political_candidacies_from_candidacies_and_segment_upstream
