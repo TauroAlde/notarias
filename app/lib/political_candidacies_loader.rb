@@ -2,7 +2,7 @@ class PoliticalCandidaciesLoader
   attr_accessor :segment, :political_candidacies, :candidacies, :data_hash
   COLORS=["#1e5839", "#292828", "#d87e7e", "#628b9f", "#19455a", "#a5c392"]
 
-  def initialize(segment)
+  def initialize(segment, district)
     @segment = segment
     load_candidacies
     load_political_candidacies_from_candidacies_and_segment_upstream
@@ -117,6 +117,15 @@ class PoliticalCandidaciesLoader
   end
 
   def load_political_candidacies_from_candidacies_and_segment_upstream
-    @political_candidacies = PoliticalCandidacy.where(candidacy: candidacies, segment_id: segment.self_and_ancestors_ids)
+    @political_candidacies = base_load_political_candidacies_from_candidacies_and_segment_upstream.
+      where(candidacy: candidacies, segment_id: segment.self_and_ancestors_ids)
+  end
+
+  def base_load_political_candidacies_from_candidacies_and_segment_upstream
+    if segment.district
+      PoliticalCandidacy.where("OR district_id = ?", segment.district.id)
+    else
+      PoliticalCandidacy.joins(:segment)
+    end
   end
 end

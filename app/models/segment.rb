@@ -58,4 +58,48 @@ class Segment < ApplicationRecord
   def created_at_day_format
     last_message ? last_message.created_at.strftime("%H:%M %P") : ""
   end
+
+  def othon_p_blanco
+    Segment.find_by(name: "Othon P. Blanco")
+  end
+
+  def benito_juarez
+    Segment.find_by(name: "Benito Juarez")
+  end
+
+  def felipe_carrillo_puerto
+    Segment.find_by(name: "Felipe Carrillo Puerto")
+  end
+
+  def jose_maria_morelos
+    Segment.find_by(name: "Jose Maria Morelos")
+  end
+
+  def bacalar
+    Segment.find_by(name: "Bacalar")
+  end
+
+  def cozumel
+    Segment.find_by(name: "Cozumel")
+  end
+
+  def isla_mujeres
+    Segment.find_by(name: "Isla Mujeres")
+  end
+
+  def lazaro_cardenas
+    Segment.find_by(name: "Lazaro Cardenas")
+  end
+
+  def puerto_morelos
+    Segment.find_by(name: "Puerto Morelos")
+  end
+
+  def solidaridad
+    Segment.find_by(name: "Solidaridad")
+  end
+
+  def tulum
+    Segment.find_by(name: "Tulúm")
+  end
 end

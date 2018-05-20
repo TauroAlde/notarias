@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180518011438) do
+ActiveRecord::Schema.define(version: 20180520005032) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,8 +38,9 @@ ActiveRecord::Schema.define(version: 20180518011438) do
   create_table "candidates", force: :cascade do |t|
     t.string   "name"
     t.integer  "political_party_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "main_political_party_id"
   end
 
   create_table "districts", force: :cascade do |t|
@@ -98,6 +99,7 @@ ActiveRecord::Schema.define(version: 20180518011438) do
     t.datetime "updated_at",   null: false
     t.integer  "candidate_id"
     t.integer  "segment_id"
+    t.integer  "district_id"
     t.index ["segment_id", "candidacy_id", "candidate_id"], name: "political_candidacies_by_assignations", unique: true, using: :btree
   end
 
