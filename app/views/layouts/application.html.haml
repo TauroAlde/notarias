@@ -9,7 +9,7 @@
     = csrf_meta_tags
     = stylesheet_link_tag    'application', media: 'all'
     = javascript_include_tag 'application'
-  -if user_masquerade?
+  -if current_user && user_masquerade?
     %nav#masquerade
       .masquerade-message
         = t('masquerade_message', fullname: current_user.full_name)
