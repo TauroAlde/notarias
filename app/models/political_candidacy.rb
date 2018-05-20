@@ -3,6 +3,7 @@ class PoliticalCandidacy < ApplicationRecord
   belongs_to :candidate
   belongs_to :segment
   belongs_to :candidacy
+  belongs_to :district
 
   accepts_nested_attributes_for :candidate
 end

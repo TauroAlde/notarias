@@ -114,18 +114,13 @@ class PoliticalCandidaciesLoader
     @candidacies = Candidacy
                      .joins(:political_candidacies)
                      .where(political_candidacies: { id: load_full_branch.pluck(:id) }).uniq
+    @candidacies = @candidacies.where("political_candidacies.district_id = ? OR political_candidacies.district_id IS NULL", segment.district.id) if segment.district
+    @candidacies
   end
 
   def load_political_candidacies_from_candidacies_and_segment_upstream
-    @political_candidacies = base_load_political_candidacies_from_candidacies_and_segment_upstream.
-      where(candidacy: candidacies, segment_id: segment.self_and_ancestors_ids)
-  end
-
-  def base_load_political_candidacies_from_candidacies_and_segment_upstream
-    if segment.district
-      PoliticalCandidacy.where("OR district_id = ?", segment.district.id)
-    else
-      PoliticalCandidacy.joins(:segment)
-    end
+    @political_candidacies = PoliticalCandidacy.where(candidacy: candidacies, segment_id: segment.self_and_ancestors_ids)
+    @political_candidacies = @political_candidacies.where("district_id = ? OR district_id IS NULL", segment.district.id) if segment.district
+    @political_candidacies
   end
 end

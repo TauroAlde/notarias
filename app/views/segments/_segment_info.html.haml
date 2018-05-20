@@ -20,41 +20,38 @@
       .col-12
         %h3 Información local
         .separator
-        %ul#pills-tab.nav.nav-pills.mb-3{role: "tablist"}
-          - @political_candidacies_loader.candidacies.uniq.each do |candidacy|
-            %li.nav-item.pr-4
-              %a.nav-link.active{ id: "pills-#{candidacy.name}-tab",  "aria-controls" => "pills-#{candidacy.name}", "aria-selected" => "true", "data-toggle" => "pill", href: "#pills-#{candidacy.name}", role: "tab"}= candidacy.name
-
-        .separator
-        #pills-tabContent.tab-content
-          - @political_candidacies_loader.candidacies.uniq.each do |candidacy|
-            .tab-pane.fade.show.active{id: "pills-#{candidacy.name}", "aria-labelledby" => "pills-#{candidacy.name}-tab", :role => "tabpanel"}
+        - @political_candidacies_loader.candidacies.uniq.each do |candidacy|
+          .row
+            .col-12
+              %h4
+                = candidacy.name
               = render partial: "candidacy_charts", locals: { candidacy: candidacy }
-
-              /
-                - @political_candidacies_loader.filter_by_candidacy(candidacy).each do |political_candidacy|
-                  .row
-                    .col
-                      %p.text-success= political_candidacy.candidate.political_party.name
-                      %p.text-warning= political_candidacy.candidate.name
-    - if @segment.district
-      .row
-        .col-12.separator
-          %h3
-            Distrito No.
-            = @segment.district.district_number
-
           .separator
-          %ul#pills-tab.nav.nav-pills.mb-3{role: "tablist"}
-            - @political_candidacies_loader.candidacies.uniq.each do |candidacy|
-              %li.nav-item.pr-4
-                %a.nav-link.active{ id: "pills-#{candidacy.name}-tab",  "aria-controls" => "pills-#{candidacy.name}", "aria-selected" => "true", "data-toggle" => "pill", href: "#pills-#{candidacy.name}", role: "tab"}= candidacy.name
+          /
+            - @political_candidacies_loader.filter_by_candidacy(candidacy).each do |political_candidacy|
+              .row
+                .col
+                  %p.text-success= political_candidacy.candidate.political_party.name
+                  %p.text-warning= political_candidacy.candidate.name
+    /
+      - if @segment.district
+        .row
+          .col-12.separator
+            %h3
+              Distrito No.
+              = @segment.district.district_number
 
-          .separator
-          #pills-tabContent.tab-content
-            - @political_candidacies_loader.candidacies.uniq.each do |candidacy|
-              .tab-pane.fade.show.active{id: "pills-#{candidacy.name}", "aria-labelledby" => "pills-#{candidacy.name}-tab", :role => "tabpanel"}
-                = render partial: "candidacy_district_charts", locals: { candidacy: candidacy }
+            .separator
+            %ul#pills-tab.nav.nav-pills.mb-3{role: "tablist"}
+              - @political_candidacies_loader.candidacies.uniq.each_with_index do |candidacy, index|
+                %li.nav-item.pr-4
+                  %a.nav-link{ id: "pills-#{candidacy.name}-tab",  "aria-controls" => "pills-#{candidacy.name}", "aria-selected" => "true", "data-toggle" => "pill", href: "#pills-#{candidacy.name}", role: "tab", class: index == 0 ? "active" : "" }= candidacy.name
+
+            .separator
+            #pills-tabContent.tab-content
+              - @political_candidacies_loader.candidacies.uniq.each do |candidacy|
+                .tab-pane.fade.show.active{id: "pills-#{candidacy.name}", "aria-labelledby" => "pills-#{candidacy.name}-tab", :role => "tabpanel"}
+                  = render partial: "candidacy_district_charts", locals: { candidacy: candidacy }
 
     .row
       .col-12.separator
