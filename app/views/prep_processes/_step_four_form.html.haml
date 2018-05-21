@@ -8,7 +8,7 @@
         .col-12
           %h3= candidacy.name
         - @political_candidacies_loader.filter_by_candidacy(candidacy).each do |political_candidacy|
-          .col-6.col-sm-4.col-md-3.col-lg-2.mb-3
+          .col-6.col-sm-auto.h-100
             .card
               = image_tag "user.gif", class: "card-img-top"
               .card-body

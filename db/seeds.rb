@@ -101,6 +101,7 @@ def add_political_candidacy(candidates_array, political_party_name)
 end
 
 pri_pvem_panal_candidates = [
+  { name: "José Antonio Meade", main_political_party: 'PRI', candidacy: Candidacy::PRESIDENCIA, segment: Segment.root },
   { name: "Susana Hurtado Vallejo", main_political_party: 'PANAL', candidacy: Candidacy::SENADOR_PRIMERA_FORMULA, segment: Segment.root },
   { name: "Raymundo King de la Rosa", main_political_party: 'PRI', candidacy: Candidacy::SENADOR_SEGUNDA_FORMULA, segment: Segment.root },
   { name: "Leslie Hendricks Rubio", main_political_party: 'PRI', candidacy: Candidacy::DIPUTADO_FEDERAL_D1, segment: Segment.root, district: District.find_by(district_number: 1) },
@@ -121,6 +122,7 @@ pri_pvem_panal_candidates = [
 add_political_candidacy(pri_pvem_panal_candidates, 'PRI/PVEM/PANAL')
 
 pan_prd_mc_candidates = [
+  { name: "Ricardo Anaya Cortés", main_political_party: 'PAN', candidacy: Candidacy::PRESIDENCIA, segment: Segment.root },
   { name: "Julián Ricalde", main_political_party: 'PRD', candidacy: Candidacy::SENADOR_PRIMERA_FORMULA, segment: Segment.root },
   { name: "Mayuli Latifa Martínez Simón", main_political_party: 'PAN', candidacy: Candidacy::SENADOR_SEGUNDA_FORMULA, segment: Segment.root },
   { name: "Miguel Ramón Martín Azueta", main_political_party: 'MC', candidacy: Candidacy::DIPUTADO_FEDERAL_D1, segment: Segment.root, district: District.find_by(district_number: 1) },
@@ -142,6 +144,7 @@ pan_prd_mc_candidates = [
 add_political_candidacy(pan_prd_mc_candidates, 'PRD/PAN/MC')
 
 morena_pes_pt_candidates = [
+  { name: "Andrés Manuel López Obrador", main_political_party: 'Morena', candidacy: Candidacy::PRESIDENCIA, segment: Segment.root },
   { name: "Marybel Villegan Canché", main_political_party: 'Morena', candidacy: Candidacy::SENADOR_PRIMERA_FORMULA, segment: Segment.root },
   { name: "José Luis Pech Várguez", main_political_party: 'Morena', candidacy: Candidacy::SENADOR_SEGUNDA_FORMULA, segment: Segment.root },
   { name: "Adriana Teissier Zabala", main_political_party: 'Morena', candidacy: Candidacy::DIPUTADO_FEDERAL_D1, segment: Segment.root, district: District.find_by(district_number: 1) },
@@ -209,6 +212,7 @@ pt_only = [
 add_political_candidacy(pt_only, 'PT')
 
 independientes = [
+  { name: "Jaime Rodríguez Calderón", main_political_party: 'Independiente', candidacy: Candidacy::PRESIDENCIA, segment: Segment.root },
   { name: 'Julio Alfonso Villegas Velázquez', main_political_party: 'Independiente', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.othon_p_blanco },
   { name: 'Prudencio Alcocer Balan', main_political_party: 'Independiente', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.bacalar },
   { name: 'Isaac Janix Alanís', main_political_party: 'Independiente', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.benito_juarez },
@@ -216,3 +220,7 @@ independientes = [
   { name: 'Fanny Cahum Fernández', main_political_party: 'Independiente', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.felipe_carrillo_puerto },
   { name: 'Wendy Ruiz Aguilar', main_political_party: 'Independiente', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.tulum }
 ]
+
+add_political_candidacy(independientes, 'Independiente')
+
+
