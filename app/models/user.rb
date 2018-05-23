@@ -168,7 +168,7 @@ class User < ApplicationRecord
 
   def ensure_common_role_when_blank_roles
     if roles.empty?
-      roles << Role.common
+      user_roles.build role: Role.common
     end
   end
 end

@@ -51,7 +51,7 @@ class UserImportManager
       @user.prevalidate_username_uniqueness = true # Sets username automatically
       @user.segments = [segment_user_import.segment]
       @user.pre_encrypted_password = row["password"]
-      @user.roles << Role.common
+      @user.user_roles.build(role: Role.common)
       @user.save!
       @completed_users << @user
     end
