@@ -69,7 +69,7 @@ es:
   step_5: "Cierre de casilla"
   step_one_description: "Si no hay ningún inconveniente al momento de apertura de tu casilla, puedes dar <strong>click</strong> en el botón superior derecho <strong>'Siguiente'</strong>"
   step_two_description: "Agrega el conteo de los votantes hombres y mujeres mayores de edad, cuando la casilla cierre, puedes dar <strong>clic</strong> en el botón superior derecho <strong>'Siguiente'</strong>"
-  step_three_description: "Una suma global de la cantidad de votantes que acudieron a la casilla. Puedes dar <strong>clic</strong> en el botón superior derecho <strong>'Siguiente'</strong> cuando el conteo este compelto"
+  step_three_description: "Una suma global de la cantidad de votantes que acudieron a la casilla. Puedes dar <strong>clic</strong> en el botón superior derecho <strong>'Siguiente'</strong> cuando el conteo este completo"
   step_four_description: "Captura los votos por candidato en este paso. Puedes dar <strong>clic</strong> en el botón superior derecho <strong>'Siguiente'</strong> si el conteo es correcto"
   step_five_description: "Cierre de la casilla, para confirmar e informar que tu casilla fue cerrada, Puedes dar <strong>clic</strong> en el botón superior derecho <strong>'Terminar'</strong> cuando la casilla haya cerrado"
   step_limit_rollbacked: "El paso en el que se encontraba el proceso fue arreglado"

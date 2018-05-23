@@ -1,5 +1,5 @@
 ActiveAdmin.register User do
-  permit_params :email, :password, :password_confirmation, :username, :role_ids, user_roles_attributes: [:user_id, :role_id]
+  permit_params :email, :password, :password_confirmation, :username, :role_ids, user_roles_attributes: [:user_id, :role_id, :_destroy, :id]
 
   index do
     selectable_column
@@ -26,7 +26,7 @@ ActiveAdmin.register User do
       f.input :username
       f.input :password
       f.input :password_confirmation
-      f.has_many :user_roles, heading: "Roles" do |ur|
+      f.has_many :user_roles, heading: "Roles", allow_destroy: true do |ur|
         ur.input :role_id, collection: Role.all, as: :select
       end
     end

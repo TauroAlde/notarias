@@ -44,7 +44,7 @@ class User < ApplicationRecord
   before_validation :set_username
   accepts_nested_attributes_for :permissions
   accepts_nested_attributes_for :user_groups, reject_if: :all_blank, allow_destroy: true
-  accepts_nested_attributes_for :user_roles
+  accepts_nested_attributes_for :user_roles, allow_destroy: true
   attr_accessor :login, :prevalidate_username_uniqueness, :pre_encrypted_password
 
   def messages_between_self_and(user)
@@ -94,11 +94,12 @@ class User < ApplicationRecord
   def set_username
     if prevalidate_username_uniqueness  == true
       if username.blank?
-        self.username = full_name.gsub(" ", '')
+        self.username = I18n.transliterate(full_name.gsub(" ", ''))
       end
       while User.where(username: username).exists?  do
         self.username = username + "#{rand(00..99)}"
       end
+      true
     end
   end
 
