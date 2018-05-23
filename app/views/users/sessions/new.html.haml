@@ -1,9 +1,8 @@
 #login-wrapper.d-flex.align-items-center.justify-content-center
   #login-box
     = form_for resource, as: resource_name, url: session_path(resource_name), class: "" do |f|
-      #login-box-header.d-flex.align-items-end
-        .p-3
-          %h2#login-box-header-text= t(:log_in_title)
+      #login-box-header.d-flex.align-items-center
+        = image_tag "logo_PVEM.png", id: "login-box-header-image", alt: "PVEM Logo"
       #login-box-body.d-flex.flex-column
         .d-flex.flex-column
         
