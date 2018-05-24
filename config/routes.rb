@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   resources :segments, only: [:show] do
     get :jstree_segment, on: :collection
     get :jstree_search, on: :collection
-    resources :users_imports, only: [:new, :update]
+    resources :users_imports, only: [:new, :create]
     resources :prep_step_fours, only: [:update] # we need the segment to load the candidacies
     resources :representative_assignations, only: [:new, :update, :destroy]
 

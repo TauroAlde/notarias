@@ -2,16 +2,19 @@ class UsersImportsController < ApplicationController
   before_action :load_segment
 
   def new
-    @segment_user_import = SegmentUserImport.find_or_create_by(
+    @segment_user_import = SegmentUserImport.new(
       segment: @segment,
-      uploader: current_user,
-      status: SegmentUserImport::INCOMPLETE
+      uploader: current_user
     )
   end
 
-  def update
-    @segment_user_import = SegmentUserImport.find(params[:id])
-    @segment_user_import.update(file: import_user_params[:file])
+  def create
+    @segment_user_import = SegmentUserImport.create(
+      status: SegmentUserImport::INCOMPLETE,
+      segment: @segment,
+      uploader: current_user,
+      file: import_user_params[:file]
+    )
 
     @user_import_manager = UserImportManager.new(@segment_user_import)
     @user_import_manager.import!
