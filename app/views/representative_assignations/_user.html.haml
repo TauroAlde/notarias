@@ -1,14 +1,12 @@
 %li.list-group-item.representative-assign-list-item{ "user-id" => user.id }
   .row
-    .col-8
-      .media
-        = image_tag "user.gif", class: "rounded-circle chat-image-avatar mr-3", alt: "Generic placeholder image"
-        .media-body
-          %h5.m-0
-            = user.full_name
-            - if user.represents_segment?(@segment)
-              %span.badge.badge-primary.badge-pill Administrador
-          
+    .col-auto
+      = image_tag "user.gif", class: "rounded-circle chat-image-avatar mr-3", alt: "Generic placeholder image"
+
+    %h5.m-0.col.text-truncate
+      = user.full_name
+      - if user.represents_segment?(@segment)
+        %span.badge.badge-primary.badge-pill Administrador
 
     .col-4
       = link_to "#", class: "chat-link btn btn-primary pull-right ml-3", "data-chat-id" => user.id, "data-chat-type" => "user" do
