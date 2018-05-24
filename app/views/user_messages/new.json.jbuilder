@@ -9,7 +9,7 @@ if @user.messages.present?
     json.evidences @user.messages_between_self_and(current_user).first.evidences do |evidence|
       json.(evidence, :id, :updated_at, :message_id, :user_id)
       json.url evidence.file.url
-      json.name evidence.file.file.original_filename
+      json.name evidence.file.file.filename
     end
   end
 
@@ -21,7 +21,7 @@ if @user.messages.present?
     json.evidences message.evidences do |evidence|
       json.(evidence, :id, :updated_at, :message_id, :user_id)
       json.url evidence.file.url
-      json.name evidence.file.file.original_filename
+      json.name evidence.file.file.filename
     end 
   end
 else

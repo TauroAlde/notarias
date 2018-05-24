@@ -65,7 +65,7 @@ class UserImportManager
       when ".ods" then ::Roo::OpenOffice.new(segment_user_import.file.url, password: nil)
       when ".xls" then ::Roo::Excel.new(segment_user_import.file.url, password: nil)
       when ".xlsx" then ::Roo::Excelx.new(segment_user_import.file.url, password: nil)
-    else raise UnknowImportFileType.new "Tipo de archivo desconocido: #{file.original_filename}"
+    else raise UnknowImportFileType.new "Tipo de archivo desconocido: #{file.filename}"
     end
   end
 

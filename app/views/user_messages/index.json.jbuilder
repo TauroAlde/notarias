@@ -9,7 +9,7 @@ json.array! @users do |user|
     json.evidences user.messages_between_self_and(current_user).first.evidences do |evidence|
       json.(evidence, :id, :updated_at, :message_id, :user_id)
       json.url evidence.file.url
-      json.name evidence.file.file.original_filename
+      json.name evidence.file.file.filename
     end 
   end
 
@@ -20,7 +20,7 @@ json.array! @users do |user|
     json.evidences message.evidences do |evidence|
       json.(evidence, :id, :updated_at, :message_id, :user_id)
       json.url evidence.file.url
-      json.name evidence.file.file.original_filename
+      json.name evidence.file.file.filename
     end 
   end
 end

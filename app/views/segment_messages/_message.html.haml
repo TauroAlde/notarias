@@ -12,7 +12,7 @@
               .row.justify-content-end
                 - message.evidences.each_with_index do |evidence, index|
                   .col-auto
-                    = link_to evidence.file.url, "data-lightbox" => (evidence.file.file.original_filename + index.to_s), "data-title" => (evidence.file.file.original_filename + index.to_s) do
+                    = link_to evidence.file.url, "data-lightbox" => (evidence.file.file.filename + index.to_s), "data-title" => (evidence.file.file.filename + index.to_s) do
                       = image_tag evidence.file.url, class: "img-fluid img-thumbnail chat-image"
           - if message.user == current_user
             = image_tag "user.gif", class: "rounded-circle chat-image-avatar ml-2 align-self-start", alt: "Generic placeholder image"

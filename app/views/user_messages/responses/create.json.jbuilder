@@ -5,7 +5,7 @@ if @message.errors.empty?
   json.evidences @message.evidences do |evidence|
     json.(evidence, :id, :updated_at, :message_id, :user_id)
     json.url evidence.file.url
-    json.name evidence.file.file.original_filename
+    json.name evidence.file.file.filename
   end
   json.user do
     json.(@message.user, :id, :full_name, :name, :mother_last_name, :father_last_name)
