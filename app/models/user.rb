@@ -42,7 +42,6 @@ class User < ApplicationRecord
   scope :admin_users, -> { joins(user_roles: :role).where(roles: { id: Role.admin.id }) }
 
   before_validation :set_username
-  before_validation :ensure_common_role_when_blank_roles
   accepts_nested_attributes_for :permissions
   accepts_nested_attributes_for :user_groups, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :user_roles, allow_destroy: true
@@ -166,9 +165,4 @@ class User < ApplicationRecord
     end
   end
 
-  def ensure_common_role_when_blank_roles
-    if roles.empty?
-      user_roles.build role: Role.common
-    end
-  end
 end
