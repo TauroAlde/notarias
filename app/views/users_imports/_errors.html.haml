@@ -1,0 +1,16 @@
+.card
+  .card-header
+    %h4 Se encontraron los siguientes errores
+  .card-body
+    %ul.list-group
+      - @user_import_manager.errors.each do |error|
+        %li.list-group-item.list-group-item-danger= error
+      - if @user_import_manager.failed_user
+        %li.list-group-item.list-group-item-danger
+          .row
+            .col
+              Correo:
+              = @user_import_manager.failed_user.email
+            .col
+              Nombre:
+              = @user_import_manager.failed_user.full_name

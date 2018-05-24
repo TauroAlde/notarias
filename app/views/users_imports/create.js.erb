@@ -1,0 +1,5 @@
+<% if @user_import_manager && @user_import_manager.errors.present? %>
+  $("#import-messages-pool").html("<%= j render 'errors' %>")
+<% else %>
+  $("#import-messages-pool").html("<%= j render 'success' %>")
+<% end %>

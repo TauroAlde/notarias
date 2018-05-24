@@ -1,8 +1,9 @@
 class UsersImportsController < ApplicationController
   before_action :load_segment
+  respond_to :json, :html
 
   def new
-    @segment_user_import = SegmentUserImport.new(
+    @new_segment_user_import = SegmentUserImport.new(
       segment: @segment,
       uploader: current_user
     )
@@ -16,12 +17,10 @@ class UsersImportsController < ApplicationController
       file: import_user_params[:file]
     )
 
+    @new_segment_user_import = SegmentUserImport.new(segment: @segment, uploader: current_user)
+
     @user_import_manager = UserImportManager.new(@segment_user_import)
     @user_import_manager.import!
-    if @user_import_manager.errors.present?
-      flash[:warning] = @user_import_manager.errors.join(", ")
-      render :new
-    end
   end
 
   private

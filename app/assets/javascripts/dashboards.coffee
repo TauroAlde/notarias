@@ -28,8 +28,8 @@ $ ->
       $('#right-sidebar').removeClass 'show-right-sidebar'
     return
 
-  if $("#chat").length
-    window.chat = new Chat
+  #if $("#chat").length
+  #  window.chat = new Chat
   
   $(document).on "click", ".chat-link", (e)->
     e.preventDefault()
