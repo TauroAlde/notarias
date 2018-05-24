@@ -28,6 +28,10 @@
 
 
     #chat-writter.col-12.p-2.pr-4.pl-4
+      .row
+        .col-12
+          #progress.progress.d-none{ style: "height: 2px;" }
+            .progress-bar{ role: "progressbar", "aria-valuenow" => "100", "aria-valuemin" => "0", "aria-valuemax" => "100" }
       %fieldset#form-fieldset
         = form_for :message, html: { class: "row h-100 no-gutter", id: "chat-form" }, authenticity_token: true do |f|
           .col-3.col-md-1

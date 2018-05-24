@@ -5,7 +5,6 @@ class @Chat
     @el = $(@selector)
     @render()
     @bindSearch()
-    @startPoller()
 
   render: (skipBinds)->
     @current = @
@@ -16,7 +15,6 @@ class @Chat
     @loadSegmentMessages()
     @loadUserMessages()
     @chatForm = new window.ChatForm(@) if !@chatForm
-    @startPoller()
 
   loadSegmentMessages: (poller)->
     @segmentMessagesPool = new SegmentMessagesPool(@, poller)
@@ -66,7 +64,7 @@ class @Chat
     clearInterval(@poller) if @poller
 
   pollerFunction: (chat) ->
-    chat.updateNewMessagesKPI() # Update the count of unread messages in the chat buttons
+    # Update the count of unread messages in the chat buttons
     if chat.before == chat.current
       chat.current.reload()
     chat.startPoller()
@@ -134,12 +132,14 @@ class @Chat
     @el.removeClass("show") if @el.hasClass("show")
     @el.addClass("hide")
     @el.css("z-index", -1000)
+    @clearPoller()
 
   show: ->
     @el.removeClass("hide") if @el.hasClass("hide")
     @el.addClass("show")
     @el.css("z-index", 10)
     @reload()
+    @startPoller()
 
   bindClose: ->
     @el.find(".close").off("click").on "click", (e)=>
@@ -185,10 +185,6 @@ class @Chat
     else
       buttons.removeClass("bg-warning")
       buttons.addClass("bg-primary")
-    
-
-  updateNewMessagesKPI: ->
-    $.getScript("/messages_kpis")
 
   #startPoller: ->
   #  setTimeout(@pollerCallback, 5000, @)

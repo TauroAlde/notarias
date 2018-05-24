@@ -24,10 +24,18 @@ class @ChatForm
       limitMultiFileUploads: 1
       autoUpload: true,
       url: form.el.attr("action")
+      progressall: (e, data) ->
+        progress_bar_container = form.chat.el.find("#progress")
+        progress_bar_container.removeClass("d-none")
+        progress = parseInt(data.loaded / data.total * 100, 10);
+        progress_bar_container.find('.progress-bar').attr("aria-valuenow", progress );
+        progress_bar_container.find('.progress-bar').css("width", progress + "%" );
       add: (e, data)->
+        console.log("add")
         data.url = form.el.attr("action")
         data.process().done -> data.submit()
       done: (e, data)->
+        form.resetProgressBar()
         if data.result.errors
           if data.result.errors[0] == "Evidences no es válido"
             $.notify("Revise el formáto de la imagen, solo se permiten jpg y png", { globalPosition: "top center" });
@@ -37,6 +45,7 @@ class @ChatForm
           form.addNewMessage(data.result)
       fail: (e, data) ->
         console.log "form fail"
+        form.resetProgressBar()
         #$.notify("Información guardada", { globalPosition: "top center", className: 'success' });
         $.notify(data.errorThrown + ": " + Object.values(data.messages).join(", "), { globalPosition: "top center" });
       submit: (e, data) ->
@@ -44,6 +53,11 @@ class @ChatForm
         console.log "form submit"
       send: (e, data) =>
         console.log "form send"
+
+  resetProgressBar: ->
+    @chat.el.find('.progress-bar').attr("aria-valuenow", 0 );
+    @chat.el.find('.progress-bar').css("width", 0 );
+    @chat.el.find("#progress").addClass("d-none")
 
   currentChatPath: ->
     if @chat.currentIsChatRoom()
