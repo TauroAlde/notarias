@@ -4,7 +4,7 @@
       %h2 Importar Usuarios
   .row
     .col-12
-      = form_for @segment_user_import, url: segment_users_import_path(@segment, @segment_user_import) do |f|
+      = form_for @segment_user_import, url: segment_users_imports_path(@segment, @segment_user_import) do |f|
         = f.file_field :file
         = f.submit "Subir", class: "btn btn-primary"
     .col-12.mt-4
