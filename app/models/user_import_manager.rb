@@ -60,7 +60,8 @@ class UserImportManager
 
   # Open import file and detect extension file
   def open_spreadsheet
-    case File.extname(segment_user_import.file.file)
+    binding.pry
+    case File.extname(segment_user_import.file.filename)
       when ".csv" then ::Roo::CSV.new(segment_user_import.file.url, password: nil)
       when ".ods" then ::Roo::OpenOffice.new(segment_user_import.file.url, password: nil)
       when ".xls" then ::Roo::Excel.new(segment_user_import.file.url, password: nil)
