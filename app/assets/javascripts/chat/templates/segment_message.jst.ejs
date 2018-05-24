@@ -1,37 +1,49 @@
 <div class="user-message row <% if (data.user.id == currentUser.id) { %> <%= 'justify-content-end' %> <% }%>">
-  <div class="col-auto col-sm-12 col-md-auto pl-4 pr-4">
-    <div class="card">
+  <div class="card col-sm-12 col-md-8 pl-4 pr-4">
       <div class="card-body">
-        <div class="media">
-          <% if (data.user.id != currentUser.id) { %>
-            <img src="/assets/user.gif" class="rounded-circle chat-image-avatar mr-2 align-self-start" alt="Generic placeholder image">
-          <% } %>
-          <div class="media-body">
-            <h5 class="mt-0 mb-1">
+        <div class="row">
+            <% if (data.user.id != currentUser.id) { %>
+              <div class="col-auto">
+                <img src="/assets/user.gif" class="rounded-circle chat-image-avatar mr-2 align-self-start" alt="Generic placeholder image">
+              </div>
+            <% } %>
+            <div class="col">
               <% if(data.user.id == currentUser.id) { %>
-                Tú 
+                <h5 class="mt-0 mb-1 text-right">
               <% } else { %>
-                <%= data.user.full_name %>
+                <h5 class="mt-0 mb-1">
               <% } %>
-            </h5>
-            <%= data.message %>
-            <% if (data.evidences.length > 0) { %>
-              <div class="row justify-content-end">
-                <% $.each(data.evidences, function(index, evidence) { %>
-                  <div class="col-auto">
-                    <a href="<%= evidence.url %>" data-lightbox="<%= evidence.name %>" data-title="<%= evidence.name %>">
-                      <img src="<%= evidence.url %>" class="img-fluid img-thumbnail chat-image">
-                    </a>
-                  </div>
-                <% }) %>
+                <% if(data.user.id == currentUser.id) { %>
+                  Tú 
+                <% } else { %>
+                  <%= data.user.full_name %>
+                <% } %>
+              </h5>
+            </div>
+            <% if (data.user.id == currentUser.id) { %>
+              <div class="col-auto">
+                <img src="/assets/user.gif" class="rounded-circle chat-image-avatar mr-2 align-self-start" alt="Generic placeholder image">
               </div>
             <% } %>
           </div>
-          <% if (data.user.id == currentUser.id) { %>
-            <img src="/assets/user.gif" class="rounded-circle chat-image-avatar mr-2 align-self-start" alt="Generic placeholder image">
+        </div>
+        <div class="row">
+          <% if (data.evidences.length > 0) { %>
+
+            <% $.each(data.evidences, function(index, evidence) { %>
+              <div class="col-12 pb-4 pr-4 pl-4">
+                <a href="<%= evidence.url %>" data-lightbox="<%= evidence.name %>" data-title="<%= evidence.name %>">
+                  <img src="<%= evidence.url %>" class="img-fluid img-thumbnail chat-image">
+                </a>
+              </div>
+            <% }) %>
+
+          <% } else { %>
+            <div class="col-12 pb-4">
+              <%= data.message %>
+            </div>
           <% } %>
         </div>
       </div>
     </div>
-  </div>
 </div>
