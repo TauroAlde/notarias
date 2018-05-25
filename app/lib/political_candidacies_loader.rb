@@ -89,7 +89,10 @@ class PoliticalCandidaciesLoader
     dates_list.map do |date|
       <<-SQL
         (
-          SELECT COALESCE(sum((prep_step_fours.data ->> '#{political_candidacy.id}')::int8), 0) AS \"#{date}\"
+          SELECT
+            sum(
+              COALESCE(NULLIF(prep_step_fours.data ->> '#{political_candidacy.id}', '')::int8, 0)
+            ) AS \"#{date}\"
           FROM prep_step_fours
           WHERE prep_step_fours.created_at > '#{date.to_datetime - 2.hours}'
           AND prep_step_fours.created_at < '#{date.to_datetime + 2.hours}'
@@ -100,7 +103,7 @@ class PoliticalCandidaciesLoader
 
   def candidacies_fields_queries(political_candidacies = nil)
     (political_candidacies || @political_candidacies).map do |political_candidacy|
-      "sum((prep_step_fours.data ->> '#{political_candidacy.id}')::int8) as \"#{political_candidacy.candidate.name.downcase}\""
+      "sum(COALESCE(NULLIF(prep_step_fours.data ->> '#{political_candidacy.id}', '')::int8, 0)) as \"#{political_candidacy.candidate.name.downcase}\""
     end.join(", ")
   end
 

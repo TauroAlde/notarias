@@ -7,7 +7,10 @@
 
 @decreaseInput = (inputSelector) ->
   $(inputSelector).val (i, oldval) ->
-    return --oldval
+    if oldval <= 0 
+      return oldval
+    else
+      return --oldval
 
 
 $ ->
