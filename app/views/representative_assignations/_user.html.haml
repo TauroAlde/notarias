@@ -1,8 +1,7 @@
 %li.list-group-item.representative-assign-list-item{ "user-id" => user.id }
   .row
     .col-auto
-      = image_tag "user.gif", class: "rounded-circle chat-image-avatar mr-3", alt: "Generic placeholder image"
-
+      = image_tag raw(Gravatar.src(user.email, 32, 'identicon' )), class: "rounded-circle chat-image-avatar mr-3", alt: "gravatar_image"
     %h5.m-0.col.text-truncate
       = user.full_name
       - if user.represents_segment?(@segment)
