@@ -1,6 +1,6 @@
 module PrepProcessesHelper
   def political_candidacy_input(political_candidacy)
-    number_field_tag "data[#{political_candidacy.id}]", step_four_data[political_candidacy.id.to_s], class: 'w-100'
+    hidden_field_tag "data[#{political_candidacy.id}]", step_four_data[political_candidacy.id.to_s], class: 'w-100', id: "number-field", min: 0, max: 9999
   end
 
   def step_four_data

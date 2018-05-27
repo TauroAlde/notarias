@@ -77,12 +77,12 @@ PoliticalParty.create([
   { names: ['Morena', 'PES', 'PT'], name: 'Morena/PES/PT' }
 ].each do |coalition|
   puts "creating coalition #{coalition[:name]}"
-  coalition_ids = coalition[:names].map do |political_party|
-    PoliticalParty.find_by(name: political_party).id
-  end
-  political_party = PoliticalParty.new(name: coalition[:name], coalition: true)
-  political_party.parties_ids = coalition_ids
-  political_party.save!
+  
+  political_party = PoliticalParty.find_or_initialize_by(name: coalition[:name], coalition: true)
+  political_party.save! if political_party.new_record?
+  political_party.coalition_relationships.create(coalition[:names].map do |parent_political_party|
+    { parent_political_party: PoliticalParty.find_by(name: parent_political_party) }
+  end)
 end
 
 def add_political_candidacy(candidates_array, political_party_name)

@@ -20,36 +20,46 @@ class PoliticalCandidaciesLoader
   def political_candidacy_data(candidacy = nil)
     @data_hash = ActiveRecord::Base.connection.execute(
       <<-SQL
-        SELECT #{candidacies_fields_queries(filter_by_candidacy(candidacy))} 
+        SELECT SUM(votes.votes_count) as votes_count, candidates.name, votes.political_candidacy_id
         FROM prep_step_fours
+        INNER JOIN votes ON votes.step_four_id = prep_step_fours.id
+        INNER JOIN political_candidacies ON political_candidacies.id = votes.political_candidacy_id
+        INNER JOIN candidates ON candidates.id = political_candidacies.candidate_id
         INNER JOIN prep_processes ON prep_processes.id = prep_step_fours.prep_process_id
         INNER JOIN segments ON segments.id = prep_processes.segment_id
         WHERE segments.id IN (#{segment.self_and_descendant_ids.join(", ")})
+        #{ "AND political_candidacies.id IN (#{filter_by_candidacy(candidacy).map(&:id).join(", ")})" if !filter_by_candidacy(candidacy).blank? }
+        GROUP BY votes.political_candidacy_id, candidates.name
       SQL
-    ).to_a[0]
+    ).to_a
     print_out_candidacy_data(candidacy)
   end
 
   def political_candidacy_district_data(candidacy = nil)
     @data_hash = ActiveRecord::Base.connection.execute(
       <<-SQL
-        SELECT #{candidacies_fields_queries(filter_by_candidacy(candidacy))} 
+        SELECT SUM(votes.votes_count) as votes_count, candidates.name, votes.political_candidacy_id
         FROM prep_step_fours
+        INNER JOIN votes ON votes.step_four_id = prep_step_fours.id
+        INNER JOIN political_candidacies ON political_candidacies.id = votes.political_candidacy_id
+        INNER JOIN candidates ON candidates.id = political_candidacies.candidate_id
         INNER JOIN prep_processes ON prep_processes.id = prep_step_fours.prep_process_id
         INNER JOIN segments ON segments.id = prep_processes.segment_id
-        INNER JOIN districts ON districts.id = segments.district_id 
+        INNER JOIN districts ON districts.id = segments.district_id
         WHERE districts.id = #{segment.district_id}
+        AND political_candidacies.id IN (#{filter_by_candidacy(candidacy).map(&:id).join(", ")})
+        GROUP BY votes.political_candidacy_id, candidates.name
       SQL
-    ).to_a[0]
+    ).to_a
     print_out_candidacy_data(candidacy)
   end
 
   def print_out_candidacy_data(candidacy)
     {
-      labels: @data_hash ? @data_hash.keys : [],
+      labels: @data_hash ? @data_hash.map { |candidacy| candidacy["name"] } : [],
       datasets: [{
         label: "Votos",
-        data: @data_hash ? @data_hash.values : [],
+        data: @data_hash ? @data_hash.map { |candidacy| candidacy["votes_count"] } : [],
         backgroundColor: data_colors,
         borderColor: data_colors
       }]
@@ -103,7 +113,7 @@ class PoliticalCandidaciesLoader
 
   def candidacies_fields_queries(political_candidacies = nil)
     (political_candidacies || @political_candidacies).map do |political_candidacy|
-      "sum(COALESCE(NULLIF(prep_step_fours.data ->> '#{political_candidacy.id}', '')::int8, 0)) as \"#{political_candidacy.candidate.name.downcase}\""
+      "sum(votes.votes_count) as \"#{political_candidacy.candidate.name.downcase}\""
     end.join(", ")
   end
 

@@ -5,7 +5,7 @@ class PrepStepFoursController < ApplicationController
   before_action :load_political_candidacies_loader
 
   def update
-    @prep_step_four.update data: params[:data]
+    @prep_step_four.update votes_params
   end
 
   private
@@ -20,5 +20,9 @@ class PrepStepFoursController < ApplicationController
 
   def load_prep_step_four
     @prep_step_four = Prep::StepFour.find(params[:id])
+  end
+
+  def votes_params
+    params.require(:prep_step_four).permit(votes_attributes: [:id, :political_party_id, :political_candidacy_id, :votes_count])
   end
 end
