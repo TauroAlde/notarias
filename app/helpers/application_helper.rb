@@ -5,6 +5,13 @@ module ApplicationHelper
       concat content_tag(:span, text)
     end
   end
+
+  def left_sidebar_gravatar_link(text, path, options={})
+    link_to path, class: "menu-row flex-row d-flex #{options[:wrapper_options][:class] if options[:wrapper_options]}", method: options[:method] || :get do
+      concat image_tag(raw(Gravatar.src(current_user.email, 32, 'identicon')), class: "rounded-circle gravatar-user")
+      concat content_tag(:span, text)
+    end
+  end 
     
   def alert_colors_helper(name, msg)    
     notice_class = case name
