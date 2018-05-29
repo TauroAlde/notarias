@@ -26,7 +26,13 @@ class @MessagesPoolBase
           html.push chatRoom.renderRow()
         if @chat.current == @chat
           @stopLoadingIcon()
-          @el.html(html)
+          if html.length
+            @el.html(html)
+          else
+            @el.html(@blankDescription())
+
+  blankDescription: ->
+    return "<div class=\"row h-100 align-items-center\"><div class=\"col\"><h3 class=\"p-3 text-center\">No hay ninguna converzación</h3><h4 class=\"p-3 text-center text-secondary\">De click en el buscador y escriba el nombre de un usuario, casilla, municipio o entidad</h4></div></div>"
 
   startLoadingIcon: ->
     @el.html('<div class="m-t5 row justify-content-center align-items-center h-100"><div class="col-auto"><div class="loader"></div></div></div>')

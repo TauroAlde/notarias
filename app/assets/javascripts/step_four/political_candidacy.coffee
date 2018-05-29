@@ -3,8 +3,8 @@ class @PoliticalCandidacy
     @el = el
     @input = @el.find(".votes-field")
     @counter = @el.find(".vote-counter")
-    @increaseBtn = $(@el.find(".increase-votes")[0])
-    @decreaseBtn = $(@el.find(".decrease-votes")[0])
+    @increaseBtn = @el.find(".increase-votes")
+    @decreaseBtn = @el.find(".decrease-votes")
     @timeout = 0
     @interval = 70
     @pushCount = 0
@@ -15,6 +15,10 @@ class @PoliticalCandidacy
   bindIncrease: ->
     @increaseBtn.on "mousedown touchstart", (e) =>
       e.preventDefault()
+      if $(e.currentTarget).hasClass("by-100")
+        @countIncDec = 100
+      else
+        @countIncDec = 1
       @startIncrease()
     .bind 'mouseup mouseleave touchend', =>
       @interval = 70
@@ -25,6 +29,10 @@ class @PoliticalCandidacy
   bindDecrease: ->
     @decreaseBtn.on "mousedown touchstart", (e) =>
       e.preventDefault()
+      if $(e.currentTarget).hasClass("by-100")
+        @countIncDec = 100
+      else
+        @countIncDec = 1
       @startDecrease()
     .bind 'mouseup mouseleave touchend', =>
       @interval = 70
@@ -34,6 +42,7 @@ class @PoliticalCandidacy
 
   startIncrease: ->
     @timeout = setInterval =>
+      return if @pushCount >= 20
       @pushCount += 1
       if @pushCount >= (10 * @countIncDec) && @interval >= 10
         @interval -= 10
@@ -49,6 +58,7 @@ class @PoliticalCandidacy
 
   startDecrease: ->
     @timeout = setInterval =>
+      return if @pushCount >= 20
       @pushCount += 1
       if @pushCount >= (10 * @countIncDec) && @interval >= 10
         @interval -= 10

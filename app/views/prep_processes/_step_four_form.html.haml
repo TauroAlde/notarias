@@ -32,15 +32,22 @@
                       .row
                         .col-12.political-candidacy-counter
                           .row.h-100.align-items-center
-                            .col-3
-                              = link_to "#", class: "btn btn-secondary decrease-votes" do
+                            .col-3.text-center
+                              = link_to "#", class: "btn btn-secondary decrease-votes by-1 pl-3 pr-3 pt-1 pb-1" do
+                                = fa_icon "minus-circle"
+                              = link_to "#", class: "btn btn-secondary decrease-votes by-100 mt-1 p-2" do
+                                = fa_icon "minus-circle"
                                 = fa_icon "minus-circle"
                             .col-6
                               %h4.text-primary.text-center.vote-counter
                                 = vote_f.object.votes_count
-                            .col-3
-                              = link_to "#", class: "btn btn-primary increase-votes" do
+                            .col-3.text-center
+                              = link_to "#", class: "btn btn-primary increase-votes by-1 pl-3 pr-3 pt-1 pb-1" do
                                 = fa_icon "plus-circle"
+                              = link_to "#", class: "btn btn-primary increase-votes by-100 mt-1 p-2" do
+                                = fa_icon "plus-circle"
+                                = fa_icon "plus-circle"
+                                
                           = vote_f.hidden_field :votes_count, class: "votes-field"
                       .separator
                           
@@ -55,13 +62,19 @@
                       .col-12.political-candidacy-counter
                         .row
                           .col-3.align-content-center
-                            = link_to "#", class: "btn btn-secondary decrease-votes" do
+                            = link_to "#", class: "btn btn-secondary decrease-votes by-1 pl-3 pr-3 pt-1 pb-1" do
+                              = fa_icon "minus-circle"
+                            = link_to "#", class: "btn btn-secondary decrease-votes by-100 mt-1 p-2" do
+                              = fa_icon "minus-circle"
                               = fa_icon "minus-circle"
                           .col-6.align-content-center
                             %h4.text-primary.text-center.vote-counter
                               = vote_f.object.votes_count
                           .col-3.align-content-center
-                            = link_to "#", class: "btn btn-primary increase-votes" do
+                            = link_to "#", class: "btn btn-primary increase-votes by-1 pl-3 pr-3 pt-1 pb-1" do
+                              = fa_icon "plus-circle"
+                            = link_to "#", class: "btn btn-primary increase-votes by-100 mt-1 p-2" do
+                              = fa_icon "plus-circle"
                               = fa_icon "plus-circle"
                         = vote_f.hidden_field :votes_count, class: "votes-field"
     .col-12.separator

@@ -31,9 +31,11 @@ class ChatSearchesController < ApplicationController
       # and the non represented segments
       User.joins(user_roles: :role, user_segments: :segment).
         where("user_segments.segment_id IN (#{segment_ids.compact.join(', ')})").
-        where("users.id != #{current_user.id}").ransack(name_or_mother_last_name_or_father_last_name_cont: params[:q]).result
+        where("users.id != #{current_user.id}").
+        ransack(username_or_name_or_mother_last_name_or_father_last_name_cont: params[:q]).result
     else
-      User.where("users.id != #{current_user.id}").ransack(name_or_mother_last_name_or_father_last_name_cont: params[:q]).result
+      User.unscoped.where("users.id != #{current_user.id}").
+        ransack(username_or_name_or_mother_last_name_or_father_last_name_cont: params[:q]).result
     end
   end
 

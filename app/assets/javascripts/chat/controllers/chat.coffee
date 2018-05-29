@@ -89,7 +89,7 @@ class @Chat
 
   bindSearch: ->
     @el.find("#chat-search").select2
-      width: "80%"
+      width: "210px"
       placeholder: 'Buscar por usuario o casilla'
       minimumInputLength: 3
       ajax:
