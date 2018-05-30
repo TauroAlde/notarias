@@ -16,7 +16,7 @@
         = link_to t(:reverse_masquerade_link), back_masquerade_path(current_user)
         %a.fa.fa-times
 
-  %body
+  %body{ "data-signin" => devise_controller? ? "true" : "false" }
     - if user_signed_in?
       = render "/layouts/chat"
 
@@ -30,9 +30,10 @@
         = render "/layouts/flash_messages"
         = yield
 
-      %span#open-messages-button.d-none.d-md-block.pl-2.bg-primary.hide
-        = fa_icon("comment")
-        %span.messages_count 0
+      - if user_signed_in?
+        %span#open-messages-button.d-none.d-md-block.pl-2.bg-primary.hide
+          = fa_icon("comment")
+          %span.messages_count 0
          
         
 
