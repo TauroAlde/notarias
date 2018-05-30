@@ -5,7 +5,8 @@ class @PoliticalCandidacy
     @counter = @el.find(".vote-counter")
     @increaseBtn = @el.find(".increase-votes")
     @decreaseBtn = @el.find(".decrease-votes")
-    @timeout = 0
+    @timeoutIncrease = 0
+    @timeoutDecrease = 0
     @interval = 70
     @pushCount = 0
     @countIncDec = 1
@@ -24,7 +25,7 @@ class @PoliticalCandidacy
       @interval = 70
       @pushCount = 0
       @countIncDec = 1
-      clearInterval(@timeout);
+      clearInterval(@timeoutIncrease);
 
   bindDecrease: ->
     @decreaseBtn.on "mousedown touchstart", (e) =>
@@ -38,16 +39,16 @@ class @PoliticalCandidacy
       @interval = 70
       @pushCount = 0
       @countIncDec = 1
-      clearInterval(@timeout);
+      clearInterval(@timeoutDecrease);
 
   startIncrease: ->
-    @timeout = setInterval =>
+    @timeoutIncrease = setInterval =>
       return if @pushCount >= 20
       @pushCount += 1
       if @pushCount >= (10 * @countIncDec) && @interval >= 10
         @interval -= 10
         @countIncDec += 1
-        clearInterval(@timeout)
+        clearInterval(@timeoutIncrease)
         @startIncrease()
 
       @input.val (i, oldval) =>
@@ -57,13 +58,13 @@ class @PoliticalCandidacy
     , @interval
 
   startDecrease: ->
-    @timeout = setInterval =>
+    @timeoutDecrease = setInterval =>
       return if @pushCount >= 20
       @pushCount += 1
       if @pushCount >= (10 * @countIncDec) && @interval >= 10
         @interval -= 10
         @countIncDec += 1
-        clearInterval(@timeout)
+        clearInterval(@timeoutDecrease)
         @startDecrease()
 
       @input.val (i, oldval) =>
