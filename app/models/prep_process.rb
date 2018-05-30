@@ -11,6 +11,8 @@ class PrepProcess < ApplicationRecord
   before_create :set_start_step
 
   scope :completed, -> { where("completed_at IS NOT NULL") }
+  validates :user_id, presence: true
+  validates :segment_id, presence: true
 
   STEPS_LIMIT = 5
 
