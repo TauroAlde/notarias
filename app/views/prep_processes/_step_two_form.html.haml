@@ -4,6 +4,7 @@
       .col-4
         %span#increase-male.btn.btn-outline-success= fa_icon('plus-circle')
       .col-4
+        %h3.text-info.d-innline-block= "Hombres"
         %h1.text-info.d-inline-block= fa_icon('mars')
         #male-counter.text-center
           = f.number_field :males, id: "male-count-input", min: 0, max: 99999
@@ -17,6 +18,7 @@
       .col-4
         %span#increase-female.btn.btn-outline-success= fa_icon('plus-circle')
       .col-4
+        %h3.text-info.d-innline-block= "Mujeres"
         %h1.text-info.d-inline-block= fa_icon('venus')
         #female-counter.text-center
           = f.number_field :females, id: "female-count-input", min: 0, max: 99999
