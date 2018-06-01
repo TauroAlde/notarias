@@ -5,9 +5,6 @@
     - @captured_processes.each do  |prep_process|
       %li.list-group-item
         .row
-          /
-            .col-3
-              = prep_process.segment_processor.name
           .col
             = link_to prep_process.processed_segment.name, segment_path(prep_process.processed_segment)
           

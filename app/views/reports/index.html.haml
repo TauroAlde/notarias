@@ -1,0 +1,19 @@
+.overflow-scroll-container.h-100#reports-container
+  .container-fluid
+    .row
+      .col
+        %h3 Reportes
+    .row
+      .col
+        = form_for :reports, url: reports_path, method: :get do |f|
+          = f.select :segment, [], {}, id: "reports-segment-search"
+          = f.check_box :include_inner
+          = f.label :include_inner, "Incluir subsecciones"
+          .separator
+          = f.text_field :from_openning_time, class: "reports-timepicker", placeholder: "Desde"
+          = f.text_field :to_openning_time, class: "reports-timepicker", placeholder: "Hasta"
+          .separator
+          = f.text_field :from_closing_time, class: "reports-timepicker", placeholder: "Desde"
+          = f.text_field :to_closing_time, class: "reports-timepicker", placeholder: "Hasta"
+          = f.submit "Buscar"
+        

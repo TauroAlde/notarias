@@ -22,4 +22,5 @@
 //= require jquery-fileupload/basic
 //= require select2
 //= require lightbox
+//= require jquery-timepicker/jquery.timepicker
 //= require_tree .

@@ -61,6 +61,9 @@ Rails.application.routes.draw do
   resources :profiles, only: [:edit, :update]
 
   resources :prep_processes, only: [:new]
+  resources :reports do
+    get :segment, on: :collection
+  end
 
   post 'users_batch_action', to: 'users_batch_actions#create'
 

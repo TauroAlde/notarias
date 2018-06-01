@@ -26,6 +26,35 @@ class Segment < ApplicationRecord
   has_many :self_and_descendants, through: :descendant_hierarchies, source: :descendant
   has_many :self_and_ancestors, through: :ancestor_hierarchies, source: :ancestor
 
+  attr_reader :non_representative_users_count, :representative_users_count
+
+  #def self.select_with_count(ids)
+  #  select(
+  #    <<-SQL
+  #        (WITH non_representative_user_segments AS (
+  #          SELECT id, segment_id, user_id, representative FROM user_segments
+  #          where representative IS NULL oR representative = 'f'
+  #        ), representative_user_segments AS (
+  #          SELECT id, segment_id, user_id, representative FROM user_segments
+  #          where representative IS TRUE
+  #        )
+  #
+  #        SELECT segments.*, COUNT(non_representative_user_segments.id) AS non_representative_users_count, COUNT(representative_user_segments.id) AS representative_users_count
+  #        FROM segments
+  #        LEFT JOIN non_representative_user_segments ON non_representative_user_segments.segment_id = segments.id 
+  #        LEFT JOIN representative_user_segments ON representative_user_segments.segment_id = segments.id
+  #        #{conditions_for_select(ids)}
+  #        GROUP BY segments.id).*
+  #      SQL
+  #    )
+  #end
+  #
+  #def self.conditions_for_select(ids)
+  #  ids.blank? ?
+  #    "" :
+  #    "WHERE segments.id #{ ids.is_a?(Array) ? "IN (#{ids.join(', ')})" : "= #{ids}" }"
+  #end
+
   def self.managed_by_ids(user)
     if user.representative?
       (user.represented_segments.map(&:self_and_descendant_ids).flatten + user.non_represented_segments.pluck(:id)).flatten.uniq

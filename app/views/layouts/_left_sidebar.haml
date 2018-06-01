@@ -2,6 +2,7 @@
   = left_sidebar_gravatar_link(t(:profile), edit_profile_path(current_user), wrapper_options: { class: ""})
 
   = left_sidebar_link(t(:dashboard), root_path, "dashboard")
+  = left_sidebar_link("Reportes", reports_path, "book")
   = #left_sidebar_link(t(:catalogs), procedure_catalogs_path , "book")
   - if root_segment
     - if can? :manage, root_segment
