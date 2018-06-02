@@ -13,15 +13,24 @@
               = f.check_box :include_inner
               = f.label :include_inner, "Incluir subsecciones"
           .row.pt-3.pb-3
-            .col-12.col-md-6
+            .col-12.col-md-4
               %h4 Hora de Apertura
               = f.text_field :from_openning_time, class: "reports-timepicker", placeholder: "Desde"
               = f.text_field :to_openning_time, class: "reports-timepicker", placeholder: "Hasta"
-            .col-12.col-md-6
+            .col-12.col-md-4
               %h4 Hora de Cierre
               = f.text_field :from_closing_time, class: "reports-timepicker", placeholder: "Desde"
               = f.text_field :to_closing_time, class: "reports-timepicker", placeholder: "Hasta"
-              = f.submit "Buscar"
+            .col-12.col-md-4
+              %h4 Diferencia de votantes
+              = f.number_field :votes_percent, min: 0, max: 99999, placeholder: "Diferencia"
+              = fa_icon("percent")
+              = f.check_box :greater_than
+              = f.label :greater_than, "Diferencia hacia arriba"
+          .row.mb-4
+            .col
+            = f.submit "Buscar", class: "btn btn-primary col-3"
+
     .row.bg-light
 
       .col-12.mb-4.bg-white.border-bottom-light.border-top-light
@@ -30,7 +39,7 @@
       .col-12.col-md-3.mb-4
         .card.gradient-card
           %h1.text-center.report-counter.pt-3.pb-3.mb-0
-            = @reports_loader.filter_by_dates.count
+            = @reports_loader.segments.count
 
       .col-12.mb-4
         .card.gradient-card
@@ -44,15 +53,15 @@
                   %th Votantes
                   %th Esperado
               %tbody
-                - if @reports_loader.filter_by_dates.present?
-                  - @reports_loader.filter_by_dates.each do |segment|
+                - if @reports_loader.segments.count > 0
+                  - @reports_loader.segments.each do |segment|
                     %tr
                       %td= segment.name
                       %td= segment.openning_time
                       %td= segment.closing_time
                       %td= segment.nominal_count
                       %td= segment.voters_count
-                -else
+                - else
                   %tr
                     %td{ colspan: 5 }
                       %h1.text-center.text-secondary No hay resultados con los filtros usados
