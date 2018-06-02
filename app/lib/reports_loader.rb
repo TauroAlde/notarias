@@ -43,6 +43,18 @@ class ReportsLoader
     base_segments.map { |s| [s.name, s.id] }
   end
 
+  def filtering_by_time?
+    filtering_by_openning? || filtering_by_closing?
+  end
+
+  def filtering_by_openning?
+    from_openning_time.present? || to_openning_time.present?
+  end
+
+  def filtering_by_closing?
+    from_openning_time.present? || to_openning_time.present?
+  end
+
   private
 
   def chain_time_queries
@@ -68,10 +80,6 @@ class ReportsLoader
 
   def to_closing_query
     "prep_processes.created_at <= '#{to_closing_time}'"
-  end
-
-  def filtering_by_time?
-    from_openning_time.present? || to_openning_time.present? || from_openning_time.present? || to_openning_time.present?
   end
 
   def segments_or_include_descendants

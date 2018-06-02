@@ -525,3 +525,20 @@ body, html {
   cursor: pointer;
 }
 
+.border-bottom-light {
+  border-bottom: 1px solid $system-dark-green-transparent;
+}
+.border-top-light {
+  border-top: 1px solid $system-dark-green-transparent;
+}
+
+.report-counter {
+  border-left: 4vw solid $system-dark-green;
+  border-radius: 0.25rem;
+}
+
+.report-counter {
+  font-size: 8vw;
+}
+
+

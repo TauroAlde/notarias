@@ -10,6 +10,9 @@ class Segment < ApplicationRecord
   has_many :user_segments
   has_many :users, through: :user_segments
   has_many :prep_processes
+  has_many :prep_step_ones, through: :prep_processes
+  has_many :prep_step_threes, through: :prep_processes
+  has_many :prep_step_fours, through: :prep_processes
   has_many :segment_processors, through: :prep_processes, foreign_key: :segment_id, class_name: 'User'
 
   has_many :political_candidacies
@@ -54,6 +57,18 @@ class Segment < ApplicationRecord
   #    "" :
   #    "WHERE segments.id #{ ids.is_a?(Array) ? "IN (#{ids.join(', ')})" : "= #{ids}" }"
   #end
+
+  def openning_time
+    prep_step_ones.empty? ? "S/E" : prep_step_ones.last.created_at
+  end
+
+  def closing_time
+    prep_processes.completed.empty? ? "S/E" : prep_processes.completed.last.completed_at
+  end
+
+  def voters_count
+    prep_step_threes.empty? ? "S/E" : prep_step_threes.sum(:voters_count)
+  end
 
   def self.managed_by_ids(user)
     if user.representative?

@@ -1,19 +1,58 @@
 .overflow-scroll-container.h-100#reports-container
-  .container-fluid
-    .row
+  .container-fluid.pt-2
+    .row.bg-light
       .col
         %h3 Reportes
-    .row
-      .col
-        = form_for @reports_loader, url: reports_path, method: :get do |f|
-          = f.select :base_segments, @reports_loader.base_segments_for_select, { selected: @reports_loader.base_segments.pluck(:id) }, id: "reports-segment-search", multiple: true
-          = f.check_box :include_inner
-          = f.label :include_inner, "Incluir subsecciones"
-          .separator
-          = f.text_field :from_openning_time, class: "reports-timepicker", placeholder: "Desde"
-          = f.text_field :to_openning_time, class: "reports-timepicker", placeholder: "Hasta"
-          .separator
-          = f.text_field :from_closing_time, class: "reports-timepicker", placeholder: "Desde"
-          = f.text_field :to_closing_time, class: "reports-timepicker", placeholder: "Hasta"
-          = f.submit "Buscar"
-        
+    .row.bg-light
+      .col-12
+        = form_for @reports_loader, url: reports_path, method: :get, class: "w-100" do |f|
+          .row.pt-3.pb-3
+            .col
+              = f.select :base_segments, @reports_loader.base_segments_for_select, { selected: @reports_loader.base_segments.pluck(:id) }, id: "reports-segment-search", multiple: true
+            .col-2
+              = f.check_box :include_inner
+              = f.label :include_inner, "Incluir subsecciones"
+          .row.pt-3.pb-3
+            .col-12.col-md-6
+              %h4 Hora de Apertura
+              = f.text_field :from_openning_time, class: "reports-timepicker", placeholder: "Desde"
+              = f.text_field :to_openning_time, class: "reports-timepicker", placeholder: "Hasta"
+            .col-12.col-md-6
+              %h4 Hora de Cierre
+              = f.text_field :from_closing_time, class: "reports-timepicker", placeholder: "Desde"
+              = f.text_field :to_closing_time, class: "reports-timepicker", placeholder: "Hasta"
+              = f.submit "Buscar"
+    .row.bg-light
+
+      .col-12.mb-4.bg-white.border-bottom-light.border-top-light
+        %h3.mt-2.mb-2 Casillas Abiertas
+
+      .col-12.col-md-3.mb-4
+        .card.gradient-card
+          %h1.text-center.report-counter.pt-3.pb-3.mb-0
+            = @reports_loader.filter_by_dates.count
+
+      .col-12.mb-4
+        .card.gradient-card
+          .card-body
+            %table.table.table-hover
+              %thead
+                %tr
+                  %th Nombre
+                  %th Apertura
+                  %th Cierre
+                  %th Votantes
+                  %th Esperado
+              %tbody
+                - if @reports_loader.filter_by_dates.present?
+                  - @reports_loader.filter_by_dates.each do |segment|
+                    %tr
+                      %td= segment.name
+                      %td= segment.openning_time
+                      %td= segment.closing_time
+                      %td= segment.nominal_count
+                      %td= segment.voters_count
+                -else
+                  %tr
+                    %td{ colspan: 5 }
+                      %h1.text-center.text-secondary No hay resultados con los filtros usados
