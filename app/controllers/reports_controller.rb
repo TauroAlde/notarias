@@ -1,10 +1,8 @@
 class ReportsController < ApplicationController
   respond_to :json
+
   def index
-    if params[:reports]
-      @reports_loader = ReportsLoader.new(params[:reports].to_unsafe_h.symbolize_keys)
-      @reports_loader.perform
-    end
+    @reports_loader = ReportsLoader.new(reports_params)
   end
 
   def segment
@@ -12,5 +10,10 @@ class ReportsController < ApplicationController
     respond_with @segments
   end
 
-  
+  private
+
+  def reports_params
+    params.require(:reports_loader).
+      permit(:include_inner, :from_openning_time, :to_openning_time, :from_closing_time, :to_closing_time, base_segments: [])
+  end
 end

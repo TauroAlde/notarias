@@ -1,65 +1,93 @@
 class ReportsLoader
-  attr_reader :segment, :include_inner, :from_openning_time, :to_openning_time, :from_closing_time, :to_closing_time, :segments
+  include ActiveModel::Model
 
-  def initialize(segment:, include_inner:, from_openning_time: nil, to_openning_time: nil, from_closing_time: nil, to_closing_time: nil)
-    @segment = Segment.find(segment)
-    @include_inner = include_inner
-    date = DateTime.now
-    # fix date format
-    @from_openning_time = Time.new(date.year, date.month, date.day, from_openning_time) if !from_openning_time.blank?
-    @to_openning_time   = Time.new(date.year, date.month, date.day, to_openning_time)   if !to_openning_time.blank?
-    @from_closing_time  = Time.new(date.year, date.month, date.day, from_closing_time)  if !from_closing_time.blank?
-    @to_closing_time    = Time.new(date.year, date.month, date.day, to_closing_time)    if !to_closing_time.blank?
+  attr_accessor :base_segments, :include_inner, :from_openning_time, :to_openning_time, :from_closing_time, :to_closing_time, :segments
+
+  def initialize(attributes = {})
+    super(attributes)
+    if base_segments.blank?
+      @base_segments = []
+      return self
+    end
+    @base_segments = Segment.find(base_segments.select { |s| !s.blank? })
+    @segments = segments_or_include_descendants
+    @from_openning_time = from_openning_time.to_datetime if !from_openning_time.blank?
+    @to_openning_time   = to_openning_time.to_datetime if !to_openning_time.blank?
+    @from_closing_time  = from_closing_time.to_datetime if !from_closing_time.blank?
+    @to_closing_time    = to_closing_time.to_datetime if !to_closing_time.blank?
   end
 
-  def perform
-    get_segments
-  end
-
-  def get_segments
-    return @segments if !@segments.blank?
-    @segments = filter_by_dates
-  end
-
-  def discrepant_greater_than_segments
+  def discrepant_voters_greater
     @discrepant_segments = get_segments.
       joins(prep_processes: :prep_step_threes).
       where("prep_step_threes.voters_count > segments.nominal_count")
   end
 
-  def discrepant_less_than_segments
+  def discrepant_voters_lesser
     @discrepant_segments = get_segments.
       joins(prep_processes: :prep_step_threes).
       where("prep_step_threes.voters_count < segments.nominal_count")
   end
 
   def filter_by_dates
-    return segment.self_and_descendants if !filtering_by_time?
-    @segments = segment.self_and_descendants
-    @segments = @segments.joins(
+    return @segments if !filtering_by_time?
+    @segments = base_segments.joins(
       <<-SQL
         INNER JOIN prep_processes ON prep_processes.segment_id = segments.id
         LEFT JOIN prep_step_ones ON prep_step_ones.prep_process_id = prep_processes.id
       SQL
-    ).where(
-      <<-SQL
-         #{ openning_query }
-         #{ closing_query }
-      SQL
-    )
+    ).where(chain_time_queries)
   end
 
-  def openning_query
-    (from_openning_time.blank? ? "" : " AND prep_processes.created_at >= #{from_openning_time} ") +
-    (to_openning_time.blank? ? "" : " AND prep_processes.created_at <= #{to_openning_time} ")
+  def base_segments_for_select
+    base_segments.map { |s| [s.name, s.id] }
   end
 
-  def closing_query
-    (from_openning_time.blank? ? "" : " AND prep_processes.created_at >= #{from_closing_time} ") +
-    (to_openning_time.blank? ? "" : " AND prep_processes.created_at <= #{to_closing_time} ")
+  private
+
+  def chain_time_queries
+    base_sql = []
+    base_sql << from_openning_query if !from_openning_time.blank?
+    base_sql << to_openning_query   if !to_openning_time.blank?
+    base_sql << from_closing_query  if !from_closing_time.blank?
+    base_sql << to_closing_query    if !to_closing_time.blank?
+    base_sql.join(" AND ")
+  end
+
+  def from_openning_query
+    "prep_processes.created_at >= '#{from_openning_time}'"
+  end
+
+  def to_openning_query
+    "prep_processes.created_at <= '#{to_openning_time}'"
+  end
+
+  def from_closing_query
+    "prep_processes.created_at >= '#{from_closing_time}'"
+  end
+
+  def to_closing_query
+    "prep_processes.created_at <= '#{to_closing_time}'"
   end
 
   def filtering_by_time?
-    !from_openning_time.blank? || !to_openning_time.blank? || !from_openning_time.blank? || !to_openning_time.blank?
+    from_openning_time.present? || to_openning_time.present? || from_openning_time.present? || to_openning_time.present?
+  end
+
+  def segments_or_include_descendants
+    return @segments if @segments.present?
+
+    base_segments = Segment.where(id: base_segments)
+    if base_segments.empty?
+      @segments = base_segments
+      return @segments
+    end
+    @segments = include_inner == "1" ? return_with_ancestor(base_segments) : base_segments
+  end
+
+  def return_with_ancestor(base_segments)
+    base_segments_ids = base_segments.pluck(:id)
+    with_ancestor_list = Segment.with_ancestor(base_segments_ids).pluck(:id)
+    with_ancestor_list.blank? ? base_segments : Segment.where(id: with_ancestor_list + base_segments_ids).uniq
   end
 end

@@ -36,9 +36,9 @@ $ ->
       e.preventDefault()
       window.chat.startNewChatFromPageLink(e.currentTarget)
 
-    setInterval -> 
-      $.getScript("/messages_kpis")
-    , 10000
+    #setInterval -> 
+    #  $.getScript("/messages_kpis")
+    #, 10000
     
     $(".reports-timepicker").timepicker
       timeFormat: 'h:mm p'
@@ -47,9 +47,11 @@ $ ->
       scrollbar: true
 
     $("#reports-segment-search").select2
-      width: "210px"
       placeholder: 'Buscar por usuario o casilla'
       minimumInputLength: 3
+      multiple: true
+      include_hidden: false
+      allowClear: true
       ajax:
         dataType: 'json'
         url: '/reports/segment'
@@ -60,6 +62,7 @@ $ ->
             items.push({ id: el.id, text: el.name, type: "segment" })
           { results: items }
       templateResult: (d) ->
+        console.log("fdsafdsafdsa")
         html = ""
         if d.id
           html = "<span class=\"badge-pill badge-info select2-badges\"><i class=\"fa fa-compass\"></i></span> <span>#{d.text}</span>"

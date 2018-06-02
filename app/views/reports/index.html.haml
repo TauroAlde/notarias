@@ -5,8 +5,8 @@
         %h3 Reportes
     .row
       .col
-        = form_for :reports, url: reports_path, method: :get do |f|
-          = f.select :segment, [], {}, id: "reports-segment-search"
+        = form_for @reports_loader, url: reports_path, method: :get do |f|
+          = f.select :base_segments, @reports_loader.base_segments_for_select, { selected: @reports_loader.base_segments.pluck(:id) }, id: "reports-segment-search", multiple: true
           = f.check_box :include_inner
           = f.label :include_inner, "Incluir subsecciones"
           .separator
