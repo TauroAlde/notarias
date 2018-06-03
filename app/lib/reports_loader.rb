@@ -11,13 +11,13 @@ class ReportsLoader
       @base_segments = []
       return self
     end
-    @base_segments = Segment.where(id: base_segments.select { |s| !s.blank? })
-    @segments = segments_or_include_descendants
+    @base_segments      = fetch_base_segments
+    @segments           = segments_or_include_descendants
     @from_openning_time = from_openning_time.to_datetime  if !from_openning_time.blank?
     @to_openning_time   = to_openning_time.to_datetime    if !to_openning_time.blank?
     @from_closing_time  = from_closing_time.to_datetime   if !from_closing_time.blank?
     @to_closing_time    = to_closing_time.to_datetime     if !to_closing_time.blank?
-    @votes_percent       = Integer(votes_percent)          if !votes_percent.blank?
+    @votes_percent      = Integer(votes_percent)          if !votes_percent.blank?
     filter
   end
 
@@ -90,29 +90,25 @@ class ReportsLoader
   end
 
   def from_openning_query
-    "prep_processes.created_at >= '#{from_openning_time}'"
+    "prep_step_ones.created_at >= '#{from_openning_time}'"
   end
 
   def to_openning_query
-    "prep_processes.created_at <= '#{to_openning_time}'"
+    "prep_step_ones.created_at <= '#{to_openning_time}'"
   end
 
   def from_closing_query
-    "prep_processes.created_at >= '#{from_closing_time}'"
+    "prep_processes.completed_at >= '#{from_closing_time}'"
   end
 
   def to_closing_query
-    "prep_processes.created_at <= '#{to_closing_time}'"
+    "prep_processes.completed_at <= '#{to_closing_time}'"
   end
 
   def segments_or_include_descendants
     return @segments if @segments.present?
 
-    if base_segments.empty?
-      @segments = base_segments
-      return @segments
-    end
-    @segments = (include_inner? ? return_with_ancestor(base_segments) : base_segments).joins(
+    @segments = fetch_segments.joins(
       <<-SQL
         LEFT JOIN prep_processes ON prep_processes.segment_id = segments.id
         LEFT JOIN prep_step_ones ON prep_step_ones.prep_process_id = prep_processes.id
@@ -129,9 +125,24 @@ class ReportsLoader
     greater_than == "1"
   end
 
-  def return_with_ancestor(base_segments)
-    base_segments_ids = base_segments.pluck(:id)
-    with_ancestor_list = Segment.with_ancestor(base_segments_ids).pluck(:id)
-    with_ancestor_list.blank? ? base_segments : Segment.where(id: with_ancestor_list + base_segments_ids).uniq
+  def fetch_base_segments
+    segments_list = base_segments.select { |s| !s.blank? }
+    if segments_list.blank?
+      @include_inner = "1"
+      Segment.roots
+    else
+      Segment.where(id: segments_list)
+    end
+  end
+
+  def fetch_segments
+    if !include_inner?
+      return base_segments
+    end
+
+    Segment.where(id:
+       Segment.with_ancestor(base_segments.pluck(:id)).leaves.pluck(:id) | 
+         (base_segments.all(&:leaf?) ? base_segments : base_segments.select(&:leaf?)).pluck(:id)
+    ).uniq
   end
 end

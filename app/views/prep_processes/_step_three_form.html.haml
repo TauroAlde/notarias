@@ -1,4 +1,10 @@
+
 = form_for @prep_step_three || @prep_process_machine.current_step, html: { class: "row align-items-center prep-form" }, remote: true do |f|
+  .col-12
+    %h1
+      Lista Nominal
+      = @prep_step_three ? @prep_step_three.prep_process.processed_segment.nominal_count : @prep_process_machine.segment.nominal_count
+
   #voters-count.col-12.col-sm-8.col-md-6.col-lg-6.mb-3
     = f.number_field :voters_count, class: 'w-100', min: 0, max: 99999
   .col

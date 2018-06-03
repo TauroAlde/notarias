@@ -13,9 +13,13 @@ class ReportsController < ApplicationController
   private
 
   def reports_params
-    params.require(:reports_loader).
-      permit(
-        :include_inner, :from_openning_time, :to_openning_time, :from_closing_time,
-        :to_closing_time, :from_votes, :to_votes, base_segments: [])
+    if params[:reports_loader].blank?
+      {}
+    else
+      params.require(:reports_loader).
+        permit(
+          :include_inner, :from_openning_time, :to_openning_time, :from_closing_time,
+          :to_closing_time, :votes_percent, :greater_than, base_segments: [])
+    end
   end
 end

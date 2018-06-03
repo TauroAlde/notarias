@@ -70,6 +70,10 @@ class Segment < ApplicationRecord
     prep_step_threes.empty? ? "S/E" : prep_step_threes.sum(:voters_count)
   end
 
+  def percent_difference
+    prep_step_threes.empty? ? "S/E" : ((prep_step_threes.sum(:voters_count) - nominal_count) * 100) / nominal_count
+  end
+
   def self.managed_by_ids(user)
     if user.representative?
       (user.represented_segments.map(&:self_and_descendant_ids).flatten + user.non_represented_segments.pluck(:id)).flatten.uniq

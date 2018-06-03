@@ -29,7 +29,9 @@
               = f.label :greater_than, "Diferencia hacia arriba"
           .row.mb-4
             .col
-            = f.submit "Buscar", class: "btn btn-primary col-3"
+            .col-3
+              = f.submit "Buscar", class: "btn btn-primary"
+
 
     .row.bg-light
 
@@ -39,7 +41,7 @@
       .col-12.col-md-3.mb-4
         .card.gradient-card
           %h1.text-center.report-counter.pt-3.pb-3.mb-0
-            = @reports_loader.segments.count
+            = @reports_loader.segments.try(:count) || 0
 
       .col-12.mb-4
         .card.gradient-card
@@ -47,21 +49,28 @@
             %table.table.table-hover
               %thead
                 %tr
-                  %th Nombre
-                  %th Apertura
-                  %th Cierre
-                  %th Votantes
-                  %th Esperado
+                  %th.text-center Nombre
+                  %th.text-center Apertura
+                  %th.text-center Cierre
+                  %th.text-center Votantes
+                  %th.text-center Esperado
+                  %th.text-center Diferencia
               %tbody
-                - if @reports_loader.segments.count > 0
+                - if (@reports_loader.segments.try(:count) || 0 )> 0
                   - @reports_loader.segments.each do |segment|
                     %tr
-                      %td= segment.name
-                      %td= segment.openning_time
-                      %td= segment.closing_time
-                      %td= segment.nominal_count
-                      %td= segment.voters_count
+                      %td.text-center
+                        = link_to segment_path(segment) do
+                          = fa_icon("sitemap")
+                          = segment.name
+                      %td.text-center= segment.openning_time.strftime("%H:%M %p")
+                      %td.text-center= segment.closing_time.strftime("%H:%M %p")
+                      %td.text-center= segment.nominal_count
+                      %td.text-center= segment.voters_count
+                      %td.text-center{ class: segment.percent_difference.abs > 10 ? "text-warning" : "" }
+                        = segment.percent_difference
+                        = fa_icon("percent")
                 - else
                   %tr
-                    %td{ colspan: 5 }
+                    %td{ colspan: 6 }
                       %h1.text-center.text-secondary No hay resultados con los filtros usados

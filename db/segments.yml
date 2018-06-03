@@ -472,7 +472,7 @@
             - name: "354-742-735-B"
               district: 2
               nominal_count: 735
-        - name: "35"
+        - name: "355"
           children:
             - name: "355-560-558-B"
               district: 2
@@ -3626,8 +3626,6 @@
               district: 4
               nominal_count: 407
               local_district: 2
-        - name: "837"
-          children:
             - name: "2-837-410-407-C1-0004"
               district: 4
               nominal_count: 407
@@ -8583,7 +8581,7 @@
             - name: "874-722-707-C14"
               district: 1
               nominal_count: 707
-        - name: "874"
+        - name: "875"
           children:
             - name: "875-746-734-B1"
               district: 1
