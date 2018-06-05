@@ -22,11 +22,11 @@
 
     #body-container
       - if user_signed_in?
+        = render "/layouts/header"
         - if !current_user.only_common?
-          = render "/layouts/header"
           #left-sidebar.sidebar-container
             = render "/layouts/left_sidebar"
-      %div{ id: user_signed_in? ? "content-with-menu" : "content" }
+      %div{ id: body_id, class: body_classes }
         = render "/layouts/flash_messages"
         = yield
 

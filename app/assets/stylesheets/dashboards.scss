@@ -78,6 +78,9 @@ body, html {
 
   #content-with-menu {
     @include media-breakpoint-up(md) { padding-left: 50px; }
+    &.for-common-user {
+      @include media-breakpoint-up(md) { padding-left: 0; }
+    }
   }
 }
 
@@ -426,6 +429,9 @@ body, html {
   width: calc(100% - 50px);
   z-index: -1000;
   right:0;
+  &.for-common-user {
+    @include media-breakpoint-up(md) { width: 100%; }
+  }
   @include media-breakpoint-down(sm) { width: 100%; }
   .close {
     min-width: 16px;

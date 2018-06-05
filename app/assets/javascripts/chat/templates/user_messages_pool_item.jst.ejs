@@ -1,7 +1,10 @@
 <div class="user-message-resume-list-item position-relative p-2 pb-3" data-user-id="<%= id %>">
-  <div class="chat-item-time text-muted d-inline position-absolute p-2">
-    <%= last_message.created_at_day_format %>
-  </div>
+  <% if(last_message) { %>
+    <div class="chat-item-time text-muted d-inline position-absolute p-2">
+      <%= last_message.created_at_day_format %>
+    </div>
+  <% } %>
+
   <% if (unread_messages_count > 0) { %>
     <span class="badge badge-warning position-absolute mr-2" id="unread-count">
       <%= unread_messages_count %>
@@ -16,14 +19,20 @@
         <div class="message-resume-title col-12">
           <h5 class="d-inline">
             <%= full_name %>
-            <% if (last_message.evidences.length > 0) { %>
-              <i class="fa fa-paperclip text-warning"></i>
+            <% if(last_message) { %>
+              <% if (last_message.evidences.length > 0) { %>
+                <i class="fa fa-paperclip text-warning"></i>
+              <% } %>
             <% } %>
           </h5>
         </div>
         <div class="message-resume-body col-12">
           <div class="pl-2 pr-2 text-muted">
-            <%= last_message.message %>
+            <% if(last_message) { %>
+              <%= last_message.message %>
+            <% } else { %>
+              Para iniciar la converzación con <%= full_name %> da clic
+            <% } %>
           </div>
         </div>
       </div>

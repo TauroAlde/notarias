@@ -1,6 +1,6 @@
 class MessagesKpisController < ApplicationController
   def index
-    segments_ids = Segment.managed_by_ids(current_user)
+    segments_ids = Segment.segments_for_messages(current_user)
     @messages = Message.find_by_sql(
       <<-SQL
         WITH available_users AS (

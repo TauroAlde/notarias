@@ -87,8 +87,17 @@ $ ->
   startBatchActions()
   $(".users-select2").select2
     width: "280px"
-    templateSelection: (d) -> segmentSelectHTML(d)
-    templateResult: (d) -> segmentSelectHTML(d)
+    templateSelection: (d) ->
+      console.log(d)
+      if $(d.element).attr("data-users-count")
+        return segmentSelectHTML(d)
+      else
+        return "Elija una opción"
+    templateResult: (d) ->
+      if $(d.element).attr("data-users-count")
+        return segmentSelectHTML(d)
+      else
+        return "Elija una opción"
   .on "select2:select", (e)->
     window.location = "/segments/#{$(e.params.data.element).attr("data-id")}/users"
 

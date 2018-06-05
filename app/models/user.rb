@@ -54,29 +54,52 @@ class User < ApplicationRecord
   end
 
   def self.user_chats(user)
-    includes(
-      received_messages: Message::INCLUDES_BASE,
-      messages: Message::INCLUDES_BASE,
-      user_segments: [:segment]
-    ).find_by_sql(
-      <<-SQL
-        WITH senders as (
-          SELECT DISTINCT "users".* FROM "users"
-          INNER JOIN messages oN messages.user_id = users.id
-          WHERE "users"."deleted_at" IS NULL
-          AND "users"."id" != #{user.id}
-          AND (messages.user_id = #{user.id} OR messages.receiver_id = #{user.id})
-        ),
-        receivers as (
-          SELECT DISTINCT "users".* FROM "users"
-          INNER JOIN messages oN messages.receiver_id = users.id
-          WHERE "users"."deleted_at" IS NULL
-          AND "users"."id" != #{user.id}
-          AND (messages.user_id = #{user.id} OR messages.receiver_id = #{user.id})
-        )
-        SELECT senders.* FROM senders UNION SELECT receivers.* FROM receivers
-      SQL
-    )
+    (self.includes(
+        received_messages: Message::INCLUDES_BASE,
+        messages: Message::INCLUDES_BASE,
+        user_segments: [:segment]
+      ).find_by_sql(
+        <<-SQL
+          WITH senders as (
+            SELECT DISTINCT "users".* FROM "users"
+            INNER JOIN messages oN messages.user_id = users.id
+            WHERE "users"."deleted_at" IS NULL
+            AND "users"."id" != #{user.id}
+            AND (messages.user_id = #{user.id} OR messages.receiver_id = #{user.id})
+          ),
+          receivers as (
+            SELECT DISTINCT "users".* FROM "users"
+            INNER JOIN messages oN messages.receiver_id = users.id
+            WHERE "users"."deleted_at" IS NULL
+            AND "users"."id" != #{user.id}
+            AND (messages.user_id = #{user.id} OR messages.receiver_id = #{user.id})
+          )
+          SELECT senders.* FROM senders UNION SELECT receivers.* FROM receivers
+        SQL
+    ) | (default_users(user) - [user])).uniq
+  end
+
+  def self.default_users(user)
+    if user.admin? || user.super_admin?
+      self.joins(user_roles: :role)
+    else
+      self.joins(user_segments: :segment, user_roles: :role).
+        where(user_segments: { segment_id: messageable_segments_ids(user) })
+    end.where(user_roles: { role_id: messageable_roles(user).map(&:id) }).limit(10)
+  end
+
+  def self.messageable_roles(user)
+    if user.only_common?
+      [Role.common]
+    elsif user.representative?
+      [Role.common, Role.admin]
+    else
+      [Role.admin, Role.super_admin]
+    end
+  end
+
+  def self.messageable_segments_ids(user)
+    Segment.messageable_by(user).pluck(:id)
   end
 
   def represents_segment?(segment)

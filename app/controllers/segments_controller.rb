@@ -5,6 +5,7 @@ class SegmentsController < ApplicationController
   def show
     authorize! :show, @segment
     load_candidacies
+    @current_branch_ids = load_current_tree(@segment)
     respond_to do |format|
       format.html { render :index }
       format.js
@@ -24,6 +25,7 @@ class SegmentsController < ApplicationController
 
   def jstree_segment
     @current_segment = preloaded_segment.find(params[:"current-segment-id"])
+    @current_branch_ids = load_current_tree(@segment) | load_current_tree(@current_segment)
     render layout: false
   end
 
@@ -33,6 +35,10 @@ class SegmentsController < ApplicationController
   end
 
   private
+
+  def load_current_tree(segment)
+    segment.self_and_ancestors_ids
+  end
 
   def load_segment
     @segment = params[:id] == "#" ? preloaded_segment.root : preloaded_segment.find(params[:id])

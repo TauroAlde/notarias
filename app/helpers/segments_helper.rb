@@ -15,11 +15,11 @@ module SegmentsHelper
   end
 
   def is_segment_open?(segment)
-    !segment.leaf? && (current_branch?(segment) || !@segment.root?)
+    current_branch?(segment)
   end
 
   def current_branch?(segment)
-    segment.self_and_descendant_ids.include?(@current_segment ? @current_segment.id : @segment.id)
+    @current_branch_ids.include?(segment.id)
   end
 
   def is_segment_disabled?(segment)

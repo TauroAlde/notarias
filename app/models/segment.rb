@@ -11,8 +11,10 @@ class Segment < ApplicationRecord
   has_many :users, through: :user_segments
   has_many :prep_processes
   has_many :prep_step_ones, through: :prep_processes
+  has_many :prep_step_twos, through: :prep_processes
   has_many :prep_step_threes, through: :prep_processes
   has_many :prep_step_fours, through: :prep_processes
+  has_many :votes, through: :prep_step_fours
   has_many :segment_processors, through: :prep_processes, foreign_key: :segment_id, class_name: 'User'
 
   has_many :political_candidacies
@@ -58,6 +60,14 @@ class Segment < ApplicationRecord
   #    "WHERE segments.id #{ ids.is_a?(Array) ? "IN (#{ids.join(', ')})" : "= #{ids}" }"
   #end
 
+  def males_count
+    prep_step_twos.empty? ? "S/E" : prep_step_twos.sum(:males)
+  end
+
+  def females_count
+    prep_step_twos.empty? ? "S/E" : prep_step_twos.sum(:females)
+  end
+
   def openning_time
     prep_step_ones.empty? ? "S/E" : prep_step_ones.last.created_at
   end
@@ -74,21 +84,19 @@ class Segment < ApplicationRecord
     prep_step_threes.empty? ? "S/E" : ((prep_step_threes.sum(:voters_count) - nominal_count) * 100) / nominal_count
   end
 
-  def self.managed_by_ids(user)
+  def self.segments_for_messages(user)
     if user.representative?
       (user.represented_segments.map(&:self_and_descendant_ids).flatten + user.non_represented_segments.pluck(:id)).flatten.uniq
     elsif user.only_common?
       user.segments.pluck(:id)
     else
-      Segment.pluck(:id)
+      Segment.joins(:messages).pluck(:id)
     end
   end
 
-  def self.with_messages_for(user)
-    includes(
-      messages: Message::INCLUDES_BASE,
-      user_segments: [:user]).joins(:messages).
-    where(id: Segment.managed_by_ids(user))
+  def self.messageable_by(user)
+    includes(messages: Message::INCLUDES_BASE, user_segments: [:user]).
+      where(id: Segment.segments_for_messages(user))
   end
 
   def last_message

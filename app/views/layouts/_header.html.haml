@@ -1,6 +1,7 @@
 %nav#header
-  = link_to "#", class: "btn btn-secondary menu-button", id: "open-hide" do
-    %i.fa.fa-bars.fa-2x.menu-icon
+  - if !current_user.only_common?
+    = link_to "#", class: "btn btn-secondary menu-button", id: "open-hide" do
+      %i.fa.fa-bars.fa-2x.menu-icon
 
   = link_to "#", class: "btn btn-secondary pull-right d-block d-md-none bg-primary", id: "open-messages-button-mobile" do
     = fa_icon("comment")

@@ -12,7 +12,15 @@ module ApplicationHelper
       concat content_tag(:span, text)
     end
   end 
-    
+
+  def body_id
+    user_signed_in? ? "content-with-menu" : "content"
+  end
+
+  def body_classes
+    user_signed_in? && current_user.only_common? ? "for-common-user" : ""
+  end
+
   def alert_colors_helper(name, msg)    
     notice_class = case name
     when "notice", "info" then "info"

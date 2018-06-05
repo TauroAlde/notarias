@@ -4,7 +4,30 @@
       = @segment.name
       %span.chat-link.badge.badge-primary.pl-3.pr-3{ "data-chat-id" => @segment.id, "data-chat-type" => "segment" }
         = fa_icon("comment")
-    
+      %span.chat-link.badge.badge-info.pl-3.pr-3
+        Votos:
+        = @segment.votes.sum(:votes_count)
+        = fa_icon("address-card")
+    .row
+      .col-12
+        %span.badge.badge-info
+          = fa_icon("male")
+          = @segment.males_count
+        %span.badge.badge-info
+          = fa_icon("female")
+          = @segment.females_count
+        %span.badge.badge-warning
+          = fa_icon("female")
+          = @segment.voters_count
+          \/
+          = @segment.nominal_count
+        %span.badge.badge-pill.ml-1{ class: "badge-#{@segment.non_representative_users.count == 0 ? "secondary" : "success"}" }
+          = fa_icon 'users', class: "mr-1"
+          = @segment.non_representative_users.count
+
+        %span.badge.badge-pill.ml-1{ class: "badge-#{@segment.representative_users.count == 0 ? "secondary" : "warning"}" }
+          = fa_icon 'address-book', class: "mr-1"
+          = @segment.representative_users.count
   /
     .col-3.mt-2
       .float-right
