@@ -67,7 +67,7 @@
                       %td.text-center= segment.closing_time
                       %td.text-center= segment.nominal_count
                       %td.text-center= segment.voters_count
-                      %td.text-center{ class: segment.percent_difference.abs > 10 ? "text-warning" : "" }
+                      %td.text-center{ class: segment.percent_difference > 10 ? "text-warning" : "" }
                         = segment.percent_difference
                         = fa_icon("percent")
                 - else

@@ -81,7 +81,7 @@ class Segment < ApplicationRecord
   end
 
   def percent_difference
-    prep_step_threes.empty? ? "S/E" : ((prep_step_threes.sum(:voters_count) - nominal_count) * 100) / nominal_count
+    prep_step_threes.empty? ? "S/E" : (((prep_step_threes.sum(:voters_count) - nominal_count) * 100) / nominal_count).abs
   end
 
   def self.segments_for_messages(user)
