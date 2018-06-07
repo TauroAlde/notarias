@@ -63,8 +63,8 @@
                         = link_to segment_path(segment) do
                           = fa_icon("sitemap")
                           = segment.name
-                      %td.text-center= segment.openning_time.strftime("%H:%M %p")
-                      %td.text-center= segment.closing_time.strftime("%H:%M %p")
+                      %td.text-center= segment.openning_time
+                      %td.text-center= segment.closing_time
                       %td.text-center= segment.nominal_count
                       %td.text-center= segment.voters_count
                       %td.text-center{ class: segment.percent_difference.abs > 10 ? "text-warning" : "" }

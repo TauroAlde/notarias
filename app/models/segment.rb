@@ -69,11 +69,11 @@ class Segment < ApplicationRecord
   end
 
   def openning_time
-    prep_step_ones.empty? ? "S/E" : prep_step_ones.last.created_at
+    prep_step_ones.empty? ? "S/E" : prep_step_ones.last.created_at.strftime("%H:%M %p")
   end
 
   def closing_time
-    prep_processes.completed.empty? ? "S/E" : prep_processes.completed.last.completed_at
+    prep_processes.completed.empty? ? "S/E" : prep_processes.completed.last.completed_at.strftime("%H:%M %p")
   end
 
   def voters_count
