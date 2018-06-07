@@ -2,7 +2,7 @@ module SegmentsHelper
   def jstree_segment_class(segment)
     if is_segment_open?(segment)
       'jstree-open'
-    elsif !segment.leaf?
+    elsif !is_leaf_segment?(segment)
       'jstree-closed'
     end
   end
@@ -12,6 +12,16 @@ module SegmentsHelper
     base_class << "jstree-disabled" if is_segment_disabled?(segment) 
     base_class << "jstree-clicked" if segment == @current_segment
     base_class.join(" ")
+  end
+
+  def segment_icon_type(segment)
+    is_leaf_segment?(segment) ? "leaf" : "default"
+  end
+
+  def is_leaf_segment?(segment)
+    cache ["is_leaf_segment-#{segment}"] do
+      segment.leaf?
+    end
   end
 
   def is_segment_open?(segment)

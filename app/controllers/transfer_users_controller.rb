@@ -4,6 +4,7 @@ class TransferUsersController < ApplicationController
 
   def new
     @segment = Segment.root
+    @current_branch_ids = load_current_tree(@segment)
     @segments = load_managed_segments_tree
   end
 
@@ -23,10 +24,15 @@ class TransferUsersController < ApplicationController
 
   def jstree_segment
     @segment = params[:id] == "#" ? Segment.root : Segment.find(params[:id])
+    @current_branch_ids = load_current_tree(@segment)
     render layout: false
   end
 
   private
+
+  def load_current_tree(segment)
+    segment.self_and_ancestors_ids
+  end
 
   def load_managed_segments_tree
     if current_user.representative?

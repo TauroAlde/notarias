@@ -62,7 +62,7 @@ class User < ApplicationRecord
         <<-SQL
           WITH senders as (
             SELECT DISTINCT "users".* FROM "users"
-            INNER JOIN messages oN messages.user_id = users.id
+            INNER JOIN messages ON messages.user_id = users.id
             WHERE "users"."deleted_at" IS NULL
             AND "users"."id" != #{user.id}
             AND (messages.user_id = #{user.id} OR messages.receiver_id = #{user.id})
