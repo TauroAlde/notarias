@@ -19,7 +19,7 @@ module SegmentsHelper
   end
 
   def is_leaf_segment?(segment)
-    cache ["is_leaf_segment-#{segment}"] do
+    cache ["is_leaf_segment", segment] do
       segment.leaf?
     end
   end
