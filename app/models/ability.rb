@@ -52,19 +52,19 @@ class Ability
       end
 
       can :manage, User do |authorizable_user|
-        within_representative_tree?(authorizable_user)
+        within_representative_tree?(authorizable_user, user)
       end
 
       can :unlock, User do |unlockable_user|
-        within_representative_tree?(unlockable_user) && user != unlockable_user
+        within_representative_tree?(unlockable_user, user) && user != unlockable_user
       end
 
       can :lock, User do |lockable_user|
-        within_representative_tree?(lockable_user) && user != lockable_user
+        within_representative_tree?(lockable_user, user) && user != lockable_user
       end
 
       can :manage_profile, User do |profileable_user|
-        within_representative_tree?(lockable_user)
+        within_representative_tree?(lockable_user, user)
       end
     else
       can :manage_profile, User do |user_profile|
@@ -76,7 +76,7 @@ class Ability
       can :manage, :all
     end
 
-    def within_representative_tree?(authorizable_user)
+    def within_representative_tree?(authorizable_user, user)
       !User.unscoped.joins(:user_segments)
         .where(user_segments: { segment_id: represented_segments_trees_ids(user), user_id: authorizable_user.id }).empty?
     end
