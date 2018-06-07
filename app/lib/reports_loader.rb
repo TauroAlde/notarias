@@ -69,6 +69,16 @@ class ReportsLoader
     from_openning_time.present? || to_openning_time.present?
   end
 
+  def open_segments
+    return [] if @segments.blank?
+    @segments.where("prep_step_ones.id IS NOT NULL")
+  end
+
+  def completed_segments
+    return [] if @segments.blank?
+    @segments.where("prep_processes.completed_at IS NOT NULL")
+  end
+
   private
   
   def voters_query
@@ -108,7 +118,7 @@ class ReportsLoader
   def segments_or_include_descendants
     return @segments if @segments.present?
 
-    @segments = fetch_segments.joins(
+    fetch_segments.joins(
       <<-SQL
         LEFT JOIN prep_processes ON prep_processes.segment_id = segments.id
         LEFT JOIN prep_step_ones ON prep_step_ones.prep_process_id = prep_processes.id

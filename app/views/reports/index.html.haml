@@ -40,8 +40,24 @@
 
       .col-12.col-md-3.mb-4
         .card.gradient-card
+          .card-header
+            %h4.mb-0 Total
           %h1.text-center.report-counter.pt-3.pb-3.mb-0
             = @reports_loader.segments.try(:count) || 0
+
+      .col-12.col-md-3.mb-4
+        .card.gradient-card
+          .card-header
+            %h4.mb-0 Abiertas
+          %h1.text-center.report-counter.pt-3.pb-3.mb-0
+            = @reports_loader.open_segments.try(:count) || 0
+
+      .col-12.col-md-3.mb-4
+        .card.gradient-card
+          .card-header
+            %h4.mb-0 Cerradas
+          %h1.text-center.report-counter.pt-3.pb-3.mb-0
+            = @reports_loader.completed_segments.try(:count) || 0
 
       .col-12.mb-4
         .card.gradient-card
@@ -63,10 +79,10 @@
                         = link_to segment_path(segment) do
                           = fa_icon("sitemap")
                           = segment.name
-                      %td.text-center= segment.openning_time
-                      %td.text-center= segment.closing_time
+                      %td.text-center{ class: report_text_class(segment.openning_time) }= segment.openning_time
+                      %td.text-center{ class: report_text_class(segment.closing_time) }= segment.closing_time
                       %td.text-center= segment.nominal_count
-                      %td.text-center= segment.voters_count
+                      %td.text-center{ class: report_text_class(segment.voters_count) }= segment.voters_count
                       %td.text-center{ class: percent_difference_color(segment) }
                         = segment.percent_difference
                         = fa_icon("percent")
