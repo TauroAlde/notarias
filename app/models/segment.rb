@@ -83,8 +83,20 @@ class Segment < ApplicationRecord
     prep_step_threes.empty? ? "S/E" : prep_step_threes.sum(:voters_count)
   end
 
+  def null_votes
+    prep_step_fours.empty? ? "S/E" : prep_step_fours.sum(:null_votes)
+  end
+
   def percent_difference
-    prep_step_threes.empty? ? "S/E" : (((prep_step_threes.sum(:voters_count) - nominal_count) * 100) / nominal_count).abs
+    if prep_step_threes.empty?
+      "S/E"
+    else
+      real_nominal_count = nominal_count || 0
+      mult = (prep_step_threes.sum(:voters_count) - real_nominal_count) * 100
+
+      return 0 if mult == 0 && real_nominal_count == 0
+      (mult / real_nominal_count).abs
+    end
   end
 
   def self.segments_for_messages(user)

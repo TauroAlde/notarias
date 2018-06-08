@@ -18,7 +18,7 @@ class ReportsController < ApplicationController
     else
       params.require(:reports_loader).
         permit(
-          :include_inner, :from_openning_time, :to_openning_time, :from_closing_time,
+          :include_inner, :from_openning_time, :to_openning_time, :from_closing_time,:null_votes_more_than, :null_votes_less_than,
           :to_closing_time, :votes_percent, :only_closed, :only_open, :greater_than, base_segments: [])
     end
   end

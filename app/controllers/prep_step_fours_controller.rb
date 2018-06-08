@@ -23,6 +23,6 @@ class PrepStepFoursController < ApplicationController
   end
 
   def votes_params
-    params.require(:prep_step_four).permit(votes_attributes: [:id, :political_party_id, :political_candidacy_id, :votes_count])
+    params.require(:prep_step_four).permit(:null_votes, votes_attributes: [:id, :political_party_id, :political_candidacy_id, :votes_count])
   end
 end

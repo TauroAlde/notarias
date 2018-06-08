@@ -4,11 +4,15 @@
       = @segment.name
       %span.chat-link.badge.badge-primary.pl-3.pr-3{ "data-chat-id" => @segment.id, "data-chat-type" => "segment" }
         = fa_icon("comment")
-      %span.chat-link.badge.badge-info.pl-3.pr-3
+      %span.badge.badge-info.pl-3.pr-3
         Votos:
         = @segment.votes.sum(:votes_count)
         = fa_icon("address-card")
-    
+      %span.badge.badge-danger.pl-3.pr-3
+        Nulos
+        = @segment.prep_step_fours.sum(:null_votes)
+        = fa_icon("ban")
+    .row.separator
     .row
       .col-12
         %span.badge.badge-info

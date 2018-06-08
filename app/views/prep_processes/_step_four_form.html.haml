@@ -1,7 +1,19 @@
 = form_for [@segment, (@prep_step_four || @prep_process_machine.current_step)], html: { class: "row align-items-center prep-form" }, remote: true do |f|
-  .col
-  .col-12.col-sm-8.col-md-4.col-lg-3 
-    = f.submit t(:save), class: "btn btn-primary w-100"
+  .col-12.mb-4
+    .row
+      .col-12
+        %h4.text-weight-bold.mt-4
+          = f.label :null_votes, class: "text-danger" do
+            = fa_icon "ban"
+            Votos nulos
+            
+
+      .col-12.col-md-4
+        = f.number_field :null_votes, min: 0, max: 999999, class: "w-100 d-inline h-100"
+      .col
+      .col-12.col-md-4
+        = f.submit t(:save), class: "btn btn-primary w-100 mt-3"
+
   - @political_candidacies_loader.candidacies.uniq.each do |candidacy|
     .col-12
       .row
@@ -18,16 +30,22 @@
               .card-body
                 %h5.card-title= political_candidacy.candidate.political_party.name
                 %p.card-text= political_candidacy.candidate.name
+
                 - if political_candidacy.candidate.political_party.coalition?
-                  - political_candidacy.candidate.political_party.parent_political_parties.each do |ppp|
+                  - political_candidacy.candidate.political_party.all_political_parties.each do |ppp|
                     = f.fields_for :votes, (f.object.votes.where(political_candidacy: political_candidacy, political_party: ppp).first || Vote.new) do |vote_f|
-                      .row
+                      .row.pt-2.pb-2
+                        .col-12.text-center.font-weight-bold
+                          Indeciso
                         = vote_f.hidden_field :id, value: vote_f.object.id if !vote_f.object.new_record?
                         = vote_f.hidden_field :political_party_id, id: "political-party-field", value: ppp.id
                         = vote_f.hidden_field :political_candidacy_id, id: "political-candidacy-field", value: political_candidacy.id
                         .col
                         .col-4
-                          = image_tag "#{ppp.name.upcase}100px.png", class: "card-img-top"
+                          - if ppp.coalition?
+                            = image_tag "#{ppp.name.gsub("/", "|")}100px.png", class: "card-img-top"
+                          - else
+                            = image_tag "#{ppp.name.upcase}100px.png", class: "card-img-top"
                         .col
                       .row
                         .col-12.political-candidacy-counter
@@ -79,5 +97,5 @@
                         = vote_f.hidden_field :votes_count, class: "votes-field"
     .col-12.separator
   .col
-  .col-12.col-sm-8.col-md-4.col-lg-3 
+  .col-12.col-sm-8.col-md-4.col-lg-3.mb-3 
     = f.submit t(:save), class: "btn btn-primary w-100"

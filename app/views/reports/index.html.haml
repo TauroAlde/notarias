@@ -7,11 +7,12 @@
       .col-12
         = form_for @reports_loader, url: reports_path, method: :get, class: "w-100" do |f|
           .row.pt-3.pb-3
-            .col
+            .col-12.col-6
               = f.select :base_segments, @reports_loader.base_segments_for_select, { selected: @reports_loader.base_segments.pluck(:id) }, id: "reports-segment-search", multiple: true
             .col-2
               = f.check_box :include_inner
               = f.label :include_inner, "Incluir subsecciones"
+
           .row.pt-3.pb-3
             .col-12.col-md-4
               %h4 Hora de Apertura
@@ -39,6 +40,14 @@
               = fa_icon("percent")
               = f.check_box :greater_than
               = f.label :greater_than, "Diferencia hacia arriba"
+
+            .col-12.col-md-4
+              %h4 Votos Nulos
+              .row
+                .col-12.col-md-6
+                  = f.number_field :null_votes_more_than, placeholder: "Mas de"
+                .col-12.col-md-6
+                  = f.number_field :null_votes_less_than, placeholder: "Menos de"
           .row.mb-4
             .col
             .col-3
@@ -82,6 +91,7 @@
                   %th.text-center Cierre
                   %th.text-center Votantes
                   %th.text-center Esperado
+                  %th.text-center Nulos
                   %th.text-center Diferencia
               %tbody
                 - if (@reports_loader.segments.try(:count) || 0 )> 0
@@ -95,6 +105,7 @@
                       %td.text-center{ class: report_text_class(segment.closing_time) }= segment.closing_time
                       %td.text-center= segment.voters_count
                       %td.text-center{ class: report_text_class(segment.voters_count) }= segment.nominal_count
+                      %td.text-center.text-danger= segment.null_votes
                       %td.text-center{ class: percent_difference_color(segment) }
                         = segment.percent_difference
                         = fa_icon("percent")

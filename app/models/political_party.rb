@@ -10,4 +10,12 @@ class PoliticalParty < ApplicationRecord
   scope :coalitions, -> { where(coalition: true) }
 
   validates :name, presence: true, uniqueness: true
+
+  def all_political_parties
+    if coalition?
+      [self] + parent_political_parties
+    else
+      self
+    end
+  end
 end

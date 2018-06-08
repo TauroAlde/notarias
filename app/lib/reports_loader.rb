@@ -3,7 +3,8 @@ class ReportsLoader
 
   attr_accessor :base_segments, :include_inner, :from_openning_time,
                 :to_openning_time, :from_closing_time, :to_closing_time, :segments,
-                :votes_percent, :greater_than, :only_closed, :only_open
+                :votes_percent, :greater_than, :only_closed, :only_open,
+                :null_votes_more_than, :null_votes_less_than
 
   def initialize(attributes = {})
     super(attributes)
@@ -38,7 +39,15 @@ class ReportsLoader
     filter_by_votes
     filter_by_only_open
     filter_by_only_closed
-    @segments = @segments.includes(:prep_step_ones, :prep_step_threes, :completed_prep_processes)
+    filter_by_null_votes
+    @segments = @segments.includes(:prep_step_ones, :prep_step_threes, :completed_prep_processes, :prep_step_fours)
+  end
+
+  def filter_by_null_votes
+    return @segments if null_votes_more_than.blank? && null_votes_less_than.blank?
+    @segments = @segments.where("prep_step_fours.null_votes >= ?", null_votes_more_than) if null_votes_more_than.present?
+    @segments = @segments.where("prep_step_fours.null_votes <= ?", null_votes_less_than) if null_votes_less_than.present?
+    @segments
   end
 
   def filter_by_only_closed
@@ -135,6 +144,7 @@ class ReportsLoader
         LEFT JOIN prep_processes ON prep_processes.segment_id = segments.id
         LEFT JOIN prep_step_ones ON prep_step_ones.prep_process_id = prep_processes.id
         LEFT JOIN prep_step_threes ON prep_step_threes.prep_process_id = prep_processes.id
+        LEFT JOIN prep_step_fours ON prep_step_fours.prep_process_id = prep_processes.id
       SQL
     ).uniq
   end
