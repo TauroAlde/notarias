@@ -3,7 +3,7 @@ class ReportsLoader
 
   attr_accessor :base_segments, :include_inner, :from_openning_time,
                 :to_openning_time, :from_closing_time, :to_closing_time, :segments,
-                :votes_percent, :greater_than
+                :votes_percent, :greater_than, :only_closed, :only_open
 
   def initialize(attributes = {})
     super(attributes)
@@ -150,7 +150,7 @@ class ReportsLoader
       return base_segments
     end
 
-    Segment.where(id:
+    Segment.includes(prep_processes: [:prep_step_ones, :prep_step_threes]).where(id:
        Segment.with_ancestor(base_segments.pluck(:id)).leaves.pluck(:id) | 
          (base_segments.all(&:leaf?) ? base_segments : base_segments.select(&:leaf?)).pluck(:id)
     ).uniq
