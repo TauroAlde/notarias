@@ -35,8 +35,9 @@
                   - political_candidacy.candidate.political_party.all_political_parties.each do |ppp|
                     = f.fields_for :votes, (f.object.votes.where(political_candidacy: political_candidacy, political_party: ppp).first || Vote.new) do |vote_f|
                       .row.pt-2.pb-2
-                        .col-12.text-center.font-weight-bold
-                          Indeciso
+                        - if ppp.coalition?
+                          .col-12.text-center.font-weight-bold
+                            Indeciso
                         = vote_f.hidden_field :id, value: vote_f.object.id if !vote_f.object.new_record?
                         = vote_f.hidden_field :political_party_id, id: "political-party-field", value: ppp.id
                         = vote_f.hidden_field :political_candidacy_id, id: "political-candidacy-field", value: political_candidacy.id
