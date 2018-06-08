@@ -36,7 +36,19 @@ class ReportsLoader
   def filter
     filter_by_dates
     filter_by_votes
-    @segments
+    filter_by_only_open
+    filter_by_only_closed
+    @segments = @segments.includes(:prep_step_ones, :prep_step_threes, :completed_prep_processes)
+  end
+
+  def filter_by_only_closed
+    return @segments if !only_closed?
+    @segments = @segments.where("prep_processes.completed_at IS NOT NULL")
+  end
+
+  def filter_by_only_open
+    return @segments if !only_open?
+    @segments = @segments.where("prep_step_ones.id IS NOT NULL")
   end
 
   def filter_by_dates
@@ -127,6 +139,18 @@ class ReportsLoader
     ).uniq
   end
 
+  def only_open_join
+    only_open? ? "INNER" : "LEFT"
+  end
+
+  def only_open?
+    only_open == "1"
+  end
+
+  def only_closed?
+    only_closed == "1"
+  end
+
   def include_inner?
     include_inner == "1"
   end
@@ -150,7 +174,7 @@ class ReportsLoader
       return base_segments
     end
 
-    Segment.includes(prep_processes: [:prep_step_ones, :prep_step_threes]).where(id:
+    Segment.where(id:
        Segment.with_ancestor(base_segments.pluck(:id)).leaves.pluck(:id) | 
          (base_segments.all(&:leaf?) ? base_segments : base_segments.select(&:leaf?)).pluck(:id)
     ).uniq

@@ -15,12 +15,24 @@
           .row.pt-3.pb-3
             .col-12.col-md-4
               %h4 Hora de Apertura
-              = f.text_field :from_openning_time, class: "reports-timepicker", placeholder: "Desde"
-              = f.text_field :to_openning_time, class: "reports-timepicker", placeholder: "Hasta"
+              .row
+                .col-12.col-md-6
+                  = f.text_field :from_openning_time, class: "reports-timepicker", placeholder: "Desde"
+                .col-12.col-md-6
+                  = f.text_field :to_openning_time, class: "reports-timepicker", placeholder: "Hasta"
+                .col-12.col-md-6.pt-2.pb-2
+                  = f.check_box :only_open
+                  = f.label :only_open, "Solo Abiertas"
             .col-12.col-md-4
               %h4 Hora de Cierre
-              = f.text_field :from_closing_time, class: "reports-timepicker", placeholder: "Desde"
-              = f.text_field :to_closing_time, class: "reports-timepicker", placeholder: "Hasta"
+              .row
+                .col-12.col-md-6
+                  = f.text_field :from_closing_time, class: "reports-timepicker", placeholder: "Desde"
+                .col-12.col-md-6
+                  = f.text_field :to_closing_time, class: "reports-timepicker", placeholder: "Hasta"
+                .col-12.col-md-6.pt-2.pb-2
+                  = f.check_box :only_closed
+                  = f.label :only_closed, "Solo Cerradas"
             .col-12.col-md-4
               %h4 Diferencia de votantes
               = f.number_field :votes_percent, min: 0, max: 99999, placeholder: "Diferencia"
@@ -30,7 +42,7 @@
           .row.mb-4
             .col
             .col-3
-              = f.submit "Buscar", class: "btn btn-primary"
+              = f.submit "Buscar", class: "btn btn-primary pull-right"
 
 
     .row.bg-light
@@ -38,21 +50,21 @@
       .col-12.mb-4.bg-white.border-bottom-light.border-top-light
         %h3.mt-2.mb-2 Casillas Abiertas
 
-      .col-12.col-md-3.mb-4
+      .col-12.col-md-4.mb-4
         .card.gradient-card
           .card-header
             %h4.mb-0 Total
           %h1.text-center.report-counter.pt-3.pb-3.mb-0
             = @reports_loader.segments.try(:count) || 0
 
-      .col-12.col-md-3.mb-4
+      .col-12.col-md-4.mb-4
         .card.gradient-card
           .card-header
             %h4.mb-0 Abiertas
           %h1.text-center.report-counter.pt-3.pb-3.mb-0
             = @reports_loader.open_segments.try(:count) || 0
 
-      .col-12.col-md-3.mb-4
+      .col-12.col-md-4.mb-4
         .card.gradient-card
           .card-header
             %h4.mb-0 Cerradas
