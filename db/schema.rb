@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180608055028) do
+ActiveRecord::Schema.define(version: 20180613053729) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -144,6 +144,7 @@ ActiveRecord::Schema.define(version: 20180608055028) do
     t.integer  "prep_process_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.string   "file"
     t.index ["prep_process_id"], name: "index_prep_step_fives_on_prep_process_id", using: :btree
   end
 

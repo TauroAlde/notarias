@@ -87,6 +87,30 @@ class Segment < ApplicationRecord
     prep_step_fours.empty? ? "S/E" : prep_step_fours.sum(:null_votes)
   end
 
+  def votes_self_and_descendant
+    leaf? ? votes.sum(:votes_count) : leaves.joins(:votes).sum("votes.votes_count")
+  end
+
+  def null_votes_self_and_descendant
+    leaf? ? null_votes : leaves.joins(:prep_step_fours).sum("prep_step_fours.null_votes")
+  end
+
+  def females_count_self_and_descendant
+    leaf? ? females_count : leaves.joins(:prep_step_twos).sum("prep_step_twos.females")
+  end
+
+  def males_count_self_and_descendant
+    leaf? ? males_count : leaves.joins(:prep_step_twos).sum("prep_step_twos.males")
+  end
+
+  def nominal_count_self_and_descendant
+    leaf? ? nominal_count : leaves.sum(:nominal_count)
+  end
+
+  def voters_count_self_and_descentant
+    leaf? ? voters_count : leaves.joins(:prep_step_threes).sum("prep_step_threes.voters_count")
+  end
+
   def percent_difference
     if prep_step_threes.empty?
       "S/E"

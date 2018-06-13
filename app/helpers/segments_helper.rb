@@ -49,11 +49,14 @@ module SegmentsHelper
     end
   end
 
+  def presidential_candidacy
+    @presidential_candidacy ||= Candidacy.find_by(name: Candidacy::PRESIDENCIA)
+  end
+
   def global_presidential_bar_chart
     loader = PoliticalCandidaciesLoader.new(Segment.root)
-    candidacy = Candidacy.find_by(name: Candidacy::PRESIDENCIA)
     bar_chart(
-      loader.political_candidacy_data(candidacy),
+      loader.political_candidacy_data(presidential_candidacy),
       default_options.merge({ legend: false })
     )
   end

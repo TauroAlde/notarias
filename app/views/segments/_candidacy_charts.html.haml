@@ -1,14 +1,14 @@
 .row
   .col-3
     .nav.flex-column.nav-pills#v-pills-tab{ role: "tablist", "aria-orientation" => "vertical" }
-      %a.nav-link.active{ id: "v-pills-bar-tab", "data-toggle" => "pill", href: "#v-pills-bar", role: "tab", "aria-controls" => "v-pills-bar", "aria-selected" => "true" } Barras
-      %a#v-pills-details-tab.nav-link{"aria-controls" => "v-pills-details", "aria-selected" => "false", "data-toggle" => "pill", :href => "#v-pills-details", :role => "tab"} Detalles
+      %a.nav-link.active{ id: "v-pills-bar-#{candidacy.id}-tab", "data-toggle" => "pill", href: "#v-pills-bar-#{candidacy.id}", role: "tab", "aria-controls" => "v-pills-bar-#{candidacy.id}", "aria-selected" => "true" } Barras
+      %a.nav-link{ "aria-controls" => "v-pills-details-#{candidacy.id}", "aria-selected" => "false", "data-toggle" => "pill", :href => "#v-pills-details-#{candidacy.id}", :role => "tab", :id => "v-pills-details-#{candidacy.id}-tab" } Detalles
 
   .col-9
     #v-pills-tabContent.tab-content
-      #v-pills-bar.tab-pane.fade.show.active{ "aria-labelledby" => "v-pills-bar-tab", :role => "tabpanel"}
+      .tab-pane.fade.show.active{ "aria-labelledby" => "v-pills-bar-#{candidacy.id}-tab", :role => "tabpanel", id: "v-pills-bar-#{candidacy.id}"}
         = segment_bar_chart(candidacy)
-      #v-pills-details.tab-pane.fade{"aria-labelledby" => "v-pills-details-tab", :role => "tabpanel"}
+      .tab-pane.fade{"aria-labelledby" => "v-pills-details-#{candidacy.id}-tab", :role => "tabpanel", :id => "v-pills-details-#{candidacy.id}"}
         .row
           - candidacy.candidates.each do |candidate|
             .col-12

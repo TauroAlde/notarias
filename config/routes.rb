@@ -24,7 +24,8 @@ Rails.application.routes.draw do
     get :jstree_segment, on: :collection
     get :jstree_search, on: :collection
     resources :users_imports, only: [:new, :create]
-    resources :prep_step_fours, only: [:update] # we need the segment to load the candidacies
+    resources :prep_step_fours, only: [:update]
+    resources :prep_step_fives, only: [:update] # we need the segment to load the candidacies
     resources :representative_assignations, only: [:new, :update, :destroy]
 
     resources :prep_processes do
@@ -56,6 +57,7 @@ Rails.application.routes.draw do
   resources :chat_searches, only: [:index]
   resources :messages_kpis, only: [:index]
 
+  resources :prep_step_fives, only: [:update]
   resources :prep_step_threes, only: [:update]
   resources :prep_step_twos, only: [:update]
   resources :profiles, only: [:edit, :update]

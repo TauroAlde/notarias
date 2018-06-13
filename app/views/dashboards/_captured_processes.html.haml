@@ -15,6 +15,6 @@
             .col-6.col-md-4
               %span.badge.badge-pill.badge-success
                 = fa_icon("sort-up")
-                = prep_process.prep_step_fours.sum { |psf| psf.data[pc.id.to_s] }
+                = prep_process.votes_for(pc).sum(:votes_count)
               = pc.candidate.name
               

@@ -2,3 +2,31 @@
   .col.pt-3
     %p= t(:step_five_description).html_safe
 
+= form_for [@segment, (@prep_step_five || @prep_process_machine.current_step)], html: { class: "row align-items-center prep-form", id: "step-five-form" }, remote: true do |f|
+  .col-12.mb-4
+    .row
+      .col-12
+        %h4.text-weight-bold.mt-4
+          = f.label :photo_evidence, id: "evidence-label", class: "btn btn-secondary w-100", for: "fileupload-step-five" do
+            = fa_icon("camera")
+          = f.file_field :file, accept: "image/*;cpature=camera", class: "d-none", id: "fileupload-step-five"
+          #progress.progress
+            .progress-bar{ role: "progressbar", "aria-valuenow" => "0", "aria-valuemin" => "0", "aria-valuemax" => "100" }
+          #loader-container.col-12.col-md-4.pb-4.d-none
+            .loader.m-auto
+
+    .row
+      .col
+      #proof.col-12.col-md-8
+        = image_tag (@prep_step_five ? @prep_step_five.file.url : @prep_process_machine.current_step.file.url), id: "proof-image"
+      .col
+        
+
+
+#myModal.image-modal
+  / The Close Button
+  %span.modal-close ×
+  / Modal Content (The Image)
+  %img#modal-image.image-modal-content/
+  / Modal Caption (Image Text)
+  #caption

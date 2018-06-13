@@ -11,7 +11,7 @@
             = t(:next)
             = fa_icon("arrow-circle-right")
       - elsif @prep_process_machine.last_step?
-        .col-5.col-md-3.col-lg-2
+        #next-step-wrapper.col-5.col-md-3.col-lg-2{ class: @prep_process_machine.prep_process.current_step > 1 ? "d-none" : "" }
           = link_to complete_segment_prep_process_path(@segment, @prep_process_machine.prep_process), class: "btn btn-primary w-100", "data-confirm" => "¿Está seguro? Tendrá que contactar a su administrador si desea regresar a algún paso anterior" do
             = t(:finish)
             = fa_icon("check-circle")

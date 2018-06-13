@@ -7,6 +7,7 @@ class PrepProcess < ApplicationRecord
   has_many :prep_step_threes, class_name: 'Prep::StepThree'
   has_many :prep_step_fours, class_name: 'Prep::StepFour'
   has_many :prep_step_fives, class_name: 'Prep::StepFive'
+  has_many :votes, through: :prep_step_fours
 
   before_create :set_start_step
 
@@ -15,6 +16,10 @@ class PrepProcess < ApplicationRecord
   validates :segment_id, presence: true
 
   STEPS_LIMIT = 5
+
+  def votes_for(political_candidacy)
+    votes.where(political_candidacy: political_candidacy)
+  end
 
   def set_start_step
     self.current_step = 1 if current_step.nil?

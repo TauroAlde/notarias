@@ -6,26 +6,26 @@
         = fa_icon("comment")
       %span.badge.badge-info.pl-3.pr-3
         Votos:
-        = @segment.votes.sum(:votes_count)
+        = @segment.votes_self_and_descendant
         = fa_icon("address-card")
       %span.badge.badge-danger.pl-3.pr-3
         Nulos
-        = @segment.prep_step_fours.sum(:null_votes)
+        = @segment.null_votes_self_and_descendant
         = fa_icon("ban")
     .row.separator
     .row
       .col-12
         %span.badge.badge-info
           = fa_icon("male")
-          = @segment.males_count
+          = @segment.males_count_self_and_descendant
         %span.badge.badge-info
           = fa_icon("female")
-          = @segment.females_count
+          = @segment.females_count_self_and_descendant
         %span.badge.badge-warning
           = fa_icon("female")
-          = @segment.voters_count
+          = @segment.voters_count_self_and_descentant
           \/
-          = @segment.nominal_count
+          = @segment.nominal_count_self_and_descendant
         %span.badge.badge-pill.ml-1{ class: "badge-#{@segment.non_representative_users.count == 0 ? "secondary" : "success"}" }
           = fa_icon 'users', class: "mr-1"
           = @segment.non_representative_users.count
