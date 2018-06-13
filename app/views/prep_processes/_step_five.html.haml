@@ -18,7 +18,8 @@
     .row
       .col
       #proof.col-12.col-md-8
-        = image_tag (@prep_step_five ? @prep_step_five.file.url : @prep_process_machine.current_step.file.url), id: "proof-image"
+        - if (@prep_process_machine.current_step.file.url) 
+          = image_tag @prep_process_machine.current_step.file.url, id: "proof-image"
       .col
         
 
