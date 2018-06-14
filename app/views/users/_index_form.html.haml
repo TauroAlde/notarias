@@ -66,3 +66,17 @@
       .form-group
         = f.label t(:password_confirmation)
         = f.text_field :password_confirmation, class: "form-control"
+  .separator
+  .row
+    .col-12
+      %h3 Captura de la Lona:
+  .row.mb-5
+    .col-12
+      
+    .col
+    .col-12.col-md-8
+      - if @user.prep_step_fives.present? && @user.prep_step_fives.last.file.url
+        = image_tag @user.prep_step_fives.last.file.url, class: "proof-image"
+      - else
+        %h3.text-center Sin captura
+    .col

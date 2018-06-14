@@ -5,7 +5,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :lockable, :masqueradable,
          :rememberable, :trackable, :validatable
   
-  acts_as_paranoid
+  acts_as_paranoid without_default_scope: true
 
   attr_reader :full_name
 
@@ -23,6 +23,7 @@ class User < ApplicationRecord
 
   has_many :user_segments
   has_many :prep_processes
+  has_many :prep_step_fives, through: :prep_processes
   has_many :incomplete_prep_processes, ->(o) { where('prep_processes.completed_at IS NULL') }, class_name: 'PrepProcess'
   has_many :evidences
   has_many :messages

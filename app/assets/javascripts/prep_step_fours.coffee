@@ -12,11 +12,11 @@ window.bindCandidacyCounters = ->
 $ ->
   modal = document.getElementById('myModal')
   # Get the image and insert it inside the modal - use its "alt" text as a caption
-  img = $("#proof-image")
   modalImg = document.getElementById('modal-image')
   captionText = document.getElementById('caption')
 
-  img.click (e)->
+  $(document).on "click", ".proof-image", (e)->
+    e.preventDefault()
     modal.style.display = 'block'
     modalImg.src = @src
     captionText.innerHTML = @alt
