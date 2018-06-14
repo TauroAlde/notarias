@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
 
   before_action :set_locale
   before_action :masquerade_user!
+  before_action :check_accepted_disclaimer, if: :user_signed_in?
   before_action :validate_common_user?
 
   #rescue_from Authorizer::AccessDenied do |exception|
@@ -16,6 +17,10 @@ class ApplicationController < ActionController::Base
       format.html { redirect_to main_app.root_url, alert: exception.message }
       format.js   { head :forbidden, content_type: 'text/html' }
     end
+  end
+
+  def check_accepted_disclaimer
+    redirect_to new_disclaimer_path if !current_user.accepted_disclaimer? && !disclaimer_controller? && !devise_controller?
   end
 
   def default_url_options
@@ -43,7 +48,11 @@ class ApplicationController < ActionController::Base
   end
 
   def allowed_common_user_controllers?
-    prep_process_controller? || profiles_controller? || devise_controller? || messages_controllers?
+    prep_process_controller? || profiles_controller? || devise_controller? || messages_controllers? || disclaimer_controller?
+  end
+
+  def disclaimer_controller?
+    self.class == DisclaimersController
   end
 
   def prep_process_controller?

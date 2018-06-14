@@ -17,7 +17,7 @@
         %a.fa.fa-times
 
   %body{ "data-signin" => devise_controller? ? "true" : "false" }
-    - if user_signed_in?
+    - if user_signed_in? && current_user.accepted_disclaimer?
       = render "/layouts/chat"
 
     #body-container
@@ -30,7 +30,7 @@
         = render "/layouts/flash_messages"
         = yield
 
-      - if user_signed_in?
+      - if user_signed_in? && current_user.accepted_disclaimer?
         %span#open-messages-button.d-none.d-md-block.pl-2.bg-primary.hide
           = fa_icon("comment")
           %span.messages_count 0

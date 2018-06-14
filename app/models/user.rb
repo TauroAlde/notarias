@@ -19,6 +19,7 @@ class User < ApplicationRecord
   has_many :segments, through: :user_segments
   has_many :represented_segments, ->(o) { where('user_segments.representative = ?', true) }, through: :user_segments, class_name: "Segment"
   has_many :non_represented_segments, ->(o) { where('user_segments.representative = ? OR user_segments.representative IS NULL', false) }, through: :user_segments, class_name: "Segment"
+  has_one :disclaimer
 
   has_many :user_segments
   has_many :prep_processes
@@ -46,6 +47,14 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :user_groups, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :user_roles, allow_destroy: true
   attr_accessor :login, :prevalidate_username_uniqueness, :pre_encrypted_password
+
+  def accepted_disclaimer?
+    disclaimer ? disclaimer.accepted? : create_disclaimer
+  end
+
+  def accept_disclaimer
+    disclaimer ? disclaimer.update(accepted: true) : create_disclaimer.update(accepted: true)
+  end
 
   def messages_between_self_and(user)
     @messages_between_self_and || (@messages_between_self_and = Message.includes(Message::INCLUDES_BASE).
