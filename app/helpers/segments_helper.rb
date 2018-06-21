@@ -62,7 +62,7 @@ module SegmentsHelper
   end
 
   def segment_bar_chart(candidacy, options = {})
-    bar_chart(candidacies_loader.political_candidacy_data(candidacy), default_options.merge(options))
+    horizontal_bar_chart(candidacies_loader.political_candidacy_data(candidacy), default_options.merge(options))
   end
 
   def segment_pie_chart(candidacy, options = {})
@@ -88,7 +88,6 @@ module SegmentsHelper
     {
       legend: false,
       maintainAspectRatio: false,
-      height: "200",
       scales: {
         yAxes: [{
           ticks: {
@@ -98,7 +97,8 @@ module SegmentsHelper
         xAxes: [{
           ticks: {
             autoSkip: false,
-            beginAtZero: true
+            beginAtZero: true,
+            
           }
         }]
       }

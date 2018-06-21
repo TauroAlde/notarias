@@ -3,7 +3,14 @@
     .row
       .col
         %h3 ¡Múchas gracias!
-        %p Si necesitas enviar alguna notificación, puedes acudir al espacio en la parte de abajo, podrás enviar notificaciones y fotografías para que tu administrador directo pueda ayudarte en cualquier situación que pueda presentarse.
+        %p Si necesitas enviar alguna notificación, puedes acudir al chat en la parte de abajo, podrás enviar notificaciones y fotografías para que tu administrador directo pueda ayudarte en cualquier situación que pueda presentarse.
         %p
-          Puedes también ver cómo van las elecciones en este enlace
-          = link_to "Gráficas de las elecciones", "#"
+          Puedes también ver cómo van las elecciones con éstas gráficas:
+
+    - PoliticalCandidaciesLoader.new(Segment.root).candidacies.uniq.each do |candidacy|
+      .row
+        .col-12
+          %h4
+            = candidacy.name
+          = render partial: "candidacy_charts", locals: { candidacy: candidacy }
+      .separator
