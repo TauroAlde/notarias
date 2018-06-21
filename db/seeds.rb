@@ -107,18 +107,18 @@ pri_pvem_panal_candidates = [
   { name: "Susana Hurtado Vallejo", main_political_party: 'PANAL', candidacy: Candidacy::SENADOR_PRIMERA_FORMULA, segment: Segment.root },
   { name: "Raymundo King de la Rosa", main_political_party: 'PRI', candidacy: Candidacy::SENADOR_SEGUNDA_FORMULA, segment: Segment.root },
   { name: "Leslie Hendricks Rubio", main_political_party: 'PRI', candidacy: Candidacy::DIPUTADO_FEDERAL_D1, segment: Segment.root, district: District.find_by(district_number: 1) },
-  { name: "Cora Amalia Castilla Madrid", main_political_party: 'PRI', candidacy: Candidacy::DIPUTADO_FEDERAL_D2, segment: Segment.root, district: District.find_by(district_number: 2) },
-  { name: "Ana Patricia Peralta De la Peña", main_political_party: 'PVEM', candidacy: Candidacy::DIPUTADO_FEDERAL_D3, segment: Segment.root, district: District.find_by(district_number: 3) },
-  { name: "Elda Candelaria Ayuso Achach", main_political_party: 'PRI', candidacy: Candidacy::DIPUTADO_FEDERAL_D4, segment: Segment.root, district: District.find_by(district_number: 4) }, # these are giiving null
+  { name: "Cora Amalia Castilla M.", main_political_party: 'PRI', candidacy: Candidacy::DIPUTADO_FEDERAL_D2, segment: Segment.root, district: District.find_by(district_number: 2) },
+  { name: "Ana Patricia Peralta", main_political_party: 'PVEM', candidacy: Candidacy::DIPUTADO_FEDERAL_D3, segment: Segment.root, district: District.find_by(district_number: 3) },
+  { name: "Elda Candelaria Ayuso A.", main_political_party: 'PRI', candidacy: Candidacy::DIPUTADO_FEDERAL_D4, segment: Segment.root, district: District.find_by(district_number: 4) }, # these are giiving null
   { name: "María Hadad Castillo", main_political_party: 'PRI', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.othon_p_blanco },
-  { name: "Paoly Elizabeth Perera Maldonado", main_political_party: 'PRI', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.felipe_carrillo_puerto},
-  { name: "Pedro Oscar Joaquin Delbouis", main_political_party: 'PRI', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.cozumel },
-  { name: "Fabiola Ileana Cervera Vidal", main_political_party: 'PANAL', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.lazaro_cardenas },
+  { name: "Paoly Elizabeth Perera M.", main_political_party: 'PRI', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.felipe_carrillo_puerto},
+  { name: "Pedro Oscar Joaquin D.", main_political_party: 'PRI', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.cozumel },
+  { name: "Fabiola Ileana Cervera V.", main_political_party: 'PANAL', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.lazaro_cardenas },
   { name: "Mario Machuca Sánchez", main_political_party: 'PVEM', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.benito_juarez },
   { name: "Martin De la Cruz Gómez", main_political_party: 'PRI', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.solidaridad },
   { name: "Marciano Dzul Caamal", main_political_party: 'PRI', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.tulum },
-  { name: "Manuel Alexander Zetina Aguiluz", main_political_party: 'PANAL', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.bacalar },
-  { name: "Laura Lynn Fernandez Piña", main_political_party: 'PVEM', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.puerto_morelos },
+  { name: "Manuel Alexander Zetina A.", main_political_party: 'PANAL', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.bacalar },
+  { name: "Laura Lynn Fernandez P.", main_political_party: 'PVEM', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.puerto_morelos },
 ]
 
 add_political_candidacy(pri_pvem_panal_candidates, 'PRI/PVEM/PANAL')
@@ -126,8 +126,8 @@ add_political_candidacy(pri_pvem_panal_candidates, 'PRI/PVEM/PANAL')
 pan_prd_mc_candidates = [
   { name: "Ricardo Anaya Cortés", main_political_party: 'PAN', candidacy: Candidacy::PRESIDENCIA, segment: Segment.root },
   { name: "Julián Ricalde", main_political_party: 'PRD', candidacy: Candidacy::SENADOR_PRIMERA_FORMULA, segment: Segment.root },
-  { name: "Mayuli Latifa Martínez Simón", main_political_party: 'PAN', candidacy: Candidacy::SENADOR_SEGUNDA_FORMULA, segment: Segment.root },
-  { name: "Miguel Ramón Martín Azueta", main_political_party: 'MC', candidacy: Candidacy::DIPUTADO_FEDERAL_D1, segment: Segment.root, district: District.find_by(district_number: 1) },
+  { name: "Mayuli Latifa Martínez S.", main_political_party: 'PAN', candidacy: Candidacy::SENADOR_SEGUNDA_FORMULA, segment: Segment.root },
+  { name: "Miguel Ramón Martín A.", main_political_party: 'MC', candidacy: Candidacy::DIPUTADO_FEDERAL_D1, segment: Segment.root, district: District.find_by(district_number: 1) },
   { name: "Luis Torres Llanes", main_political_party: 'PAN', candidacy: Candidacy::DIPUTADO_FEDERAL_D2, segment: Segment.root, district: District.find_by(district_number: 2) },
   { name: "Karla Romero Gómez", main_political_party: 'PRD', candidacy: Candidacy::DIPUTADO_FEDERAL_D3, segment: Segment.root, district: District.find_by(district_number: 3) },
   { name: "Gabriela López Pallares", main_political_party: 'PRD', candidacy: Candidacy::DIPUTADO_FEDERAL_D4, segment: Segment.root, district: District.find_by(district_number: 4) },
@@ -135,34 +135,34 @@ pan_prd_mc_candidates = [
   { name: "José Esquivel Vargas", main_political_party: 'PRD', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.felipe_carrillo_puerto },
   { name: "Sofía Alcocer Alcocer", main_political_party: 'PRD', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.jose_maria_morelos },
   { name: "Perla Tun Pech", main_political_party: 'PAN', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.cozumel },
-  { name: "María Trinidad García Argüelles", main_political_party: 'PAN', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.lazaro_cardenas },
+  { name: "María Trinidad García A.", main_political_party: 'PAN', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.lazaro_cardenas },
   { name: "Faustino Uicab Alcocer", main_political_party: 'PAN', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.isla_mujeres },
   { name: "Cristina Torres Gómez", main_political_party: 'PAN', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.solidaridad },
   { name: "Víctor Mas Tah", main_political_party: 'PAN', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.tulum },
-  { name: "Nelia Guadalupe Uc Sosa", main_political_party: 'PRD', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.bacalar },
+  { name: "Nelia Guadalupe Uc S.", main_political_party: 'PRD', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.bacalar },
   { name: "Ludivina Menchaca Castellanos", main_political_party: 'MC', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.puerto_morelos }
 ]
 
 add_political_candidacy(pan_prd_mc_candidates, 'PRD/PAN/MC')
 
 morena_pes_pt_candidates = [
-  { name: "Andrés Manuel López Obrador", main_political_party: 'Morena', candidacy: Candidacy::PRESIDENCIA, segment: Segment.root },
+  { name: "Andrés Manuel López O.", main_political_party: 'Morena', candidacy: Candidacy::PRESIDENCIA, segment: Segment.root },
   { name: "Marybel Villegan Canché", main_political_party: 'Morena', candidacy: Candidacy::SENADOR_PRIMERA_FORMULA, segment: Segment.root },
-  { name: "José Luis Pech Várguez", main_political_party: 'Morena', candidacy: Candidacy::SENADOR_SEGUNDA_FORMULA, segment: Segment.root },
+  { name: "José Luis Pech V.", main_political_party: 'Morena', candidacy: Candidacy::SENADOR_SEGUNDA_FORMULA, segment: Segment.root },
   { name: "Adriana Teissier Zabala", main_political_party: 'Morena', candidacy: Candidacy::DIPUTADO_FEDERAL_D1, segment: Segment.root, district: District.find_by(district_number: 1) },
   { name: "Patricia Palma Olvera", main_political_party: 'Morena', candidacy: Candidacy::DIPUTADO_FEDERAL_D2, segment: Segment.root, district: District.find_by(district_number: 2) },
   { name: "Gregorio Sanchez Martinez", main_political_party: 'PES', candidacy: Candidacy::DIPUTADO_FEDERAL_D3, segment: Segment.root , district: District.find_by(district_number: 3)},
   { name: "Jesús Pool Moo", main_political_party: 'Morena', candidacy: Candidacy::DIPUTADO_FEDERAL_D4, segment: Segment.root, district: District.find_by(district_number: 4) },
   { name: "Hernán Pastrana Pastrana", main_political_party: 'Morena', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.othon_p_blanco },
   { name: "Maricarmen Hernández Solís", main_political_party: 'Morena', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.felipe_carrillo_puerto },
-  { name: "José Domingo Flota Castillo", main_political_party: 'Morena', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.jose_maria_morelos },
+  { name: "José Domingo Flota C.", main_political_party: 'Morena', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.jose_maria_morelos },
   { name: "Juanita Alonso Marrufo", main_political_party: 'Morena', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.cozumel },
-  { name: "María Elena H. Lezama Espinoza", main_political_party: 'Morena', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.benito_juarez },
+  { name: "María Elena H. Lezama E.", main_political_party: 'Morena', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.benito_juarez },
   { name: "Edgar Gasca Arceo", main_political_party: 'Morena', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.isla_mujeres },
   { name: "Laura Beristain Navarrete", main_political_party: 'Morena', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.solidaridad },
   { name: "Eloísa Balam Mazum", main_political_party: 'PES', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.tulum },
   { name: "Rivelino Valdivia Villaseca", main_political_party: 'Morena', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.bacalar },
-  { name: "Juan Pablo Aguilera Negrón", main_political_party: 'Morena', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.puerto_morelos },
+  { name: "Juan Pablo Aguilera N.", main_political_party: 'Morena', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.puerto_morelos },
 ]
 
 add_political_candidacy(morena_pes_pt_candidates, 'Morena/PES/PT')
@@ -180,22 +180,22 @@ pri_only = [
 add_political_candidacy(pri_only, 'PRI')
 
 morena_only = [
-  { name: "Alma Margarita Lomas Álvarez", main_political_party: 'Morena', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.lazaro_cardenas }
+  { name: "Alma Margarita Lomas Á.", main_political_party: 'Morena', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.lazaro_cardenas }
 ]
 
 add_political_candidacy(morena_only, 'Morena')
 
 pes_only = [
-  { name: "Juan Carlos Osorio Magaña", main_political_party: 'PES', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.isla_mujeres },
+  { name: "Juan Carlos Osorio M.", main_political_party: 'PES', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.isla_mujeres },
   { name: "Marta Canul Tut", main_political_party: 'PES', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.jose_maria_morelos },
   { name: "María Ruiz Molina", main_political_party: 'PES', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.lazaro_cardenas },
   { name: "Jesús Valencia Cardín", main_political_party: 'PES', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.othon_p_blanco },
-  { name: "María Trinidad Guillén Núñes", main_political_party: 'PES', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.bacalar },
+  { name: "María Trinidad Guillén N.", main_political_party: 'PES', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.bacalar },
   { name: "Niurkia Sáliva Benítez", main_political_party: 'PES', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.benito_juarez },
   { name: "Salvador Rocha Vargas", main_political_party: 'PES', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.cozumel },
   { name: "Francisco Poot Cauil", main_political_party: 'PES', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.felipe_carrillo_puerto },
   { name: "Eloísa Zatina Barriga", main_political_party: 'PES', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.puerto_morelos },
-  { name: "Luis Fernando Roldán Carrillo", main_political_party: 'PES', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.solidaridad }
+  { name: "Luis Fernando Roldán C.", main_political_party: 'PES', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.solidaridad }
 ]
 
 add_political_candidacy(pes_only, 'PES')
@@ -214,8 +214,8 @@ pt_only = [
 add_political_candidacy(pt_only, 'PT')
 
 independientes = [
-  { name: "Jaime Rodríguez Calderón", main_political_party: 'Independiente', candidacy: Candidacy::PRESIDENCIA, segment: Segment.root },
-  { name: 'Julio Alfonso Villegas Velázquez', main_political_party: 'Independiente', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.othon_p_blanco },
+  { name: "Jaime Rodríguez C.", main_political_party: 'Independiente', candidacy: Candidacy::PRESIDENCIA, segment: Segment.root },
+  { name: 'Julio Alfonso Villegas V.', main_political_party: 'Independiente', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.othon_p_blanco },
   { name: 'Prudencio Alcocer Balan', main_political_party: 'Independiente', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.bacalar },
   { name: 'Isaac Janix Alanís', main_political_party: 'Independiente', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.benito_juarez },
   { name: 'Gloria Mex Alcocer', main_political_party: 'Independiente', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.cozumel },
