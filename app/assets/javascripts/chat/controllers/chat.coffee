@@ -175,17 +175,6 @@ class @Chat
     $("#open-messages-button-mobile").click (e) =>
       if @isHidden()
         @show()
-
-  replaceMessagesKPI: (count)->
-    $(".messages_count").html(count)
-    buttons = $("#open-messages-button, #open-messages-button-mobile")
-    if count > 0
-      buttons.addClass("bg-warning")
-      buttons.removeClass("bg-primary")
-    else
-      buttons.removeClass("bg-warning")
-      buttons.addClass("bg-primary")
-
   #startPoller: ->
   #  setTimeout(@pollerCallback, 5000, @)
   #

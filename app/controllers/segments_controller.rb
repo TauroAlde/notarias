@@ -53,24 +53,7 @@ class SegmentsController < ApplicationController
   end
 
   def preloaded_segment
-    Segment.preload(
-      :users,
-      :non_representative_users,
-      { children: [
-        :users,
-        :non_representative_users
-      ] },
-      { self_and_descendants: [
-        :users,
-        :non_representative_users,
-        { children: [
-          { self_and_descendants: [
-            :users,
-            :non_representative_users
-          ]}
-        ]}
-      ]}
-    )
+    Segment.preload(:users,:non_representative_users)
   end
 
   def connection_to_users

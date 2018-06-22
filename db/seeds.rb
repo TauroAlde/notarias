@@ -76,7 +76,8 @@ PoliticalParty.create([
   { names: ['PRD', 'PAN'], name: 'PRD/PAN' },
   { names: ['PRI', 'PVEM', 'PANAL'], name: 'PRI/PVEM/PANAL' },
   { names: ['PVEM', 'PRI'], name: 'PVEM/PRI' },
-  { names: ['Morena', 'PES', 'PT'], name: 'Morena/PES/PT' }
+  { names: ['Morena', 'PES', 'PT'], name: 'Morena/PES/PT' },
+  { names: ['Morena', 'PT'], name: 'Morena/PT' }
 ].each do |coalition|
   puts "creating coalition #{coalition[:name]}"
   
@@ -152,7 +153,12 @@ morena_pes_pt_candidates = [
   { name: "Adriana Teissier Zabala", main_political_party: 'Morena', candidacy: Candidacy::DIPUTADO_FEDERAL_D1, segment: Segment.root, district: District.find_by(district_number: 1) },
   { name: "Patricia Palma Olvera", main_political_party: 'Morena', candidacy: Candidacy::DIPUTADO_FEDERAL_D2, segment: Segment.root, district: District.find_by(district_number: 2) },
   { name: "Gregorio Sanchez Martinez", main_political_party: 'PES', candidacy: Candidacy::DIPUTADO_FEDERAL_D3, segment: Segment.root , district: District.find_by(district_number: 3)},
-  { name: "Jesús Pool Moo", main_political_party: 'Morena', candidacy: Candidacy::DIPUTADO_FEDERAL_D4, segment: Segment.root, district: District.find_by(district_number: 4) },
+  { name: "Jesús Pool Moo", main_political_party: 'Morena', candidacy: Candidacy::DIPUTADO_FEDERAL_D4, segment: Segment.root, district: District.find_by(district_number: 4) }
+]
+
+add_political_candidacy(morena_pes_pt_candidates, 'Morena/PES/PT')
+
+morena_pt_candidates = [
   { name: "Hernán Pastrana Pastrana", main_political_party: 'Morena', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.othon_p_blanco },
   { name: "Maricarmen Hernández Solís", main_political_party: 'Morena', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.felipe_carrillo_puerto },
   { name: "José Domingo Flota C.", main_political_party: 'Morena', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.jose_maria_morelos },
@@ -165,7 +171,7 @@ morena_pes_pt_candidates = [
   { name: "Juan Pablo Aguilera N.", main_political_party: 'Morena', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.puerto_morelos },
 ]
 
-add_political_candidacy(morena_pes_pt_candidates, 'Morena/PES/PT')
+add_political_candidacy(morena_pt_candidates, 'Morena/PT')
 
 pri_pvem = [
   { name: "Juan Carrillo Soberanis", main_political_party: 'PRI', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.jose_maria_morelos }
@@ -195,7 +201,8 @@ pes_only = [
   { name: "Salvador Rocha Vargas", main_political_party: 'PES', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.cozumel },
   { name: "Francisco Poot Cauil", main_political_party: 'PES', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.felipe_carrillo_puerto },
   { name: "Eloísa Zatina Barriga", main_political_party: 'PES', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.puerto_morelos },
-  { name: "Luis Fernando Roldán C.", main_political_party: 'PES', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.solidaridad }
+  { name: "Luis Fernando Roldán C.", main_political_party: 'PES', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.solidaridad },
+  { name: "Wendy Ruiz Aguilar", main_political_party: 'PES', candidacy: Candidacy::PRESIDENTE_MUNICIPAL, segment: Segment.tulum }
 ]
 
 add_political_candidacy(pes_only, 'PES')

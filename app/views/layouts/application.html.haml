@@ -31,9 +31,8 @@
         = yield
 
       - if user_signed_in? && current_user.accepted_disclaimer?
-        %span#open-messages-button.d-none.d-md-block.pl-2.bg-primary.hide
+        %span#open-messages-button.d-none.d-md-block.bg-primary.hide
           = fa_icon("comment")
-          %span.messages_count 0
          
     #myModal.image-modal
       / The Close Button

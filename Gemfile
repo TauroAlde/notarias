@@ -63,6 +63,7 @@ gem "select2-rails"
 gem 'lightbox2-rails'
 gem 'ejs'
 gem 'rb-gravatar'
+gem 'redis-rails', '~> 5'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
