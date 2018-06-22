@@ -129,7 +129,7 @@ class Segment < ApplicationRecord
         user.represented_segments.map(&:self_and_descendant_ids).flatten +
         user.non_represented_segments.pluck(:id)).flatten.uniq
     elsif user.only_common?
-      (user.represented_segments.map(&:self_and_ascendant_ids).flatten + user.segments.pluck(:id)).flatten.uniq
+      (user.segments.map(&:self_and_ascendant_ids).flatten + user.segments.pluck(:id)).flatten.uniq
     else
       Segment.joins(:messages).pluck(:id)
     end
