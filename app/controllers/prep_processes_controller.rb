@@ -30,6 +30,7 @@ class PrepProcessesController < ApplicationController
       flash[:warning] = "No pudo completarse la captura de datos"
       redirect_to :new
     end
+    @candidacies_loader = PoliticalCandidaciesLoader.new(Segment.root)
     flash[:notice] = "¡Gracias por completar la captura de información de su casilla!"
   end
 
