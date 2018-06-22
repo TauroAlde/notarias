@@ -125,11 +125,11 @@ class Segment < ApplicationRecord
 
   def self.segments_for_messages(user)
     if user.representative?
-      ( user.represented_segments.map(&:self_and_ascendant_ids).flatten +
+      ( user.represented_segments.map(&:self_and_ancestors_ids).flatten +
         user.represented_segments.map(&:self_and_descendant_ids).flatten +
         user.non_represented_segments.pluck(:id)).flatten.uniq
     elsif user.only_common?
-      (user.segments.map(&:self_and_ascendant_ids).flatten + user.segments.pluck(:id)).flatten.uniq
+      (user.segments.map(&:self_and_ancestors_ids).flatten + user.segments.pluck(:id)).flatten.uniq
     else
       Segment.joins(:messages).pluck(:id)
     end
