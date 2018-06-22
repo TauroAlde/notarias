@@ -463,6 +463,8 @@ body, html {
 
 .segment-message-resume-list-item, .user-message-resume-list-item {
   cursor: pointer;
+  border-top: 1px solid $system-dark-green-transparent;
+  border-bottom: 1px solid $system-dark-green-transparent;
   &:hover { background-color: rgba(221,229,234, 0.5); }
 }
 
