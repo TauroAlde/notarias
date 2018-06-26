@@ -1,5 +1,5 @@
 class Segment < ApplicationRecord
-  belongs_to :parent_segment, foreign_key: :parent_id, class_name: "Segment", optional: true
+  belongs_to :parent_segment, foreign_key: :parent_id, class_name: "Segment", optional: true, touch: true
   has_many :segments, foreign_key: :parent_id, class_name: "Segment", inverse_of: :parent_segment
   # representatives are the entity in charge of the segment in most cases the "casilla"
   # o the leaf segment of the tree
@@ -62,6 +62,10 @@ class Segment < ApplicationRecord
   #    "" :
   #    "WHERE segments.id #{ ids.is_a?(Array) ? "IN (#{ids.join(', ')})" : "= #{ids}" }"
   #end
+
+  def users_down_tree_count
+    @users_down_tree ||= UserSegment.where(segment_id: self_and_descendant_ids).count
+  end
 
   def males_count
     prep_step_twos.empty? ? "S/E" : prep_step_twos.sum(:males)

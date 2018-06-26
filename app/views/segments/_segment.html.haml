@@ -10,6 +10,11 @@
         %span.badge.badge-pill.ml-1{ class: "badge-#{segment.representative_users.count == 0 ? "secondary" : "warning"}" }
           = fa_icon 'address-book', class: "mr-1"
           = segment.representative_users.count
+
+        %span.badge.badge-pill.ml-1{ class: "badge-#{segment.users_down_tree_count == 0 ? "secondary" : "info"}" }
+          = fa_icon 'sitemap', class: "mr-1"
+          = fa_icon 'users', class: "mr-1"
+          = segment.users_down_tree_count
       
       = segment.name
 
