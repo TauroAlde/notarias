@@ -1,0 +1,14 @@
+- cache ["report", segment] do
+  %tr
+    %td.text-center
+      = link_to segment_path(segment) do
+        = fa_icon("sitemap")
+        = segment.name
+    %td.text-center{ class: report_text_class(segment.openning_time) }= segment.openning_time
+    %td.text-center{ class: report_text_class(segment.closing_time) }= segment.closing_time
+    %td.text-center= segment.voters_count
+    %td.text-center{ class: report_text_class(segment.voters_count) }= segment.nominal_count
+    %td.text-center.text-danger= segment.null_votes
+    %td.text-center{ class: percent_difference_color(segment) }
+      = segment.percent_difference
+      = fa_icon("percent")

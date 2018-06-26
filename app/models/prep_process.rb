@@ -1,6 +1,6 @@
 class PrepProcess < ApplicationRecord
   belongs_to :segment_processor, foreign_key: :user_id, class_name: 'User'
-  belongs_to :processed_segment, foreign_key: :segment_id, class_name: 'Segment'
+  belongs_to :processed_segment, foreign_key: :segment_id, class_name: 'Segment', touch: true
 
   has_many :prep_step_ones, class_name: 'Prep::StepOne'
   has_many :prep_step_twos, class_name: 'Prep::StepTwo'

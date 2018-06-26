@@ -118,7 +118,7 @@ class Segment < ApplicationRecord
       real_nominal_count = nominal_count || 0
       mult = (prep_step_threes.sum(:voters_count) - real_nominal_count) * 100
 
-      return 0 if mult == 0 && real_nominal_count == 0
+      return 0 if mult == 0 || real_nominal_count == 0
       (mult / real_nominal_count).abs
     end
   end
