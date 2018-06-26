@@ -23,8 +23,7 @@ Rails.application.configure do
     }
   else
     config.action_controller.perform_caching = true
-
-    config.cache_store = :redis_cache_store
+    config.cache_store = :redis_store, "http://localhost:6379", { expires_in: 90.minutes }
   end
 
   # Don't care if the mailer can't send.
