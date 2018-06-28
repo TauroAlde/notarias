@@ -20,7 +20,9 @@ class ApplicationController < ActionController::Base
   end
 
   def check_accepted_disclaimer
-    redirect_to new_disclaimer_path if !current_user.accepted_disclaimer? && !disclaimer_controller? && !devise_controller?
+    if current_user
+      redirect_to new_disclaimer_path if !current_user.accepted_disclaimer? && !disclaimer_controller? && !devise_controller?
+    end
   end
 
   def default_url_options

@@ -61,7 +61,7 @@ Rails.application.routes.draw do
   resources :prep_step_threes, only: [:update]
   resources :prep_step_twos, only: [:update]
   resources :profiles, only: [:edit, :update]
-  resources :disclaimers, only: [:new, :update]
+  resources :disclaimers, only: [:new, :update, :index]
 
   resources :prep_processes, only: [:new]
   resources :reports do
