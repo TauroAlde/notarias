@@ -64,6 +64,7 @@ gem 'lightbox2-rails'
 gem 'ejs'
 gem 'rb-gravatar'
 gem 'redis-rails', '~> 5'
+gem 'jquery-timepicker-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
