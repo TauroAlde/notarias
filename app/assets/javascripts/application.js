@@ -23,5 +23,4 @@
 //= require select2
 //= require lightbox
 //= require jquery.timepicker.js
-//= require datepair.js
 //= require_tree .
